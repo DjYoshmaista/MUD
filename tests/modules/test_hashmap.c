@@ -26,26 +26,26 @@ MudHashmap* map = mud_hashmap_create();
     if (ctx->abort_current_test) return;
 
     CHECK_INT_EQ(ctx, mud_hashmap_size(map), 0);
-    CHECK(ctx, mud_hashmap_is_empty(map));
+    CHECK(mud_hashmap_is_empty(map));
 
     mud_hashmap_destroy(map);
 }
 
 TEST(hashmap_null_safety) {
     CHECK_INT_EQ(ctx, mud_hashmap_size(NULL), 0);
-    CHECK(ctx, mud_hashmap_is_empty(NULL));
+    CHECK(mud_hashmap_is_empty(NULL));
     CHECK_NULL(ctx, mud_hashmap_get(NULL, "key"));
-    CHECK(ctx, !mud_hashmap_has(NULL, "key"));
-    CHECK(ctx, !mud_hashmap_set(NULL, "key", "value"));
-    CHECK(ctx, !mud_hashmap_remove(NULL, "key"));
+    CHECK(!mud_hashmap_has(NULL, "key"));
+    CHECK(!mud_hashmap_set(NULL, "key", "value"));
+    CHECK(!mud_hashmap_remove(NULL, "key"));
 
     // NULL key handling
     MudHashmap* map = mud_hashmap_create();
     REQUIRE_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
-    CHECK(ctx, !mud_hashmap_set(map, NULL, "value"));
-    CHECK(ctx, !mud_hashmap_has(map, NULL));
+    CHECK(!mud_hashmap_set(map, NULL, "value"));
+    CHECK(!mud_hashmap_has(map, NULL));
     CHECK_NULL(ctx, mud_hashmap_get(map, NULL));
 
     mud_hashmap_destroy(map);
@@ -60,9 +60,9 @@ TEST(hashmap_set_get) {
     if (ctx->abort_current_test) return;
 
     int value1 = 100, value2 = 200, value3 = 300;
-    CHECK(ctx, mud_hashmap_set(map, "one", &value1));
-    CHECK(ctx, mud_hashmap_set(map, "two", &value2));
-    CHECK(ctx, mud_hashmap_set(map, "three", &value3));
+    CHECK(mud_hashmap_set(map, "one", &value1));
+    CHECK(mud_hashmap_set(map, "two", &value2));
+    CHECK(mud_hashmap_set(map, "three", &value3));
 
     CHECK_INT_EQ(ctx, mud_hashmap_size(map), 3);
 
@@ -91,11 +91,11 @@ TEST(hashmap_update) {
 
     int value1 = 100, value2 = 999;
 
-    CHECK(ctx, mud_hashmap_set(map, "key", &value1));
+    CHECK(mud_hashmap_set(map, "key", &value1));
     CHECK_INT_EQ(ctx, *(int*)mud_hashmap_get(map, "key"), 100);
 
     // Update same key
-    CHECK(ctx, mud_hashmap_set(map, "key", &value2));
+    CHECK(mud_hashmap_set(map, "key", &value2));
     CHECK_INT_EQ(ctx, *(int*)mud_hashmap_get(map, "key"), 999);
 
     // Size unchanged
@@ -112,9 +112,9 @@ TEST(hashmap_has) {
     int value = 42;
     mud_hashmap_set(map, "exists", &value);
 
-    CHECK(ctx, mud_hashmap_has(map, "exists"));
-    CHECK(ctx, !mud_hashmap_has(map, "missing"));
-    CHECK(ctx, !mud_hashmap_has(map, ""));
+    CHECK(mud_hashmap_has(map, "exists"));
+    CHECK(!mud_hashmap_has(map, "missing"));
+    CHECK(!mud_hashmap_has(map, ""));
 
     mud_hashmap_destroy(map);
 }
@@ -132,20 +132,20 @@ TEST(hashmap_remove) {
     CHECK_INT_EQ(ctx, mud_hashmap_size(map), 3);
 
     // Remove middle
-    CHECK(ctx, mud_hashmap_remove(map, "b"));
+    CHECK(mud_hashmap_remove(map, "b"));
     CHECK_INT-EQ(ctx, mud_hashmap_size(map), 2);
-    CHECK(ctx, !mud_hashmap_has9(map, "b"));
-    CHECK(ctx, mud_hashmap_has(map, "a"));
-    CHECK(ctx, mud_hashmap_has(map, "c"));
+    CHECK(!mud_hashmap_has9(map, "b"));
+    CHECK(mud_hashmap_has(map, "a"));
+    CHECK(mud_hashmap_has(map, "c"));
 
     // Remove non-existent
-    CHECK(ctx, !mud_hashmap_remove(map, "b"));  // Already removed
-    CHECK(ctx, !mud_hashmap_remove(map, "missing"));
+    CHECK(!mud_hashmap_remove(map, "b"));  // Already removed
+    CHECK(!mud_hashmap_remove(map, "missing"));
 
     // Remove remaining
-    CHECK(ctx, mud_hashmap_remove(map, "a"));
-    CHECK(ctx, mud_hashmap_remove(map, "c"));
-    CHECK(ctx, mud_hashmap_is_empty(map));
+    CHECK(mud_hashmap_remove(map, "a"));
+    CHECK(mud_hashmap_remove(map, "c"));
+    CHECK(mud_hashmap_is_empty(map));
 
     mud_hashmap_destroy(map);
 }
@@ -161,10 +161,10 @@ TEST(hashmap_remove_with_destructor) {
     *value = 42;
 
     mod_hashmap_set(map, "key", value);
-    CHECK(ctx, mud_hashmap_remove_with(map, "key", free));
+    CHECK(mud_hashmap_remove_with(map, "key", free));
 
     // Value was freed (we can't verify directly, but no leak with sanitizer)
-    CHECK(ctx, !mud_hashmap_has(map, "key"));
+    CHECK(!mud_hashmap_has(map, "key"));
 
     mud_hashmap_destroy(map);
 }
@@ -186,12 +186,12 @@ TEST(hashmap_clear) {
     mud_hashmap_clear(map);
 
     CHECK_INT_EQ(ctx, mud_hashmap_size(map), 0);
-    CHECK(ctx, mud_hashmap_is_empty(map));
-    CHECK(ctx, !mud_hashmap_has(map, "a"));
+    CHECK(mud_hashmap_is_empty(map));
+    CHECK(!mud_hashmap_has(map, "a"));
 
     // Can still use after clear
     int new_value = 99;
-    CHECK(ctx, mud_hashmap_set(map, "new", &new_value));
+    CHECK(mud_hashmap_set(map, "new", &new_value));
     CHECK_INT_EQ(ctx, mud_hashmap_size(map), 1);
 
     mud_hashmap_destroy(map);
@@ -212,7 +212,7 @@ TEST(hashmap_clear_with_destructor) {
     mud_hashmap_clear_with(map, counting_destructor);
 
     CHECK_INT_EQ(ctx, destructor_call_Count, 3);
-    CHECK(ctx, mud_hashmap_is_empty(map));
+    CHECK(mud_hashmap_is_empty(map));
 
     mud_hashmap_destroy(map);
 }
@@ -228,7 +228,7 @@ TEST(hashmap_growth) {
 	snprintf(key, sizeof(key), "key_%d", i);
 	int* value = malloc(sizeof(int));
 	*value = i;
-	CHECK(ctx, mud_hashmap_set(map, key, value));
+	CHECK(mud_hashmap_set(map, key, value));
     }
 
     CHECK_INT_EQ(ctx, mud_hashmap_size(map), 100);
@@ -266,7 +266,7 @@ TEST(hashmap_iteration) {
 	sum += *(int*)iter.value;
 
 	// Key should be one of our keys
-	CHECK(ctx, strcmp(iter.key, "one") == 0 ||
+	CHECK(strcmp(iter.key, "one") == 0 ||
 		   strcmp(iter.key, "two") == 0 ||
 		   strcmp(iter.key, "three") == 0);
     }
@@ -283,7 +283,7 @@ TEST(hashmap_iteration_empty) {
     if (ctx->abort_current_test) return;
 
     MudHashmapIter iter = mud_hashmap_iter_start(map);
-    CHECK(ctx, !mud_hashmap_iter_next(map, &iter));
+    CHECK(!mud_hashmap_iter_next(map, &iter));
 
     mud_hashmap_destroy(map);
 }
@@ -315,7 +315,7 @@ TEST(hashmap_keys) {
 	} else {
 	    FAIL(ctx, "Unexpected key: %s", keys[i], "\nNo 'alpha', 'beta', or 'gamma' keys found");
 	}
-    CHECK(ctx, found_alpha && found_beta && found_gamma);
+    CHECK(found_alpha && found_beta && found_gamma);
 
     // Limited buffer
     count = mud_hashmap_keys(map, keys, 2);
@@ -351,14 +351,14 @@ TEST(hashmap_key_independence) {
     char key_buf[32] = "original";
     int value = 42;
 
-    CHECK(ctx, mud_hashmap_set(map, key_buf, &value));
+    CHECK(mud_hashmap_set(map, key_buf, &value));
 
     // Modify buffer
     strcpy(key_buf, "modified");
 
     // Original key should still work (hashmap copied it)
-    CHECK(ctx, mud_hashmap_has(map, "original"));
-    CHECK(ctx, !mud_hashmap_has(map, "modified"));
+    CHECK(mud_hashmap_has(map, "original"));
+    CHECK(!mud_hashmap_has(map, "modified"));
 
     mud_hashmap_destroy(map);
 }
@@ -371,14 +371,14 @@ TEST(hashmap_similar_keys) {
 
     // Keys that might collide or be similar
     int values[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    CHECK(ctx, mud_hashmap_set(map, "a", &values[0]));
-    CHECK(ctx, mud_hashmap_set(map, "aa", &values[1]));
-    CHECK(ctx, mud_hashmap_set(map, "aaa", &values[2]));
-    CHECK(ctx, mud_hashmap_set(map, "b", &values[3]));
-    CHECK(ctx, mud_hashmap_set(map, "ab", &values[4]));
-    CHECK(ctx, mud_hashmap_set(map, "ba", &values[5]));
-    CHECK(ctx, mud_hashmap_set(map, "abc", &values[6]));
-    CHECK(ctx, mud_hashmap_set(map, "cba", &values[7]));
+    CHECK(mud_hashmap_set(map, "a", &values[0]));
+    CHECK(mud_hashmap_set(map, "aa", &values[1]));
+    CHECK(mud_hashmap_set(map, "aaa", &values[2]));
+    CHECK(mud_hashmap_set(map, "b", &values[3]));
+    CHECK(mud_hashmap_set(map, "ab", &values[4]));
+    CHECK(mud_hashmap_set(map, "ba", &values[5]));
+    CHECK(mud_hashmap_set(map, "abc", &values[6]));
+    CHECK(mud_hashmap_set(map, "cba", &values[7]));
 
     CHECK_INT_EQ(ctx, mud_hashmap_size(map), 0);
 
@@ -404,18 +404,18 @@ TEST(hashmap_empty_key) {
     int value = 42;
 
     // Empty string is a valid key
-    CHECK(ctx, mud_hashmap_set(map, "", &value));
-    CHECK(ctx, mud_hashmap_has(map, ""));
+    CHECK(mud_hashmap_set(map, "", &value));
+    CHECK(mud_hashmap_has(map, ""));
     CHECK_INT_EQ(ctx, *(int*)mud_hashmap_get(map, ""), 42);
 
     // Different from non-empty
     int value2 = 99;
-    CHECK(ctx, mud_hashmap_set(map, "x", &value2));
+    CHECK(mud_hashmap_set(map, "x", &value2));
     CHECK_INT_EQ(ctx, *(int*)mud_hashmap_get(map), 2);
 
-    CHECK(ctx, mud_hashmap_set(map, ""));
-    CHECK(ctx, !mud_hashmap_set(map, ""));
-    CHECK(ctx, mud_hashmap_set(map, "x"));
+    CHECK(mud_hashmap_set(map, ""));
+    CHECK(!mud_hashmap_set(map, ""));
+    CHECK(mud_hashmap_set(map, "x"));
 
     mud_hashmap_destroy(map);
 }

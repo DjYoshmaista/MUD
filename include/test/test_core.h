@@ -44,103 +44,102 @@ static inline int mud_test_register(MudTestInfo info) {
     return 0;
 }
 
-#define CHECK_STR_EQ(ctx, actual, expected)					\
-    do {									\
-	const char* _a = {actual};						\
-	const char* _e = {expected);						\
-	if (_a == NULL || _e == NULL) {						\
-	    if (_a != _e) {							\
-		mud_testctx_record_failuref((ctx), MUD_TEST_SEV_CHECK,		\
-		    __FILE__, __LINE__,						\
-		    "CHECK_STR_EQ(" #actual ", " #expected ")",			\
-		    "NULL mismatch: actual=%p, expected=%p",			\
-		    (void*)_a, (void*)_e);					\
-	    }									\
-	} else if (strcmp(_a, _e) != 0) {					\
-	    mud_testctx_record_failuref((ctx), MUD_TEST_SEV_CHECK,		\
-		__FILE__, __LINE__,						\
-		"CHECK_STR_EQ(" #actual ", " #expected ")",			\
-		"strings differ: actual=\%s\", expected=\"%s\"",		\
-		_a, _e);							\
-	    }									\
+#define CHECK_STR_EQ(ctx, actual, expected)                                     \
+    do {                                                                        \
+        const char* _a = {actual};                                              \
+        const char* _e = {expected};                                            \
+        if (_a == NULL || _e == NULL) {                                         \
+            if (_a != _e) {                                                     \
+                mud_testctx_record_failuref((ctx), MUD_TEST_SEV_CHECK,          \
+                    __FILE__, __LINE__,                                         \
+                    "CHECK_STR_EQ(" #actual ", " #expected ")",                 \
+                    "NULL mismatch: actual=%p, expected=%p",                    \
+                    (void*)_a, (void*)_e);                                      \
+            }                                                                   \
+    } else if (strcmp(_a, _e) != 0) {                                           \
+        mud_testctx_record_failuref((ctx), MUD_TEST_SEV_CHECK,                  \
+        __FILE__, __LINE__,                                                     \
+        "CHECK_STR_EQ(" #actual ", " #expected ")",                             \
+        "strings differ: actual=\%s\", expected=\"%s\"",                        \
+        _a, _e);                                                                \
     } while (0)
 
-#define CHECK_INT_EQ(ctx, actual, expected)					\
-    do {									\
-	long long _a = (long long)(actual);					\
-	long long _e = (long long)(expected);					\
-	if (_a != _e) {								\
-	    mud_testctx_record_failuref((ctx), MUD_TEST_SEV_CHECK,		\
-		__FILE__, __LINE__,						\
-		"CHECK_INT_EQ(" #actual ", " #expected ")",			\
-		"values differ: actual=%lld, expected=%lld", _a, _e);		\
-	}									\
+#define CHECK_INT_EQ(ctx, actual, expected)                                     \
+    do {                                                                        \
+        long long _a = (long long)(actual);                                     \
+        long long _e = (long long)(expected);                                   \
+        if (_a != _e) {                                                         \
+            mud_testctx_record_failuref((ctx), MUD_TEST_SEV_CHECK,              \
+            __FILE__, __LINE__,                                                 \
+            "CHECK_INT_EQ(" #actual ", " #expected ")",                         \
+            "values differ: actual=%lld, expected=%lld", _a, _e);               \
+        }                                                                       \
     } while (0)
 
-#define REQUIRE_STR_EQ(ctx, actual, expected)					\
-    do {									\
-	const char* _a = (actual);						\
-	const char* _e = (expected);						\
-	if (_a == NULL || _e == NULL) {						\
-	    if (_a != _e) {							\
-		mud_testctx_record_failuref((ctx), MUD_TEST_SEV_REQUIRE,	\
-		    __FILE__, __LINE__,						\
-		    "REQUIRE_STR_EQ(" #actual ", " #expected ")",		\
-		    "NULL mismatch: actual=%p, expected=%p",			\
-		    (void*)_a, (void*)_e);					\
-	    }									\
-	} else if (strcmp(_a, _e) != 0) {					\
-	    mud_testctx_record_failuref((ctx), MUD_TEST_SEV_REQUIRE,		\
-		__FILE__, __LINE__,						\
-		"REQUIRE_STR_EQ(" #actual ", " #expected ")", 			\
-		"strings differ: actual=\%s\", expected=\"%s\"",		\
-		_a, _e);							\
-	}									\
+#define REQUIRE_STR_EQ(ctx, actual, expected)                                   \
+    do {                                                                        \
+        const char* _a = (actual);                                              \
+        const char* _e = (expected);                                            \
+        if (_a == NULL || _e == NULL) {                                         \
+            if (_a != _e) {                                                     \
+                mud_testctx_record_failuref((ctx), MUD_TEST_SEV_REQUIRE,        \
+                    __FILE__, __LINE__,                                         \
+                    "REQUIRE_STR_EQ(" #actual ", " #expected ")",               \
+                    "NULL mismatch: actual=%p, expected=%p",                    \
+                    (void*)_a, (void*)_e);                                      \
+            }                                                                   \
+        } else if (strcmp(_a, _e) != 0) {                                       \
+            mud_testctx_record_failuref((ctx), MUD_TEST_SEV_REQUIRE,            \
+            __FILE__, __LINE__,                                                 \
+            "REQUIRE_STR_EQ(" #actual ", " #expected ")",                       \
+            "strings differ: actual=\%s\", expected=\"%s\"",                    \
+            _a, _e);                                                            \
+            }                                                                   \
     } while (0)
 
-#define CHECK_PTR_EQ(ctx, actual, expected)					\
-    do {									\
-	const void* _a = (actual);						\
-	const void* _e = (expected);						\
-	if (_a != _e) {								\
-	    mud_testctx_record_failuref((ctx), MUD_TEST_SEV_CHECK,		\
-		__FILE__, __LINE__,						\
-		"CHECK_PTR_EQ(" #actual ", " #expected ")",			\
-		"pointers differ: actual=%p, expected=%p", _a, _e);		\
-	}									\
+#define CHECK_PTR_EQ(ctx, actual, expected)                                     \
+    do {                                                                        \
+        const void* _a = (actual);                                              \
+        const void* _e = (expected);                                            \
+        if (_a != _e) {                                                         \
+            mud_testctx_record_failuref((ctx), MUD_TEST_SEV_CHECK,              \
+            __FILE__, __LINE__,                                                 \
+            "CHECK_PTR_EQ(" #actual ", " #expected ")",                         \
+            "pointers differ: actual=%p, expected=%p", _a, _e);                 \
+        }                                                                       \
     } while (0)
 
-#define CHECK_NOT_NULL(ctx, ptr)						\
-    do {									\
-	if ((ptr) == NULL) {							\
-	    mud_testctx_record_fialuref((ctx), MUD_TEST_SEV_CHECK,		\
-		__FILE__, __LINE__,						\
-		"CHECK_NOT_NULL(" #ptr ")",					\
-		"pointer is NULL");						\
-	}									\
+#define CHECK_NOT_NULL(ctx, ptr)                                                \
+    do {                                                                        \
+        if ((ptr) == NULL) {                                                    \
+            mud_testctx_record_fialuref((ctx), MUD_TEST_SEV_CHECK,              \
+            __FILE__, __LINE__,                                                 \
+            "CHECK_NOT_NULL(" #ptr ")",                                         \
+            "pointer is NULL");                                                 \
+        }                                                                       \
     } while (0)
 
-#define CHECK_NULL(ctx, ptr)							\
-    do {									\
-	if ((ptr) != NULL) {							\
-	    mud_testctx_record_failuref((ctx), MUD_TEST_SEV_CHECK,		\
-		__FILE__, __LINE__,						\
-		"CHECK_NULL(" #ptr ")",						\
-		"pointer is NOT NULL");						\
-	}									\
+#define CHECK_NULL(ctx, ptr)                                                    \
+    do {                                                                        \
+        if ((ptr) != NULL) {                                                    \
+            mud_testctx_record_failuref((ctx), MUD_TEST_SEV_CHECK,              \
+            __FILE__, __LINE__,                                                 \
+            "CHECK_NULL(" #ptr ")",                                             \
+            "pointer is NOT NULL");                                             \
+        }                                                                       \
     } while (0)
 
-#define CHECK_MEM_EQ(ctx, actual, expected, size)				\
-    do {									\
-	const void* _a = (actual);						\
-	const void* _e = (expected);						\
-	size_t _s = (size);							\
-	if (memcmp(_a, _e, _s) != 0) {						\
-	    mud_testctx_record_failuref((ctx), MUD_TEST_SEV_CHECK,		\
-		__FILE__, __LINE__,						\
-		"CHECK_MEM_EQ(" #actual ", " #expected ", " #size ")",		\
-		"memory block differ (size=%zu)", _s);				\
-	}									\
+#define CHECK_MEM_EQ(ctx, actual, expected, size)                               \
+    do {                                                                        \
+        const void* _a = (actual);                                              \
+        const void* _e = (expected);                                            \
+        size_t _s = (size);                                                     \
+        if (memcmp(_a, _e, _s) != 0) {                                          \
+            mud_testctx_record_failuref((ctx), MUD_TEST_SEV_CHECK,              \
+            __FILE__, __LINE__,                                                 \
+            "CHECK_MEM_EQ(" #actual ", " #expected ", " #size ")",              \
+            "memory block differ (size=%zu)", _s);                              \
+        }\
     } while (0)
 
 #define CHECK_TRUE(ctx, expr) CHECK_CTX(ctx, (expr))

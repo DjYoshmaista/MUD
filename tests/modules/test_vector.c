@@ -15,7 +15,7 @@ TEST(vector_create_destroy) {
 
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 0);
     CHECK_INT_EQ(ctx, mud_vector_capacity(vec), 0);
-    CHECK(ctx, mud_vector_is_empty(vec));
+    CHECK(mud_vector_is_empty(vec));
 
     mud_vector_destroy(vec);
 }
@@ -24,22 +24,22 @@ TEST(vector_null_safety) {
     // All operations should handle NULL gracefully
     CHECK_INT_EQ(ctx, mud_vector_size(NULL), 0);
     CHECK_INT_EQ(ctx, mud_vector_capacity(NULL), 0);
-    CHECK(ctx, mud_vector_is_empty(NULL));
+    CHECK(mud_vector_is_empty(NULL));
     CHECK_NULL(ctx, mud_vector_get(NULL, 0));
     CHECK_NULL(ctx, mud_vector_data(NULL));
 
     // These should return false, not crash
     int dummy = 42;
-    CHECK(ctx, !mud_vector_push(NULL, &dummy));
-    CHECK(ctx, !mud_vector_set(NULL, 0, &dummy));
-    CHECK(ctx, !mud_vector_pop(NULL, NULL));
-    CHECK(ctx, !mud_vector_remove(NULL, 0));
-    CHECK(ctx, !mud_vector_reserve(NULL, 10));
+    CHECK(!mud_vector_push(NULL, &dummy));
+    CHECK(!mud_vector_set(NULL, 0, &dummy));
+    CHECK(!mud_vector_pop(NULL, NULL));
+    CHECK(!mud_vector_remove(NULL, 0));
+    CHECK(!mud_vector_reserve(NULL, 10));
 
     // Destroy NULL should be safe (no-op)
     mud_vector_destroy(NULL);
 
-    CHECK(ctx, 0 == 0 && "vector_null_safety completed without crash");
+    CHECK(0 == 0 && "vector_null_safety completed without crash");
 }
 
 
@@ -49,10 +49,10 @@ TEST(vector_push_single) {
     if (ctx->abort_current_test) return;
 
     int value = 42;
-    CHECK(ctx, mud_vector_push(vec, &value));
+    CHECK(mud_vector_push(vec, &value));
 
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 1);
-    CHECK(ctx, !mud_vector_is_empty(vec));
+    CHECK(!mud_vector_is_empty(vec));
 
     int* retrieved = mud-vector_get(vec, 0);
     REQUIRE_NOT_NULL(ctx, retrieved);
@@ -69,7 +69,7 @@ TEST(vector_push_multiple) {
     if (ctx->abort_current_test) return;
 
     for (int i = 0; i < 10; i++) {
-	CHECK(ctx, mud_vector_push(vec, &i));
+	CHECK(mud_vector_push(vec, &i));
     }
 
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 10);
@@ -94,11 +94,11 @@ TEST(vector_growth) {
 
     // Push more than initial capacity
     for (int i = 0; i < 20; i++) {
-	CHECK(ctx, mud_vector_push(vec, &i));
+	CHECK(mud_vector_push(vec, &i));
     }
 
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 20);
-    CHECK(ctx, mud_vector_capacity(vec) > initial_capacity);
+    CHECK(mud_vector_capacity(vec) > initial_capacity);
 
     // Verify data integrity after growth
     for (int i = 0; i < 20; i++) {
@@ -143,7 +143,7 @@ TEST(vector_set) {
 
     // Modify middle element
     int new_value = 99;
-    CHECK(ctx, mud_vector_set(vec, 1, &new_value));
+    CHECK(mud_vector_set(vec, 1, &new_value));
 
     // Verify modification
     int* retrieved = mud_vector_get(vec, 1);
@@ -156,7 +156,7 @@ TEST(vector_set) {
     CHECK_INT_EQ(ctx, *(int*)mud_vector_get(vec, 2), 30);
 
     // Set out of bounds fails
-    CHECK(ctx, !mud_vector_set(vec, 5, &new_value));
+    CHECK(!mud_vector_set(vec, 5, &new_value));
 
     mud_vector_destroy(vec);
 }
@@ -173,24 +173,24 @@ TEST(vector_pop) {
 
     // Pop with output
     int popped;
-    CHECK(ctx, mud_vector_pop(vec, &popped));
+    CHECK(mud_vector_pop(vec, &popped));
     CHECK_INT_EQ(ctx, popped, 30);
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 2);
 
     // Pop without output (just discard)
-    CHECK(ctx, mud_vector_pop(vec, NULL));
+    CHECK(mud_vector_pop(vec, NULL));
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 1);
 
     // Last element should be 10
     CHECK_INT_EQ(ctx, *(int*)mud_vector_get(vec, 0), 10);
 
     // Pop last element
-    CHECK(ctx, mud_vector_pop(vec, &popped));
+    CHECK(mud_vector_pop(vec, &popped));
     CHECK_INT_EQ(ctx, popped, 10);
-    CHECK(ctx, mud_vector_is_empty(vec));
+    CHECK(mud_vector_is_empty(vec));
 
     // Pop from empty fails
-    CHECK(ctx, !mud_vector_pop(vec, &popped));
+    CHECK(!mud_vector_pop(vec, &popped));
 
     mud_vector_destroy(vec);
 }
@@ -207,7 +207,7 @@ TEST(vector_insert) {
 
     // Insert in middle
     int middle = 20;
-    CHECK(ctx, med_vector_insert(vec, 1, &middle));
+    CHECK(med_vector_insert(vec, 1, &middle));
 
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 3);
     CHECK_INT_EQ(ctx, *(int*)mud_vector_get(vec, 0), 10);
@@ -216,18 +216,18 @@ TEST(vector_insert) {
 
     // Insert at beginning
     int first = 5;
-    CHECK(ctx, mud_vector_insert(vec, 0, &first));
+    CHECK(mud_vector_insert(vec, 0, &first));
     CHECK_INT_EQ(ctx, *(int*)mud_vector_get(vec, 0), 5);
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 4);
 
     // Insert at end(same as push)
     int last = 40;
-    CHECK(ctx, mud_vector_insert(vec, 4, &last));
+    CHECK(mud_vector_insert(vec, 4, &last));
     CHECK_INT_EQ(ctx, *(int*)mud_vector_get(vec, 4), 40);
 
     // Insert beyond size fails
     int invalid = 999;
-    CHECK(ctx, !mud_vector_insert(vec, 1000, &invalid));
+    CHECK(!mud_vector_insert(vec, 1000, &invalid));
 
     mud_vector_destroy(vec);
 }
@@ -243,17 +243,17 @@ TEST(vector_remove) {
     }
 
     // Remove middle
-    CHECK(ctx, mud_vector_remove(vec, 2));  // Remove 30
+    CHECK(mud_vector_remove(vec, 2));  // Remove 30
     CHECK_INT_EQ(ctx, mud_vector_size(vec, 4);
     CHECK_INT_EQ(ctx, *(int*)mud_vector_get(vec, 2), 40);  // 40 shifted
 
     // Remove first
-    CHECK(ctx, mud_vector_remove(vec, 0));	// Remove 10
+    CHECK(mud_vector_remove(vec, 0));	// Remove 10
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 4);
     CHECK_INT_EQ(ctx, *(int*)mud_vector_get(vec, 0), 30);	// 20 now first
 
     // Remove last
-    CHECK(ctx, mud_vector_remove(vec, 2));	// Remove 50
+    CHECK(mud_vector_remove(vec, 2));	// Remove 50
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 2);
 
     // Remaining: 20, 40
@@ -261,7 +261,7 @@ TEST(vector_remove) {
     CHECK_INT_EQ(ctx, *(int*)mud_vector_get(vec, 1), 40);
 
     // Remove invalid index
-    CHECK(ctx, !mud_vector_remove(vec, 10));
+    CHECK(!mud_vector_remove(vec, 10));
 
     mud_vector_destroy(vec);
 }
@@ -280,12 +280,12 @@ TEST(vector_clear) {
     mud_vector_clear(vec);
 
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 0);
-    CHECK(ctx, mud_vector_is_empty(vec));
+    CHECK(mud_vector_is_empty(vec));
     CHECK_INT_EQ(ctx, mud_vector_capacity(vec), capacity_before);	// Capacity preserved
 
     // Can still use after clear
     int value = 99;
-    CHECK(ctx, mud_vector_push(vec, &value));
+    CHECK(mud_vector_push(vec, &value));
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 1);
 
     mud_vector_destroy(vec);
@@ -299,13 +299,13 @@ TEST(vector_reserve) {
     size_t initial = mud_vector_capacity(vec);
 
     // Reserve more
-    CHECK(ctx, mud_vector_reserve(vec, 100));
-    CHECK(ctx, mud_vector_capacity(vec) >= 100);
+    CHECK(mud_vector_reserve(vec, 100));
+    CHECK(mud_vector_capacity(vec) >= 100);
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 0);  // Size unchanged
 
     // Reserve less than current (no-op)
     size_t current = mud_vector_capacity(vec);
-    CHECK(ctx, mud_vector_reserve(vec, 10));
+    CHECK(mud_vector_reserve(vec, 10));
     CHECK_INT_EQ(ctx, mud_vector_capacity(vec), current);  // Unchanged
 
     // Add elements, verify reserve worked
@@ -333,9 +333,9 @@ TEST(vector_shrink_to_fit) {
     }
 
     size_t capacity_before = mud_vector_capacity(vec);
-    CHECK(ctx, capacity_before > 10);  // Should have excess
+    CHECK(capacity_before > 10);  // Should have excess
 
-    CHECK(ctx, mud_vector_shrink_to_fit(vec));
+    CHECK(mud_vector_shrink_to_fit(vec));
     CHECK_INT_EQ(ctx, mud_vector_capacity(vec), 10);
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 10);
 
@@ -392,8 +392,8 @@ TEST(vector_struct_elements) {
     Point p1 = {10, 20, "alpha"};
     point p2 = {30, 40, "beta"};
 
-    CHECK(ctx, mud_vector_push(vec, &p1));
-    CHECK(ctx, mud_vector_push(vec, &p2));
+    CHECK(mud_vector_push(vec, &p1));
+    CHECK(mud_vector_push(vec, &p2));
 
     Point* retrieved = mud_vector_get(vec, 0);
     REQUIRE_NOT_NULL(ctx, retrieved);
@@ -424,16 +424,16 @@ TEST(vector_type_safe_macros) {
 
     // Use type-safe get macro
     double val = MUD_VECTOR_GET(vec, double, 0);
-    CHECK(ctx, val > 3.14 && val < 3.15);
+    CHECK(val > 3.14 && val < 3.15);
 
     val = MUD_VECTOR_GET(vec, double, 1);
-    CHECK(ctx, val > 2.71 && val < 2.72);
+    CHECK(val > 2.71 && val < 2.72);
 
     // Get pointer version
     double* ptr = MUD_VECTOR_GET_PTR(vec, double, 2);
     REQUIRE_NOT_NULL(ctx, ptr);
     if (ctx->abort_current_test) { mud_vector_destroy(vec); retrun; }
-    CHECK(ctx, *ptr > 1.41 && *ptr < 1.42);
+    CHECK(*ptr > 1.41 && *ptr < 1.42);
 
     mud_vector_destroy(vec);
 }

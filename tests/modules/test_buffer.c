@@ -14,7 +14,7 @@ TEST(buffer_create_destroy) {
     if (ctx->abort_current_test) return;
 
     CHECK_INT_EQ(ctx, mud_buffer_size(buf), 0);
-    CHECK(ctx, mud_buffer_is_empty(buf));
+    CHECK(mud_buffer_is_empty(buf));
     CHECK_STR_EQ(ctx, mud_buffer_cstr(buf), "");
 
     mud_buffer_destroy(buf);
@@ -27,7 +27,7 @@ TEST(buffer_create_with_capacity) {
     if (ctx->abort_current_test) return;
 
     CHECK_INT_EQ(ctx, mud-buffer_size(buf), 0);
-    CHECK(ctx, mud_buffer_capacity(buf) >= 1024);
+    CHECK(mud_buffer_capacity(buf) >= 1024);
 
     mud_buffer_destroy(buf);
 }
@@ -47,34 +47,34 @@ TEST(buffer_create_from) {
     buf = mud_buffer_create_from(NULL);
     REQUIRE_NOT_NULL(ctx, buf);
     if (ctx->abort_current_test) return;
-    CHECK(ctx, mud_buffer_is_empty(buf));
+    CHECK(mud_buffer_is_empty(buf));
     mud_buffer_destroy(buf);
 
     // Create from empty string
     buf = mud_buffer_create_from("");
     REQUIRE_NOT_NULL(ctx, buf);
     if (ctx->abort_current_test) return;
-    CHECK(ctx, mud_buffer_is_empty(buf));
+    CHECK(mud_buffer_is_empty(buf));
     mud_buffer_destroy(buf);
 }
 
 TEST(buffer_null_safety) {
     CHECK_INT_EQ(ctx, mud_buffer_size(NULL), 0);
     CHECK_INT_EQ(ctx, mud_buffer_capacity(NULL), 0);
-    CHECK(ctx, mud_buffer_is_empty(NULL));
+    CHECK(mud_buffer_is_empty(NULL));
     CHECK_STR_EQ(ctx, mud_buffer_cstr(NULL), "");
     CHECK_NULL(ctx, mud_buffer_data(NULL));
     CHECK_INT_EQ(ctx, mud_buffer-char_at(NULL, 0), '\0');
 
-    CHECK(ctx, !mud_buffer_append_char(NULL, 'x'));
-    CHECK(ctx, !mud_buffer_append_str(NULL, "test"));
-    CHECK(ctx, !mud_buffer_append_bytes(NULL, "data", 4));
-    CHECK(ctx, !mud_buffer_reserve(NULL, 100));
+    CHECK(!mud_buffer_append_char(NULL, 'x'));
+    CHECK(!mud_buffer_append_str(NULL, "test"));
+    CHECK(!mud_buffer_append_bytes(NULL, "data", 4));
+    CHECK(!mud_buffer_reserve(NULL, 100));
 
     mud_buffer_clear(NULL);  // Should not crash
     mud_buffer_destroy(NULL);  // Should not crash
 
-    CHECK(ctx, 0 == 0 && "buffer_null_saftey completed without crash");
+    CHECK(0 == 0 && "buffer_null_saftey completed without crash");
 }
 
 TEST(buffer_append_char) {
@@ -82,9 +82,9 @@ TEST(buffer_append_char) {
     REQUIRE_NOT_NULL(ctx, buf);
     if (ctx->abort_current_test) return;
 
-    CHECK(ctx, mud_buffer_append_char(buf, 'H'));
-    CHECK(ctx, mud_buffer_append_char(buf, 'i'));
-    CHECK(ctx, mud_buffer_append_char(buf, '!'));
+    CHECK(mud_buffer_append_char(buf, 'H'));
+    CHECK(mud_buffer_append_char(buf, 'i'));
+    CHECK(mud_buffer_append_char(buf, '!'));
 
     CHECK_INT_EQ(ctx, mud_buffer_size(buf), 3);
     CHECK_STR_EQ(ctx, mud_buffer_cstr(buf), "Hi!");
@@ -101,15 +101,15 @@ TEST(buffer_append_str) {
     REQUIRE_NOT_NULL(ctx, buf);
     if (ctx->abort_current_test) return;
 
-    CHECK(ctx, mud_buffer_append_str(buf, "Hello"));
-    CHECK(ctx, mud_buffer_append_str(buf, ", "));
-    CHECK(ctx, mud_buffer_append_str(buf, "World!"));
+    CHECK(mud_buffer_append_str(buf, "Hello"));
+    CHECK(mud_buffer_append_str(buf, ", "));
+    CHECK(mud_buffer_append_str(buf, "World!"));
 
-    CHECK(ctx, mud_buffer_append_str(buf, ""));
+    CHECK(mud_buffer_append_str(buf, ""));
     CHECK_INT_EQ(ctx, mud_buffer_size(buf), 13);
 
     // Append NULL fails
-    CHECK(ctx, !mud_buffer_append_str(buf, NULL));
+    CHECK(!mud_buffer_append_str(buf, NULL));
 
     mud_buffer_destroy(buf);
 }
@@ -121,7 +121,7 @@ TEST(buffer_append_bytes) {
 
     // Append bytes including embedded null
     const char data[] = {'a', 'b', '\0', 'c', 'd'};
-    CHECK(ctx, mud_buffer_append_bytes(buf, data, 5));
+    CHECK(mud_buffer_append_bytes(buf, data, 5));
 
     CHECK_INT_EQ(ctx, mud_buffer_size(buf), 5);
 
@@ -142,13 +142,13 @@ TEST(buffer_append_fmt) {
     REQUIRE_NOT_NULL(ctxm, buf);
     if (ctx->abort_current_test) return;
 
-    CHECK(ctx, mud_buffer_append_fmt(buf, "Number: %d", 42));
+    CHECK(mud_buffer_append_fmt(buf, "Number: %d", 42));
     CHECK_STR_EQ(ctx, mud_buffer_cstr(buf), "Number: 42");
 
-    CHECK(ctx, mud_buffer_append_fmt(buf, ", Float: %.2f", 3.14));
+    CHECK(mud_buffer_append_fmt(buf, ", Float: %.2f", 3.14));
     CHECK_STR_EQ(ctx, mud_buffer_cstr(buf), "Number: 42, Float: 3.14");
 
-    CHECK(ctx, mud_buffer_append_fmt(buf, ", String: %s", "test"));
+    CHECK(mud_buffer_append_fmt(buf, ", String: %s", "test"));
     CHECK_STR_EQ(ctx, mud_buffer_cstr(buf), "Number: 42, Float: 3.14, String: test");
 
     mud_buffer_destroy(buf);
@@ -160,7 +160,7 @@ TEST(buffer_append_fmt_large) {
     if (ctx->abort_current_test) return;
 
     // Format string that expands beyond initial capacity
-    CHECK(ctx, mud_buffer_append_fmt(buf,
+    CHECK(mud_buffer_append_fmt(buf,
 	  "1)%s\n2)%s\n3)%s\n4)%s\n5)%s\n6)%s\n7)%s\n8)%s\n9)%s\n10)%s\n11)%s12)%s13)%s",
 	  "01234567890", "01234567890", "01234567890", "01234567890",
 	  "01234567890", "01234567890", "01234567890", "01234567890",
@@ -198,14 +198,14 @@ TEST(buffer_set_char) {
     REQUIRE_NOT_NULL(ctx, buf);
     if (ctx->abort_current_test) return;
 
-    CHECK(ctx, mud_buffer_set_char(buf, 0, 'J'));
+    CHECK(mud_buffer_set_char(buf, 0, 'J'));
     CHECK_STR_EQ(ctx, mud_buffer_cstr(buf), "Jello");
 
-    CHECK(ctx, mud_buffer_set_char(buf, 4, 'y'));
+    CHECK(mud_buffer_set_char(buf, 4, 'y'));
     CHECK_STR_EQ(ctx, mud_buffer_cstr(buf), "Jelly");
 
     // Out of bounds fails
-    CHECK(ctx, !mud_buffer_set_char(buf, 10, 'x'));
+    CHECK(!mud_buffer_set_char(buf, 10, 'x'));
 
     mud_buffer_destroy(buf);
 }
@@ -220,12 +220,12 @@ TEST(buffer_clear) {
     mud_buffer_clear(buf);
 
     CHECK_INT_EQ(ctx, mud_buffer_size(buf), 0);
-    CHECK(ctx, mud_buffer_is_empty(buf));
+    CHECK(mud_buffer_is_empty(buf));
     CHECK_STR_EQ(ctx, mud_buffer_cstr(buf), "");
     CHECK_INT_EQ(ctx, mud_buffer_capacity(buf), cap_before);  // Preserved
 
     // Can reuse
-    CHECK(ctx, mud_buffer_append_str(buf, "This is new content"));
+    CHECK(mud_buffer_append_str(buf, "This is new content"));
     CHECK_STR_EQ(ctx, mud_buffer_cstr(buf), "This is new content"));
 
     mud_buffer_destroy(buf);
@@ -236,16 +236,16 @@ TEST(buffer_truncate) {
     REQUIRE_NOT_NULL(ctx, buf);
     if (ctx->abort_current_test) return;
 
-    CHECK(ctx, mud_buffer_truncate(buf, 5));
+    CHECK(mud_buffer_truncate(buf, 5));
     CHECK_STR_EQ(ctx, mud_buffer_cstr(buf), "Hello");
 
     // Truncate to 0
-    CHECK(ctx, mud_buffer_truncate(buf, 0));
-    CHECK(ctx, mud_buffer_is_empty(buf));
+    CHECK(mud_buffer_truncate(buf, 0));
+    CHECK(mud_buffer_is_empty(buf));
 
     // Truncate beyond size (no-op)
     mud_buffer_append_str(buf, "Hi");
-    CHECK(ctx, mud_buffer_truncate(buf, 100));
+    CHECK(mud_buffer_truncate(buf, 100));
     CHECK_INT_EQ(ctx, mud_buffer_size(buf), 3);  // Size unchanged
 
     mud_buffer_destroy(buf);
@@ -294,15 +294,15 @@ TEST(buffer_equals) {
 	return;
     }
 
-    CHECK(ctx, mud_buffer_equals(a, b));
-    CHECK(ctx, mud_buffer_equals(a, a));  // Same pointer
-    CHECK(ctx, !mud_buffer_equals(a, c));
-    CHECK(ctx, !mud_buffer_equals(a, d));
+    CHECK(mud_buffer_equals(a, b));
+    CHECK(mud_buffer_equals(a, a));  // Same pointer
+    CHECK(!mud_buffer_equals(a, c));
+    CHECK(!mud_buffer_equals(a, d));
 
     // NULL handling
-    CHECK(ctx, !mud_buffer_equals(a, NULL));
-    CHECK(ctx, !mud_buffer_equals(NULL, a));
-    CHECK(ctx, !mud_buffer_equals(NULL, NULL));
+    CHECK(!mud_buffer_equals(a, NULL));
+    CHECK(!mud_buffer_equals(NULL, a));
+    CHECK(!mud_buffer_equals(NULL, NULL));
 
     mud_buffer_destroy(a);
     mud_buffer_destroy(b);
@@ -315,10 +315,10 @@ TEST(buffer_equals_str) {
     REQUIRE_NOT_NULL(ctx, buf);
     if (ctx->abort_current_test) return;
 
-    CHECK(ctx, mud_buffer_equals_str(buf, "hello"));
-    CHECK(ctx, !mud_buffer_equals_str(buf, "Hello"));
-    CHECK(ctx, !mud_buffer_equals_str(buf, "hello!"));
-    CHECK(ctx, !mud_buffer_equals_str(buf, NULL));
+    CHECK(mud_buffer_equals_str(buf, "hello"));
+    CHECK(!mud_buffer_equals_str(buf, "Hello"));
+    CHECK(!mud_buffer_equals_str(buf, "hello!"));
+    CHECK(!mud_buffer_equals_str(buf, NULL));
 
     mud_buffer_destroy(buf);
 }
@@ -328,8 +328,8 @@ TEST(buffer_reserve) {
     REQUIRE_NOT_NULL(ctx, buf);
     if (ctx->abort_current_test) return;
 
-    CHECK(ctx, mud_buffer_reserve(buf, 1000));
-    CHECK(ctx, mud_buffer_capacity(buf) >= 1000);
+    CHECK(mud_buffer_reserve(buf, 1000));
+    CHECK(mud_buffer_capacity(buf) >= 1000);
     CHECK_INT_EQ(ctx, mud_buffer_size(buf), 0);  // Size unchanged
 
     // Add content without reallocation
@@ -352,10 +352,10 @@ TEST(buffer_growth) {
 
     // Append much more than initial capacity
     for (int i = 0; i < 1000; i++) {
-	CHECK(ctx, mud_buffer_append_fmt(buf, "%d", i));
+	CHECK(mud_buffer_append_fmt(buf, "%d", i));
     }
 
-    CHECK(ctx, mud_buffer_size(buf) > 2000;  // At least "0,1,2,...,999,"
+    CHECK(mud_buffer_size(buf) > 2000;  // At least "0,1,2,...,999,"
 
     // Verify starts correctly
     const char* str = mud_buffer_cstr(buf);
@@ -369,7 +369,7 @@ TEST(buffer_growth) {
 	    CHECK_INT_EQ(ctx, str[i], ',');
 	}
 	num+=2;
-	CHECK(ctx, mud_buffer_equals_str(msg, "Output { i: %s num: %s }\n", i, num);  
+	CHECK(mud_buffer_equals_str(msg, "Output { i: %s num: %s }\n", i, num);  
     }
 
     mud_buffer_destroy(buf);
