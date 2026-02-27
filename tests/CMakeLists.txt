@@ -34,7 +34,6 @@ target_link_libraries(mud_test_lib INTERFACE
 set(TEST_MODULE_SOURCES
     modules/test_vector.c
     modules/test_buffer.c
-    modules/test_buffer.c
     modules/test_str.c
     modules/test_hashmap.c
 )
@@ -161,13 +160,13 @@ set_tests_properties(run_all_tests PROPERTIES
 #   - FIXTURES_CLEANUP: Cleans up the named fixture
 #   - FIXTURES_REQUIRED: The named fixture is required for the test
 # ------------------------------------------------------------------------------
-add_test(NAME setup_test_db COMMAND ${CMAKE_COMMAND} -E echo "Setting up...")
-set_tests_properties(setup_test_db PROPERTIES FIXTURES_SETUP TestDatabase)
-
-add_test(NAME cleanup_test_db COMMAND ${CMAKE_COMMAND} -E echo "Cleaning up...")
-set_tests_properties(cleanup_test_db PROPERTIES FIXTURES_CLEANUP TestDatabase)
-
-set_tests_properties(test_with_db PROPERTIES FIXTURES_REQUIRED TestDatabase)
+# add_test(NAME setup_test_db COMMAND ${CMAKE_COMMAND} -E echo "Setting up...")
+# set_tests_properties(setup_test_db PROPERTIES FIXTURES_SETUP TestDatabase)
+# 
+# add_test(NAME cleanup_test_db COMMAND ${CMAKE_COMMAND} -E echo "Cleaning up...")
+# set_tests_properties(cleanup_test_db PROPERTIES FIXTURES_CLEANUP TestDatabase)
+# 
+# set_tests_properties(test_with_db PROPERTIES FIXTURES_REQUIRED TestDatabase)
 
 # ------------------------------------------------------------------------------
 # Custom Target: tests (Build All Test Executables)

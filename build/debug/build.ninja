@@ -11,7 +11,7 @@
 # =============================================================================
 
 # =============================================================================
-# Project: Project
+# Project: MUD
 # Configurations: Debug
 # =============================================================================
 
@@ -42,6 +42,186 @@ include CMakeFiles/rules.ninja
 cmake_ninja_workdir = /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/
 
 #############################################
+# Utility command for Experimental
+
+build Experimental: phony CMakeFiles/Experimental
+
+
+#############################################
+# Utility command for Nightly
+
+build Nightly: phony CMakeFiles/Nightly
+
+
+#############################################
+# Utility command for Continuous
+
+build Continuous: phony CMakeFiles/Continuous
+
+
+#############################################
+# Utility command for NightlyMemoryCheck
+
+build NightlyMemoryCheck: phony CMakeFiles/NightlyMemoryCheck
+
+
+#############################################
+# Utility command for NightlyStart
+
+build NightlyStart: phony CMakeFiles/NightlyStart
+
+
+#############################################
+# Utility command for NightlyUpdate
+
+build NightlyUpdate: phony CMakeFiles/NightlyUpdate
+
+
+#############################################
+# Utility command for NightlyConfigure
+
+build NightlyConfigure: phony CMakeFiles/NightlyConfigure
+
+
+#############################################
+# Utility command for NightlyBuild
+
+build NightlyBuild: phony CMakeFiles/NightlyBuild
+
+
+#############################################
+# Utility command for NightlyTest
+
+build NightlyTest: phony CMakeFiles/NightlyTest
+
+
+#############################################
+# Utility command for NightlyCoverage
+
+build NightlyCoverage: phony CMakeFiles/NightlyCoverage
+
+
+#############################################
+# Utility command for NightlyMemCheck
+
+build NightlyMemCheck: phony CMakeFiles/NightlyMemCheck
+
+
+#############################################
+# Utility command for NightlySubmit
+
+build NightlySubmit: phony CMakeFiles/NightlySubmit
+
+
+#############################################
+# Utility command for ExperimentalStart
+
+build ExperimentalStart: phony CMakeFiles/ExperimentalStart
+
+
+#############################################
+# Utility command for ExperimentalUpdate
+
+build ExperimentalUpdate: phony CMakeFiles/ExperimentalUpdate
+
+
+#############################################
+# Utility command for ExperimentalConfigure
+
+build ExperimentalConfigure: phony CMakeFiles/ExperimentalConfigure
+
+
+#############################################
+# Utility command for ExperimentalBuild
+
+build ExperimentalBuild: phony CMakeFiles/ExperimentalBuild
+
+
+#############################################
+# Utility command for ExperimentalTest
+
+build ExperimentalTest: phony CMakeFiles/ExperimentalTest
+
+
+#############################################
+# Utility command for ExperimentalCoverage
+
+build ExperimentalCoverage: phony CMakeFiles/ExperimentalCoverage
+
+
+#############################################
+# Utility command for ExperimentalMemCheck
+
+build ExperimentalMemCheck: phony CMakeFiles/ExperimentalMemCheck
+
+
+#############################################
+# Utility command for ExperimentalSubmit
+
+build ExperimentalSubmit: phony CMakeFiles/ExperimentalSubmit
+
+
+#############################################
+# Utility command for ContinuousStart
+
+build ContinuousStart: phony CMakeFiles/ContinuousStart
+
+
+#############################################
+# Utility command for ContinuousUpdate
+
+build ContinuousUpdate: phony CMakeFiles/ContinuousUpdate
+
+
+#############################################
+# Utility command for ContinuousConfigure
+
+build ContinuousConfigure: phony CMakeFiles/ContinuousConfigure
+
+
+#############################################
+# Utility command for ContinuousBuild
+
+build ContinuousBuild: phony CMakeFiles/ContinuousBuild
+
+
+#############################################
+# Utility command for ContinuousTest
+
+build ContinuousTest: phony CMakeFiles/ContinuousTest
+
+
+#############################################
+# Utility command for ContinuousCoverage
+
+build ContinuousCoverage: phony CMakeFiles/ContinuousCoverage
+
+
+#############################################
+# Utility command for ContinuousMemCheck
+
+build ContinuousMemCheck: phony CMakeFiles/ContinuousMemCheck
+
+
+#############################################
+# Utility command for ContinuousSubmit
+
+build ContinuousSubmit: phony CMakeFiles/ContinuousSubmit
+
+
+#############################################
+# Utility command for test
+
+build CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest
+  DESC = Running tests...
+  pool = console
+  restat = 1
+
+build test: phony CMakeFiles/test.util
+
+
+#############################################
 # Utility command for edit_cache
 
 build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
@@ -63,8 +243,672 @@ build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
 
 build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 
+
+#############################################
+# Custom command for CMakeFiles/Experimental
+
+build CMakeFiles/Experimental | ${cmake_ninja_workdir}CMakeFiles/Experimental: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Experimental -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/Nightly
+
+build CMakeFiles/Nightly | ${cmake_ninja_workdir}CMakeFiles/Nightly: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Nightly -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/Continuous
+
+build CMakeFiles/Continuous | ${cmake_ninja_workdir}CMakeFiles/Continuous: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Continuous -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/NightlyMemoryCheck
+
+build CMakeFiles/NightlyMemoryCheck | ${cmake_ninja_workdir}CMakeFiles/NightlyMemoryCheck: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=NightlyMemoryCheck -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/NightlyStart
+
+build CMakeFiles/NightlyStart | ${cmake_ninja_workdir}CMakeFiles/NightlyStart: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Nightly -DACTIONS=Start -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/NightlyUpdate
+
+build CMakeFiles/NightlyUpdate | ${cmake_ninja_workdir}CMakeFiles/NightlyUpdate: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Nightly -DACTIONS=Update -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/NightlyConfigure
+
+build CMakeFiles/NightlyConfigure | ${cmake_ninja_workdir}CMakeFiles/NightlyConfigure: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Nightly -DACTIONS=Configure -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/NightlyBuild
+
+build CMakeFiles/NightlyBuild | ${cmake_ninja_workdir}CMakeFiles/NightlyBuild: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Nightly -DACTIONS=Build -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/NightlyTest
+
+build CMakeFiles/NightlyTest | ${cmake_ninja_workdir}CMakeFiles/NightlyTest: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Nightly -DACTIONS=Test -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/NightlyCoverage
+
+build CMakeFiles/NightlyCoverage | ${cmake_ninja_workdir}CMakeFiles/NightlyCoverage: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Nightly -DACTIONS=Coverage -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/NightlyMemCheck
+
+build CMakeFiles/NightlyMemCheck | ${cmake_ninja_workdir}CMakeFiles/NightlyMemCheck: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Nightly -DACTIONS=MemCheck -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/NightlySubmit
+
+build CMakeFiles/NightlySubmit | ${cmake_ninja_workdir}CMakeFiles/NightlySubmit: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Nightly -DACTIONS=Submit -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/ExperimentalStart
+
+build CMakeFiles/ExperimentalStart | ${cmake_ninja_workdir}CMakeFiles/ExperimentalStart: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Experimental -DACTIONS=Start -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/ExperimentalUpdate
+
+build CMakeFiles/ExperimentalUpdate | ${cmake_ninja_workdir}CMakeFiles/ExperimentalUpdate: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Experimental -DACTIONS=Update -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/ExperimentalConfigure
+
+build CMakeFiles/ExperimentalConfigure | ${cmake_ninja_workdir}CMakeFiles/ExperimentalConfigure: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Experimental -DACTIONS=Configure -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/ExperimentalBuild
+
+build CMakeFiles/ExperimentalBuild | ${cmake_ninja_workdir}CMakeFiles/ExperimentalBuild: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Experimental -DACTIONS=Build -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/ExperimentalTest
+
+build CMakeFiles/ExperimentalTest | ${cmake_ninja_workdir}CMakeFiles/ExperimentalTest: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Experimental -DACTIONS=Test -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/ExperimentalCoverage
+
+build CMakeFiles/ExperimentalCoverage | ${cmake_ninja_workdir}CMakeFiles/ExperimentalCoverage: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Experimental -DACTIONS=Coverage -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/ExperimentalMemCheck
+
+build CMakeFiles/ExperimentalMemCheck | ${cmake_ninja_workdir}CMakeFiles/ExperimentalMemCheck: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Experimental -DACTIONS=MemCheck -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/ExperimentalSubmit
+
+build CMakeFiles/ExperimentalSubmit | ${cmake_ninja_workdir}CMakeFiles/ExperimentalSubmit: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Experimental -DACTIONS=Submit -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/ContinuousStart
+
+build CMakeFiles/ContinuousStart | ${cmake_ninja_workdir}CMakeFiles/ContinuousStart: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Continuous -DACTIONS=Start -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/ContinuousUpdate
+
+build CMakeFiles/ContinuousUpdate | ${cmake_ninja_workdir}CMakeFiles/ContinuousUpdate: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Continuous -DACTIONS=Update -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/ContinuousConfigure
+
+build CMakeFiles/ContinuousConfigure | ${cmake_ninja_workdir}CMakeFiles/ContinuousConfigure: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Continuous -DACTIONS=Configure -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/ContinuousBuild
+
+build CMakeFiles/ContinuousBuild | ${cmake_ninja_workdir}CMakeFiles/ContinuousBuild: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Continuous -DACTIONS=Build -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/ContinuousTest
+
+build CMakeFiles/ContinuousTest | ${cmake_ninja_workdir}CMakeFiles/ContinuousTest: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Continuous -DACTIONS=Test -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/ContinuousCoverage
+
+build CMakeFiles/ContinuousCoverage | ${cmake_ninja_workdir}CMakeFiles/ContinuousCoverage: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Continuous -DACTIONS=Coverage -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/ContinuousMemCheck
+
+build CMakeFiles/ContinuousMemCheck | ${cmake_ninja_workdir}CMakeFiles/ContinuousMemCheck: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Continuous -DACTIONS=MemCheck -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+
+#############################################
+# Custom command for CMakeFiles/ContinuousSubmit
+
+build CMakeFiles/ContinuousSubmit | ${cmake_ninja_workdir}CMakeFiles/ContinuousSubmit: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest -DMODEL=Continuous -DACTIONS=Submit -S CMakeFiles/CTestScript.cmake -V
+  pool = console
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /home/yosh/gitrepos/personalProjectRepositories/MUD/CMakeLists.txt
+# =============================================================================
+
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target mud_core
+
+
+#############################################
+# Order-only phony target for mud_core
+
+build cmake_object_order_depends_target_mud_core: phony || .
+
+build src/CMakeFiles/mud_core.dir/mud_vector.c.o: C_COMPILER__mud_core_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_vector.c || cmake_object_order_depends_target_mud_core
+  CONFIG = Debug
+  DEP_FILE = src/CMakeFiles/mud_core.dir/mud_vector.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include
+  OBJECT_DIR = src/CMakeFiles/mud_core.dir
+  OBJECT_FILE_DIR = src/CMakeFiles/mud_core.dir
+  TARGET_SUPPORT_DIR = src/CMakeFiles/mud_core.dir
+
+build src/CMakeFiles/mud_core.dir/mud_buffer.c.o: C_COMPILER__mud_core_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_buffer.c || cmake_object_order_depends_target_mud_core
+  CONFIG = Debug
+  DEP_FILE = src/CMakeFiles/mud_core.dir/mud_buffer.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include
+  OBJECT_DIR = src/CMakeFiles/mud_core.dir
+  OBJECT_FILE_DIR = src/CMakeFiles/mud_core.dir
+  TARGET_SUPPORT_DIR = src/CMakeFiles/mud_core.dir
+
+build src/CMakeFiles/mud_core.dir/mud_str.c.o: C_COMPILER__mud_core_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_str.c || cmake_object_order_depends_target_mud_core
+  CONFIG = Debug
+  DEP_FILE = src/CMakeFiles/mud_core.dir/mud_str.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include
+  OBJECT_DIR = src/CMakeFiles/mud_core.dir
+  OBJECT_FILE_DIR = src/CMakeFiles/mud_core.dir
+  TARGET_SUPPORT_DIR = src/CMakeFiles/mud_core.dir
+
+build src/CMakeFiles/mud_core.dir/mud_hashmap.c.o: C_COMPILER__mud_core_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_hashmap.c || cmake_object_order_depends_target_mud_core
+  CONFIG = Debug
+  DEP_FILE = src/CMakeFiles/mud_core.dir/mud_hashmap.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include
+  OBJECT_DIR = src/CMakeFiles/mud_core.dir
+  OBJECT_FILE_DIR = src/CMakeFiles/mud_core.dir
+  TARGET_SUPPORT_DIR = src/CMakeFiles/mud_core.dir
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target mud_core
+
+
+#############################################
+# Link the static library src/libmud_core.a
+
+build src/libmud_core.a: C_STATIC_LIBRARY_LINKER__mud_core_Debug src/CMakeFiles/mud_core.dir/mud_vector.c.o src/CMakeFiles/mud_core.dir/mud_buffer.c.o src/CMakeFiles/mud_core.dir/mud_str.c.o src/CMakeFiles/mud_core.dir/mud_hashmap.c.o
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
+  OBJECT_DIR = src/CMakeFiles/mud_core.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = src/libmud_core.a
+  TARGET_PDB = mud_core.a.dbg
+  TARGET_SUPPORT_DIR = src/CMakeFiles/mud_core.dir
+
+
+#############################################
+# Utility command for test
+
+build src/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/src && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest
+  DESC = Running tests...
+  pool = console
+  restat = 1
+
+build src/test: phony src/CMakeFiles/test.util
+
+
+#############################################
+# Utility command for edit_cache
+
+build src/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/src && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build src/edit_cache: phony src/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build src/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/src && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/cmake --regenerate-during-build -S/home/yosh/gitrepos/personalProjectRepositories/MUD -B/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build src/rebuild_cache: phony src/CMakeFiles/rebuild_cache.util
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /home/yosh/gitrepos/personalProjectRepositories/MUD/CMakeLists.txt
+# =============================================================================
+
+# =============================================================================
+# Object build statements for EXECUTABLE target run_all_tests
+
+
+#############################################
+# Order-only phony target for run_all_tests
+
+build cmake_object_order_depends_target_run_all_tests: phony || cmake_object_order_depends_target_mud_core
+
+build tests/CMakeFiles/run_all_tests.dir/run_all_tests.c.o: C_COMPILER__run_all_tests_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_all_tests.c || cmake_object_order_depends_target_run_all_tests
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/run_all_tests.dir/run_all_tests.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
+  OBJECT_DIR = tests/CMakeFiles/run_all_tests.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/run_all_tests.dir
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/run_all_tests.dir
+
+build tests/CMakeFiles/run_all_tests.dir/modules/test_vector.c.o: C_COMPILER__run_all_tests_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_vector.c || cmake_object_order_depends_target_run_all_tests
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/run_all_tests.dir/modules/test_vector.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
+  OBJECT_DIR = tests/CMakeFiles/run_all_tests.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/run_all_tests.dir/modules
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/run_all_tests.dir
+
+build tests/CMakeFiles/run_all_tests.dir/modules/test_buffer.c.o: C_COMPILER__run_all_tests_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_buffer.c || cmake_object_order_depends_target_run_all_tests
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/run_all_tests.dir/modules/test_buffer.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
+  OBJECT_DIR = tests/CMakeFiles/run_all_tests.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/run_all_tests.dir/modules
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/run_all_tests.dir
+
+build tests/CMakeFiles/run_all_tests.dir/modules/test_str.c.o: C_COMPILER__run_all_tests_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_str.c || cmake_object_order_depends_target_run_all_tests
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/run_all_tests.dir/modules/test_str.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
+  OBJECT_DIR = tests/CMakeFiles/run_all_tests.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/run_all_tests.dir/modules
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/run_all_tests.dir
+
+build tests/CMakeFiles/run_all_tests.dir/modules/test_hashmap.c.o: C_COMPILER__run_all_tests_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_hashmap.c || cmake_object_order_depends_target_run_all_tests
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/run_all_tests.dir/modules/test_hashmap.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
+  OBJECT_DIR = tests/CMakeFiles/run_all_tests.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/run_all_tests.dir/modules
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/run_all_tests.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target run_all_tests
+
+
+#############################################
+# Link the executable tests/run_all_tests
+
+build tests/run_all_tests: C_EXECUTABLE_LINKER__run_all_tests_Debug tests/CMakeFiles/run_all_tests.dir/run_all_tests.c.o tests/CMakeFiles/run_all_tests.dir/modules/test_vector.c.o tests/CMakeFiles/run_all_tests.dir/modules/test_buffer.c.o tests/CMakeFiles/run_all_tests.dir/modules/test_str.c.o tests/CMakeFiles/run_all_tests.dir/modules/test_hashmap.c.o | src/libmud_core.a || src/libmud_core.a
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/run_all_tests.dir/link.d
+  FLAGS = -g
+  LINK_FLAGS = -Wl,--dependency-file=tests/CMakeFiles/run_all_tests.dir/link.d
+  LINK_LIBRARIES = src/libmud_core.a
+  OBJECT_DIR = tests/CMakeFiles/run_all_tests.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = tests/run_all_tests
+  TARGET_PDB = run_all_tests.dbg
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/run_all_tests.dir
+
+# =============================================================================
+# Object build statements for EXECUTABLE target test_vector
+
+
+#############################################
+# Order-only phony target for test_vector
+
+build cmake_object_order_depends_target_test_vector: phony || cmake_object_order_depends_target_mud_core
+
+build tests/CMakeFiles/test_vector.dir/run_single_module.c.o: C_COMPILER__test_vector_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_single_module.c || cmake_object_order_depends_target_test_vector
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/test_vector.dir/run_single_module.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
+  OBJECT_DIR = tests/CMakeFiles/test_vector.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/test_vector.dir
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/test_vector.dir
+
+build tests/CMakeFiles/test_vector.dir/modules/test_vector.c.o: C_COMPILER__test_vector_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_vector.c || cmake_object_order_depends_target_test_vector
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/test_vector.dir/modules/test_vector.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
+  OBJECT_DIR = tests/CMakeFiles/test_vector.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/test_vector.dir/modules
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/test_vector.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target test_vector
+
+
+#############################################
+# Link the executable tests/test_vector
+
+build tests/test_vector: C_EXECUTABLE_LINKER__test_vector_Debug tests/CMakeFiles/test_vector.dir/run_single_module.c.o tests/CMakeFiles/test_vector.dir/modules/test_vector.c.o | src/libmud_core.a || src/libmud_core.a
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/test_vector.dir/link.d
+  FLAGS = -g
+  LINK_FLAGS = -Wl,--dependency-file=tests/CMakeFiles/test_vector.dir/link.d
+  LINK_LIBRARIES = src/libmud_core.a
+  OBJECT_DIR = tests/CMakeFiles/test_vector.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = tests/test_vector
+  TARGET_PDB = test_vector.dbg
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/test_vector.dir
+
+# =============================================================================
+# Object build statements for EXECUTABLE target test_buffer
+
+
+#############################################
+# Order-only phony target for test_buffer
+
+build cmake_object_order_depends_target_test_buffer: phony || cmake_object_order_depends_target_mud_core
+
+build tests/CMakeFiles/test_buffer.dir/run_single_module.c.o: C_COMPILER__test_buffer_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_single_module.c || cmake_object_order_depends_target_test_buffer
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/test_buffer.dir/run_single_module.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
+  OBJECT_DIR = tests/CMakeFiles/test_buffer.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/test_buffer.dir
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/test_buffer.dir
+
+build tests/CMakeFiles/test_buffer.dir/modules/test_buffer.c.o: C_COMPILER__test_buffer_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_buffer.c || cmake_object_order_depends_target_test_buffer
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/test_buffer.dir/modules/test_buffer.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
+  OBJECT_DIR = tests/CMakeFiles/test_buffer.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/test_buffer.dir/modules
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/test_buffer.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target test_buffer
+
+
+#############################################
+# Link the executable tests/test_buffer
+
+build tests/test_buffer: C_EXECUTABLE_LINKER__test_buffer_Debug tests/CMakeFiles/test_buffer.dir/run_single_module.c.o tests/CMakeFiles/test_buffer.dir/modules/test_buffer.c.o | src/libmud_core.a || src/libmud_core.a
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/test_buffer.dir/link.d
+  FLAGS = -g
+  LINK_FLAGS = -Wl,--dependency-file=tests/CMakeFiles/test_buffer.dir/link.d
+  LINK_LIBRARIES = src/libmud_core.a
+  OBJECT_DIR = tests/CMakeFiles/test_buffer.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = tests/test_buffer
+  TARGET_PDB = test_buffer.dbg
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/test_buffer.dir
+
+# =============================================================================
+# Object build statements for EXECUTABLE target test_str
+
+
+#############################################
+# Order-only phony target for test_str
+
+build cmake_object_order_depends_target_test_str: phony || cmake_object_order_depends_target_mud_core
+
+build tests/CMakeFiles/test_str.dir/run_single_module.c.o: C_COMPILER__test_str_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_single_module.c || cmake_object_order_depends_target_test_str
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/test_str.dir/run_single_module.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
+  OBJECT_DIR = tests/CMakeFiles/test_str.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/test_str.dir
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/test_str.dir
+
+build tests/CMakeFiles/test_str.dir/modules/test_str.c.o: C_COMPILER__test_str_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_str.c || cmake_object_order_depends_target_test_str
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/test_str.dir/modules/test_str.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
+  OBJECT_DIR = tests/CMakeFiles/test_str.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/test_str.dir/modules
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/test_str.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target test_str
+
+
+#############################################
+# Link the executable tests/test_str
+
+build tests/test_str: C_EXECUTABLE_LINKER__test_str_Debug tests/CMakeFiles/test_str.dir/run_single_module.c.o tests/CMakeFiles/test_str.dir/modules/test_str.c.o | src/libmud_core.a || src/libmud_core.a
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/test_str.dir/link.d
+  FLAGS = -g
+  LINK_FLAGS = -Wl,--dependency-file=tests/CMakeFiles/test_str.dir/link.d
+  LINK_LIBRARIES = src/libmud_core.a
+  OBJECT_DIR = tests/CMakeFiles/test_str.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = tests/test_str
+  TARGET_PDB = test_str.dbg
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/test_str.dir
+
+# =============================================================================
+# Object build statements for EXECUTABLE target test_hashmap
+
+
+#############################################
+# Order-only phony target for test_hashmap
+
+build cmake_object_order_depends_target_test_hashmap: phony || cmake_object_order_depends_target_mud_core
+
+build tests/CMakeFiles/test_hashmap.dir/run_single_module.c.o: C_COMPILER__test_hashmap_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_single_module.c || cmake_object_order_depends_target_test_hashmap
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/test_hashmap.dir/run_single_module.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
+  OBJECT_DIR = tests/CMakeFiles/test_hashmap.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/test_hashmap.dir
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/test_hashmap.dir
+
+build tests/CMakeFiles/test_hashmap.dir/modules/test_hashmap.c.o: C_COMPILER__test_hashmap_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_hashmap.c || cmake_object_order_depends_target_test_hashmap
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/test_hashmap.dir/modules/test_hashmap.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
+  OBJECT_DIR = tests/CMakeFiles/test_hashmap.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/test_hashmap.dir/modules
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/test_hashmap.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target test_hashmap
+
+
+#############################################
+# Link the executable tests/test_hashmap
+
+build tests/test_hashmap: C_EXECUTABLE_LINKER__test_hashmap_Debug tests/CMakeFiles/test_hashmap.dir/run_single_module.c.o tests/CMakeFiles/test_hashmap.dir/modules/test_hashmap.c.o | src/libmud_core.a || src/libmud_core.a
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/test_hashmap.dir/link.d
+  FLAGS = -g
+  LINK_FLAGS = -Wl,--dependency-file=tests/CMakeFiles/test_hashmap.dir/link.d
+  LINK_LIBRARIES = src/libmud_core.a
+  OBJECT_DIR = tests/CMakeFiles/test_hashmap.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = tests/test_hashmap
+  TARGET_PDB = test_hashmap.dbg
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/test_hashmap.dir
+
+
+#############################################
+# Utility command for build_tests
+
+build tests/build_tests: phony tests/run_all_tests tests/test_buffer tests/test_hashmap tests/test_str tests/test_vector
+
+
+#############################################
+# Utility command for tests
+
+build tests/tests: phony tests/run_all_tests
+
+
+#############################################
+# Utility command for test
+
+build tests/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/ctest
+  DESC = Running tests...
+  pool = console
+  restat = 1
+
+build tests/test: phony tests/CMakeFiles/test.util
+
+
+#############################################
+# Utility command for edit_cache
+
+build tests/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build tests/edit_cache: phony tests/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build tests/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests && /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/bin/cmake --regenerate-during-build -S/home/yosh/gitrepos/personalProjectRepositories/MUD -B/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build tests/rebuild_cache: phony tests/CMakeFiles/rebuild_cache.util
+
 # =============================================================================
 # Target aliases.
+
+build build_tests: phony tests/build_tests
+
+build libmud_core.a: phony src/libmud_core.a
+
+build mud_core: phony src/libmud_core.a
+
+build run_all_tests: phony tests/run_all_tests
+
+build test_buffer: phony tests/test_buffer
+
+build test_hashmap: phony tests/test_hashmap
+
+build test_str: phony tests/test_str
+
+build test_vector: phony tests/test_vector
+
+build tests: phony tests/tests
 
 # =============================================================================
 # Folder targets.
@@ -74,7 +918,21 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 #############################################
 # Folder: /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug
 
-build all: phony
+build all: phony src/all tests/all
+
+# =============================================================================
+
+#############################################
+# Folder: /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/src
+
+build src/all: phony src/libmud_core.a
+
+# =============================================================================
+
+#############################################
+# Folder: /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests
+
+build tests/all: phony tests/run_all_tests tests/test_vector tests/test_buffer tests/test_str tests/test_hashmap
 
 # =============================================================================
 # Built-in targets
@@ -83,14 +941,14 @@ build all: phony
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/cmake_install.cmake: RERUN_CMAKE | /home/yosh/gitrepos/personalProjectRepositories/MUD/CMakeLists.txt /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeCCompiler.cmake.in /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeCCompilerABI.c /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeCInformation.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeCXXCompiler.cmake.in /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeCXXInformation.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeCommonLanguageInclude.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeCompilerIdDetection.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeDetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeDetermineCompilerSupport.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeDetermineSystem.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeGenericSystem.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeInitializeConfigs.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeLanguageInformation.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeNinjaFindMake.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeParseImplicitIncludeInfo.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeParseImplicitLinkInfo.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeParseLibraryArchitecture.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeSystem.cmake.in /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeSystemSpecificInformation.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeSystemSpecificInitialize.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeTestCCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeTestCXXCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeTestCompilerCommon.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/ADSP-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/ARMCC-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/ARMClang-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/AppleClang-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Borland-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Bruce-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Clang-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Clang-DetermineCompilerInternal.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Compaq-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Cray-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/CrayClang-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Diab-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Embarcadero-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Fujitsu-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/GHS-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/GNU-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/GNU-C.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/GNU-CXX-CXXImportStd.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/GNU-CXX.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/GNU-FindBinUtils.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/GNU.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/HP-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/HP-CXX-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/IAR-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/IBMClang-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Intel-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/LCC-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/MSVC-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/NVHPC-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/NVIDIA-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/OrangeC-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/PGI-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/PathScale-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Renesas-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/SCO-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/SDCC-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/SunPro-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/TI-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/TIClang-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Tasking-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Watcom-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/XL-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/XL-CXX-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/XLClang-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/zOS-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Internal/CMakeCLinkerInformation.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Internal/CMakeCXXLinkerInformation.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Internal/CMakeCommonLinkerInformation.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Internal/CMakeDetermineLinkerId.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Internal/CMakeInspectCLinker.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Internal/CMakeInspectCXXLinker.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Internal/FeatureTesting.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Linker/GNU-C.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Linker/GNU-CXX.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Linker/GNU.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linker/GNU.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linker/Linux-GNU-C.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linker/Linux-GNU-CXX.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linker/Linux-GNU.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linux-Determine-CXX.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linux-GNU-C.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linux-GNU-CXX.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linux-GNU.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linux-Initialize.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linux.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/4.2.1/CMakeCCompiler.cmake CMakeFiles/4.2.1/CMakeCXXCompiler.cmake CMakeFiles/4.2.1/CMakeSystem.cmake
+build build.ninja /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/cmake_install.cmake /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/src/cmake_install.cmake /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests/cmake_install.cmake /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/CTestTestfile.cmake /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests/CTestTestfile.cmake: RERUN_CMAKE | /home/yosh/gitrepos/personalProjectRepositories/MUD/CMakeLists.txt /home/yosh/gitrepos/personalProjectRepositories/MUD/cmake/Coverage.cmake /home/yosh/gitrepos/personalProjectRepositories/MUD/cmake/Sanitizers.cmake /home/yosh/gitrepos/personalProjectRepositories/MUD/src/CMakeLists.txt /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/CMakeLists.txt /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeCInformation.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeCommonLanguageInclude.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeGenericSystem.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeInitializeConfigs.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeLanguageInformation.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeSystemSpecificInformation.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeSystemSpecificInitialize.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CTest.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CTestTargets.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CTestUseLaunchers.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/GNU-C.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/GNU.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/DartConfiguration.tcl.in /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Internal/CMakeCLinkerInformation.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Internal/CMakeCommonLinkerInformation.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Linker/GNU-C.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Linker/GNU.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linker/GNU.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linker/Linux-GNU-C.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linker/Linux-GNU.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linux-GNU-C.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linux-GNU.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linux-Initialize.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linux.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/UnixPaths.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Templates/CTestScript.cmake.in CMakeCache.txt CMakeFiles/4.2.1/CMakeCCompiler.cmake CMakeFiles/4.2.1/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build /home/yosh/gitrepos/personalProjectRepositories/MUD/CMakeLists.txt /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeCCompiler.cmake.in /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeCCompilerABI.c /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeCInformation.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeCXXCompiler.cmake.in /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeCXXInformation.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeCommonLanguageInclude.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeCompilerIdDetection.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeDetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeDetermineCompilerSupport.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeDetermineSystem.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeGenericSystem.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeInitializeConfigs.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeLanguageInformation.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeNinjaFindMake.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeParseImplicitIncludeInfo.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeParseImplicitLinkInfo.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeParseLibraryArchitecture.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeSystem.cmake.in /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeSystemSpecificInformation.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeSystemSpecificInitialize.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeTestCCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeTestCXXCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeTestCompilerCommon.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/ADSP-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/ARMCC-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/ARMClang-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/AppleClang-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Borland-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Bruce-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Clang-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Clang-DetermineCompilerInternal.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Compaq-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Cray-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/CrayClang-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Diab-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Embarcadero-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Fujitsu-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/GHS-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/GNU-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/GNU-C.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/GNU-CXX-CXXImportStd.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/GNU-CXX.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/GNU-FindBinUtils.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/GNU.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/HP-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/HP-CXX-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/IAR-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/IBMClang-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Intel-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/LCC-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/MSVC-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/NVHPC-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/NVIDIA-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/OrangeC-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/PGI-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/PathScale-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Renesas-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/SCO-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/SDCC-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/SunPro-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/TI-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/TIClang-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Tasking-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/Watcom-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/XL-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/XL-CXX-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/XLClang-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/zOS-C-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Internal/CMakeCLinkerInformation.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Internal/CMakeCXXLinkerInformation.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Internal/CMakeCommonLinkerInformation.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Internal/CMakeDetermineLinkerId.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Internal/CMakeInspectCLinker.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Internal/CMakeInspectCXXLinker.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Internal/FeatureTesting.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Linker/GNU-C.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Linker/GNU-CXX.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Linker/GNU.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linker/GNU.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linker/Linux-GNU-C.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linker/Linux-GNU-CXX.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linker/Linux-GNU.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linux-Determine-CXX.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linux-GNU-C.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linux-GNU-CXX.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linux-GNU.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linux-Initialize.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linux.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/4.2.1/CMakeCCompiler.cmake CMakeFiles/4.2.1/CMakeCXXCompiler.cmake CMakeFiles/4.2.1/CMakeSystem.cmake: phony
+build /home/yosh/gitrepos/personalProjectRepositories/MUD/CMakeLists.txt /home/yosh/gitrepos/personalProjectRepositories/MUD/cmake/Coverage.cmake /home/yosh/gitrepos/personalProjectRepositories/MUD/cmake/Sanitizers.cmake /home/yosh/gitrepos/personalProjectRepositories/MUD/src/CMakeLists.txt /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/CMakeLists.txt /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeCInformation.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeCommonLanguageInclude.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeGenericSystem.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeInitializeConfigs.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeLanguageInformation.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeSystemSpecificInformation.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CMakeSystemSpecificInitialize.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CTest.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CTestTargets.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/CTestUseLaunchers.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/GNU-C.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Compiler/GNU.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/DartConfiguration.tcl.in /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Internal/CMakeCLinkerInformation.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Internal/CMakeCommonLinkerInformation.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Linker/GNU-C.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Linker/GNU.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linker/GNU.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linker/Linux-GNU-C.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linker/Linux-GNU.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linux-GNU-C.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linux-GNU.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linux-Initialize.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/Linux.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Modules/Platform/UnixPaths.cmake /home/yosh/miniconda3/envs/ipex/lib/python3.11/site-packages/cmake/data/share/cmake-4.2/Templates/CTestScript.cmake.in CMakeCache.txt CMakeFiles/4.2.1/CMakeCCompiler.cmake CMakeFiles/4.2.1/CMakeSystem.cmake: phony
 
 
 #############################################
