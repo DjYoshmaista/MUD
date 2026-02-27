@@ -16,7 +16,7 @@
 #define TEST(name)                                              \
     static void name(MudTestCtx* ctx);                          \
     MUD_TEST_CONSTRUCTOR                                        \
-    static void MUD_TEST_UNIEQUE(mud_test_register_)(void) {    \
+    static void MUD_TEST_UNIQUE(mud_test_register_)(void) {    \
         MudTestInfo info = {                                    \
             .name = #name,                                      \
             .file = __FILE__,                                   \

@@ -1,5 +1,6 @@
 #include "mud_vector.h"
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 
 struct MudVector {
@@ -14,7 +15,7 @@ struct MudVector {
 #define MUD_VECTOR_GROWTH_FACTOR 2
 
 /* Helper: Calculate Byte Offset */
-static inline void* vector_element_ptr(const Mudvector* vec, size_t index) {
+static inline void* vector_element_ptr(const MudVector* vec, size_t index) {
     return (char*)vec->data + (index * vec->element_size);
 }
 
@@ -92,8 +93,17 @@ bool mud_vector_is_empty(const MudVector* vec) {
  *     copies existing data.
  * - If failed; Returns NULL, original block unchanged
  * ============================================================================= */
-if (new_capacity > SIZE_MAX / vec->element_size) {
-    return false; // Would overflow
+static bool vector_grow(MudVector* vec) {
+    size_t new_capacity = vec->capacity * MUD_VECTOR_GROWTH_FACTOR;
+
+    void* new_data = realloc(vec->data, new_capacity * vec->element_size);
+    if (new_data == NULL) {
+        return false;
+    }
+
+    vec->data = new_data;
+    vec->capacity = new_capacity;
+    return true;
 }
 
 /* =============================================================================
@@ -144,7 +154,7 @@ bool mud_vector_shrink_to_fit(MudVector* vec) {
 	    vec->capacity = 0;
 	    return false;
 	}
-	vec->capacity = MUD_VECTOR_INITIAL_CAPCITY;
+	vec->capacity = MUD_VECTOR_INITIAL_CAPACITY;
 	return true;
     }
 

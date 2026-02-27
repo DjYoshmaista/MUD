@@ -1,5 +1,6 @@
 #include "mud_hashmap.h"
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 
 #define MUD_HASHMAP_INITIAL_CAPACITY 16
@@ -120,7 +121,7 @@ void mud_hashmap_destroy_with(MudHashmap* map, MudHashmapDestructor destructor) 
         if (entry->state == MUD_HASHMAP_ENTRY_OCCUPIED) {
             free(entry->key);
             if (destructor != NULL) {
-            destructor(entry->value);
+                destructor(entry->value);
             }
         }
     }
@@ -132,15 +133,15 @@ void mud_hashmap_destroy_with(MudHashmap* map, MudHashmapDestructor destructor) 
 /* =============================================================================
  - Resize Helper
 =============================================================================*/
-static bool hashmap_resize(MudHashmap* map_rsz, size_t new_capacity) {
+static bool hashmap_resize(MudHashmap* map, size_t new_capacity) {
     MudHashmapEntry* new_entries = calloc(new_capacity, sizeof(MudHashmapEntry));
     if (new_entries == NULL) {
         return false;
     }
 
     // Rehash all existing entries
-    for (size_t i = 0; i < map_rsz->capacity; i++) {
-        MudHashmapEntry* old_entry = &map_rsz->entries[i];
+    for (size_t i = 0; i < map->capacity; i++) {
+        MudHashmapEntry* old_entry = &map->entries[i];
         if (old_entry->state == MUD_HASHMAP_ENTRY_OCCUPIED) {
             size_t new_index = find_bucket(new_entries, new_capacity, old_entry->key, true);
             new_entries[new_index] = *old_entry;
@@ -163,7 +164,7 @@ bool mud_hashmap_set(MudHashmap* map, const char* key, void* value) {
     }
 
     // Check load factor
-    if ((double)(map->size + 1) / map->capacity > MUD_HASHMAP_LOAD_FACTOR_THRESHOLD) {
+    if ((size_t)(map->size + 1) / map->capacity > MUD_HASHMAP_LOAD_FACTOR_THRESHOLD) {
         if (!hashmap_resize(map, map->capacity * 2)) {
             return false;
         }
@@ -245,8 +246,13 @@ bool mud_hashmap_remove(MudHashmap* map, const char* key) {
     return mud_hashmap_remove_with(map, key, NULL);
 }
 
-bool mud_hashmap_remove_with(MudHashmap* map, const char* key, MudHashmapDestructor destructor() {
+bool mud_hashmap_remove_with(MudHashmap* map, const char* key, MudHashmapDestructor destructor) {
     if (map == NULL || key == NULL) {
+        return false;
+    }
+
+    size_t index = find_bucket(map->entries, map->capacity, key, false);
+    if (index == SIZE_MAX) {
         return false;
     }
 
@@ -281,7 +287,7 @@ bool mud_hashmap_remove_with(MudHashmap* map, const char* key, MudHashmapDestruc
 /* =============================================================================
  - Size Operations
 =============================================================================*/
-size-t mud_hashmap_size(const MudHashamap* map) {
+size_t mud_hashmap_size(const MudHashmap* map) {
     return map ? map->size : 0;
 }
 
@@ -292,7 +298,7 @@ bool mud_hashmap_is_empty(const MudHashmap* map) {
     //	     to indicate whether the entry is occupied or not
 }
 
-void mud_hashamap_clear(MudHashmap* map) {
+void mud_hashmap_clear(MudHashmap* map) {
     mud_hashmap_clear_with(map, NULL);
 }
 
@@ -301,7 +307,7 @@ void mud_hashmap_clear_with(MudHashmap* map, MudHashmapDestructor destructor) {
         return;
     }
 
-    for (size_t i = 0; i < map->capacity; i+++) {
+    for (size_t i = 0; i < map->capacity; i++) {
         MudHashmapEntry* entry = &map->entries[i];
         if (entry->state == MUD_HASHMAP_ENTRY_OCCUPIED) {
             free(entry->key);
@@ -358,7 +364,7 @@ size_t mud_hashmap_keys(const MudHashmap* map, const char** out_keys, size_t max
 
     size_t count = 0;
     for (size_t i = 0; i < map->capacity && count < max_keys; i++) {
-        if (map->entries[i].state == MUD_HAHSHMAP_ENTRY_OCCUPIED) {
+        if (map->entries[i].state == MUD_HASHMAP_ENTRY_OCCUPIED) {
             out_keys[count++] = map->entries[i].key;
         }
     }

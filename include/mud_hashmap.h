@@ -37,11 +37,6 @@ typedef struct MudHashmapIter {
 MudHashmapIter mud_hashmap_iter_start(const MudHashmap* map);
 bool mud_hashmap_iter_next(const MudHashmap* map, MudHashmapIter* iter);
 
-MudHashmapIter iter = mud_hashmap_iter_start(map);
-while (mud_hashmap_iter_next(map, &iter)) {
-    printf("%s = %p\n", iter.key, iter.value);
-}
-
 size_t mud_hashmap_keys(const MudHashmap* map, const char** out_keys, size_t max_keys);
 
 #ifdef __cplusplus

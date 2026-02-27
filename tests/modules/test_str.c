@@ -82,7 +82,7 @@ TEST(strview_equals_cstr) {
     CHECK(ctx, !mud_strview_equals_cstr(sv, "hell"));
 
     // Empty
-    MudStrview empty = mud_strview_from_cstr("");
+    MudStrView empty = mud_strview_from_cstr("");
     CHECK(ctx, mud_strview_equals_cstr(empty, ""));
     CHECK(ctx, !mud_strview_equals_cstr(empty, "x"));
 }

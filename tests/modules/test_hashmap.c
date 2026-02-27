@@ -20,7 +20,7 @@ static void reset_destructor_count(void) {
 }
 
 TEST(hashmap_create_destroy) {
-    MudHashmap* map = mud_hashmap_create();
+MudHashmap* map = mud_hashmap_create();
 
     REQUIRE_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;

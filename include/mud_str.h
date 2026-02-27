@@ -25,8 +25,8 @@ typedef struct MudStrView {
 MudStrView mud_strview_from_cstr(const char* str);
 MudStrView mud_strview_from_parts(const char* data, size_t len);
 MudStrView mud_strview_substr(MudStrView sv, size_t start, size_t len);
-bool mud_strview_equals(MudStrview a, MudStrView b);
-bool mud_strview_equals_cstr(MudStrview sv, const char* str);
+bool mud_strview_equals(MudStrView a, MudStrView b);
+bool mud_strview_equals_cstr(MudStrView sv, const char* str);
 bool mud_strview_starts_with(MudStrView sv, MudStrView prefix);
 bool mud_strview_ends_with(MudStrView sv, MudStrView suffix);
 MudStrView mud_strview_trim(MudStrView sv);
@@ -46,7 +46,7 @@ int mud_str_compare_nocase(const char* a, const char* b);
 =============================================================================*/
 bool mud_str_to_int(const char* str, int* out);
 bool mud_str_to_long(const char* str, long* out);
-bool_mud_str_to_double(const char* str, double* out);
+bool mud_str_to_double(const char* str, double* out);
 bool mud_str_to_bool(const char* str, bool* out);
 
 /* =============================================================================

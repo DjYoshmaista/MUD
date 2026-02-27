@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdio.h>
 
-#define MUD_BUFFER_INITIAL_CAPACITY 64
+#define MUD_BUFFER_INITIAL_CAPACITY 128
 
 struct MudBuffer {
     char* data;
@@ -17,24 +17,24 @@ struct MudBuffer {
  -- Init to empty string: `data[0] = '\0'` makes buf immediately usable as cstr
 =============================================================================*/
 MudBuffer* mud_buffer_create(void) {
-    rewturn mud_buffer_create_with_capacity(MUD_BUFFER_INITIAL_CAPACITY);
+    return mud_buffer_create_with_capacity(MUD_BUFFER_INITIAL_CAPACITY);
 }
 
 MudBuffer* mud_buffer_create_with_capacity(size_t capacity) {
     if (capacity == 0) {
-	capacity = MUD_BUFFER_INITIAL_CAPACITY;
+        capacity = MUD_BUFFER_INITIAL_CAPACITY;
     }
 
     MudBuffer* buf = malloc(sizeof(MudBuffer));
     if (buf == NULL) {
-	return NULL;
+        return NULL;
     }
 
     // +1 for null terminator
     buf->data = malloc(capacity + 1);
     if (buf->data == NULL) {
-	free(buf);
-	return NULL;
+        free(buf);
+        return NULL;
     }
 
     buf->data[0] = '\0';
@@ -49,7 +49,7 @@ MudBuffer* mud_buffer_create_with_capacity(size_t capacity) {
 =============================================================================*/
 void mud_buffer_destroy(MudBuffer* buf) {
     if (buf == NULL) {
-	return;
+        return;
     }
     free(buf->data);
     free(buf);
@@ -69,7 +69,7 @@ bool mud_buffer_is_empty(const MudBuffer* buf) {
 
 const char* mud_buffer_cstr(const MudBuffer* buf) {
     if (buf == NULL) {
-	return "";
+        return "";
     }
     return buf->data;
 }
@@ -80,7 +80,7 @@ char* mud_buffer_data(MudBuffer* buf) {
 
 char mud_buffer_char_at(const MudBuffer* buf, size_t index) {
     if (buf == NULL || index >= buf->size) {
-	return '\0';
+        return '\0';
     }
     return buf->data[index];
 }
@@ -90,17 +90,17 @@ char mud_buffer_char_at(const MudBuffer* buf, size_t index) {
 =============================================================================*/
 static bool buffer_ensure_capacity(MudBuffer* buf, size_t needed) {
     if (needed <= buf->capacity) {
-	return true;
+        return true;
     }
 
     size_t new_capacity = buf->capacity;
     while (new_capacity < needed) {
-	new_capacity *= 2;
+        new_capacity *= 2;
     }
 
     char* new_data = realloc(buf->data, new_capacity + 1);
     if (new_data == NULL) {
-	return false;
+        return false;
     }
 
     buf->data = new_data;
@@ -113,11 +113,11 @@ static bool buffer_ensure_capacity(MudBuffer* buf, size_t needed) {
 =============================================================================*/
 bool mud_buffer_append_char(MudBuffer* buf, char c) {
     if (buf == NULL) {
-	return false;
+        return false;
     }
 
     if (!buffer_ensure_capacity(buf, buf->size + 1)) {
-	return false;
+        return false;
     }
 
     buf->data[buf->size] = c;
@@ -128,16 +128,16 @@ bool mud_buffer_append_char(MudBuffer* buf, char c) {
 
 bool mud_buffer_append_str(MudBuffer* buf, const char* str) {
     if (buf == NULL || str == NULL) {
-	return false;
+        return false;
     }
 
     size_t len = strlen(str);
     if (len == 0) {
-	return true;
+        return true;
     }
 
     if (!buffer_ensure_capacity(buf, buf->size + len)) {
-	return false;
+        return false;
     }
 
     memcpy(buf->data + buf->size, str, len);
@@ -149,15 +149,15 @@ bool mud_buffer_append_str(MudBuffer* buf, const char* str) {
 
 bool mud_buffer_append_bytes(MudBuffer* buf, const void* data, size_t len) {
     if (buf == NULL || (data == NULL && len > 0)) {
-	return false;
+        return false;
     }
 
     if (len == 0) {
-	return true;
+        return true;
     }
 
     if (!buffer_ensure_capacity(buf, buf->size + len)) {
-	return false;
+        return false;
     }
 
     memcpy(buf->data + buf->size, data, len);
@@ -172,10 +172,10 @@ bool mud_buffer_append_bytes(MudBuffer* buf, const void* data, size_t len) {
 =============================================================================*/
 bool mud_buffer_append_vfmt(MudBuffer* buf, const char* fmt, va_list args) {
     if (buf == NULL || fmt == NULL) {
-	return false;
+        return false;
     }
 
-    va_lists args_copy;
+    va_list args_copy;
     va_copy(args_copy, args);
 
     // Determine required size
@@ -183,11 +183,11 @@ bool mud_buffer_append_vfmt(MudBuffer* buf, const char* fmt, va_list args) {
     va_end(args_copy);
 
     if (needed < 0) {
-	return false;  // Format error
+        return false;  // Format error
     }
 
     if (!buffer_ensure_capacity(buf, buf->size + (size_t)needed)) {
-	return false;
+        return false;
     }
 
     vsnprintf(buf->data + buf->size, (size_t)needed + 1, fmt, args);
@@ -209,7 +209,7 @@ bool mud_buffer_append_fmt(MudBuffer* buf, const char* fmt, ...) {
 =============================================================================*/
 void mud_buffer_clear(MudBuffer* buf) {
     if (buf == NULL) {
-	return;
+        return;
     }
     buf->size = 0;
     buf->data[0] = '\0';
@@ -217,11 +217,11 @@ void mud_buffer_clear(MudBuffer* buf) {
 
 bool mud_buffer_truncate(MudBuffer* buf, size_t new_size) {
     if (buf == NULL) {
-	return false;
+        return false;
     }
 
     if (new_size >= buf->size) {
-	return true;  // Nothing to do
+        return true;  // Nothing to do
     }
 
     buf->size = new_size;
@@ -231,8 +231,8 @@ bool mud_buffer_truncate(MudBuffer* buf, size_t new_size) {
 }
 
 bool mud_buffer_set_char(MudBuffer* buf, size_t index, char c) {
-    if (buf == NUL || index >= buf->size) {
-	return false;
+    if (buf == NULL || index >= buf->size) {
+        return false;
     }
     buf->data[index] = c;
     return true;
@@ -243,12 +243,12 @@ bool mud_buffer_set_char(MudBuffer* buf, size_t index, char c) {
 =============================================================================*/
 MudBuffer* mud_buffer_clone(const MudBuffer* buf) {
     if (buf == NULL) {
-	return NULL;
+        return NULL;
     }
 
     MudBuffer* clone = mud_buffer_create_with_capacity(buf->size);
     if (clone == NULL) {
-	return NULL;
+        return NULL;
     }
 
     memcpy(clone->data, buf->data, buf->size + 1);
@@ -258,23 +258,23 @@ MudBuffer* mud_buffer_clone(const MudBuffer* buf) {
 
 bool mud_buffer_equals(const MudBuffer* a, const MudBuffer* b) {
     if (a == b) {
-	return true;  // Same pointer or both NULL
+        return true;  // Same pointer or both NULL
     }
     if (a == NULL || b == NULL) {
-	return false;
+        return false;
     }
     if (a->size != b->size) {
-	return false;
+        return false;
     }
     return memcmp(a->data, b->data, a->size) == 0;
 }
 
 bool mud_buffer_equals_str(const MudBuffer* buf, const char* str) {
     if (buf == NULL && str == NULL) {
-	return true;
+        return true;
     }
     if (buf == NULL || str == NULL) {
-	return false;
+        return false;
     }
     return strcmp(buf->data, str) == 0;
 }
