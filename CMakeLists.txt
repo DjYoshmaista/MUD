@@ -48,6 +48,9 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
 # Subsystems
 # ------------------------------------------------------------------------------
 
+# Core library -- Always built
+add_subdirectory(src)
+
 if(MUD_ENABLE_TESTS)
     include(CTest)
     add_subdirectory(tests)
