@@ -1,4 +1,4 @@
-#infdef MUD_BUFFER_H
+#ifndef MUD_BUFFER_H
 #define MUD_BUFFER_H
 
 #include <stddef.h>

@@ -5,7 +5,7 @@
 
 #include "test/test_autoreg.h"
 #include "mud_hashmap.h"
-#include <string.H>
+#include <string.h>
 #include <stdlib.h>
 
 static int destructor_call_count = 0;

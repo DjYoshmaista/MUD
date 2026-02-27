@@ -10,7 +10,7 @@ extern "C" {
 
 typedef struct MudHashmap MudHashmap;
 
-typedef void (*MudHashMapDestructor){void* value;}
+typedef void (*MudHashmapDestructor)(void* value);
 
 MudHashmap* mud_hashmap_create(void);
 MudHashmap* mud_hashmap_create_with_capacity(size_t initial_capacity);
@@ -20,7 +20,7 @@ void mud_hashmap_destroy_with(MudHashmap* map, MudHashmapDestructor destructor);
 bool mud_hashmap_set(MudHashmap* map, const char* key, void* value);
 void* mud_hashmap_get(const MudHashmap* map, const char* key);
 bool mud_hashmap_has(const MudHashmap* map, const char* key);
-bool mud_hashmap_remove(MudHashmap* map, const cahr* key);
+bool mud_hashmap_remove(MudHashmap* map, const char* key);
 bool mud_hashmap_remove_with(MudHashmap* map, const char* key, MudHashmapDestructor destructor);
 
 size_t mud_hashmap_size(const MudHashmap* map);

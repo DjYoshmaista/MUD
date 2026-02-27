@@ -125,34 +125,34 @@ static inline void mud_testctx_record_failure(
 
     // Require requests abort
     if (severity == MUD_TEST_SEV_REQUIRE) {
-	ctx->abort_current_test = 1;
+        ctx->abort_current_test = 1;
     }
 
     // Store entry if space remains
     if (ctx->total_failures < (uint32_t)MUD_TEST_MAX_FAILURES) {
-	MudTestFailure* f = &ctx->failures[ctx->total_failures];
+        MudTestFailure* f = &ctx->failures[ctx->total_failures];
 
-	f->file = file;
-	f->line = line;
-	f->severity = severity;
+        f->file = file;
+        f->line = line;
+        f->severity = severity;
 
-	// Copy expr string (optional)
-	if (expr_str && expr_str[0] != '\0') {
-	    strncpy(f->expr, expr_str, (size_t)MUD_TEST_EXPR_MAX - 1);
-	    f->expr[MUD_TEST_EXPR_MAX - 1] = '\0';
-	} else { 
-	    f->expr[0] = '\0';
-	}
+        // Copy expr string (optional)
+        if (expr_str && expr_str[0] != '\0') {
+            strncpy(f->expr, expr_str, (size_t)MUD_TEST_EXPR_MAX - 1);
+            f->expr[MUD_TEST_EXPR_MAX - 1] = '\0';
+        } else { 
+            f->expr[0] = '\0';
+        }
 
-	// Copy msg string
-	if (msg_str && msg_str[0] != '\0') {
-	    strncpy(f->msg, msg_str, (size_t)MUD_TEST_MSG_MAX - 1);
-	    f->msg[MUD_TEST_MSG_MAX - 1] = '\0';
-	} else {
-	    f->msg[0] = '\0';
-	}
+        // Copy msg string
+        if (msg_str && msg_str[0] != '\0') {
+            strncpy(f->msg, msg_str, (size_t)MUD_TEST_MSG_MAX - 1);
+            f->msg[MUD_TEST_MSG_MAX - 1] = '\0';
+        } else {
+            f->msg[0] = '\0';
+        }
 
-	ctx->total_failures += 1;
+        ctx->total_failures += 1;
     }
 }
 
@@ -172,10 +172,10 @@ static inline void mud_testctx_record_failuref(
     buf[0] = '\0';
 
     if (fmt && fmt[0] != '\0') {
-	va_list args;
-	va_start(args, fmt);
-	(void)vsnprintf(buf, sizeof(buf), fmt, args);
-	va_end(args);
+        va_list args;
+        va_start(args, fmt);
+        (void)vsnprintf(buf, sizeof(buf), fmt, args);
+        va_end(args);
     }
 
     mud_testctx_record_failure(ctx, severity, file, line, expr_str, buf);
@@ -198,20 +198,20 @@ static inline void mud_testctx_record_failuref(
     If diff name preferred can use the *_CTX variants.
 */
 
-#define CHECK_CTX(_ctx, expr)							\
-    do {									\
-	if (!(expr)) {								\
-	    mud_testctx_record_failure((_ctx), MUD_TEST_SEV_CHECK,		\
-		__FILE__, __LINE__, MUD_TEST_STRINGIZE(expr), "CHECK failed");	\
-	}									\
+#define CHECK_CTX(_ctx, expr)                                                   \
+    do {                                                                        \
+        if (!(expr)) {                                                          \
+            mud_testctx_record_failure((_ctx), MUD_TEST_SEV_CHECK,              \
+            __FILE__, __LINE__, MUD_TEST_STRINGIZE(expr), "CHECK failed");      \
+        }                                                                       \
     } while (0)
 
-#define REQUIRE_CTX(_ctx, expr)								\
-    do {										\
-	if (!(expr)) {									\
-	    mud_testctx_record_failure((_ctx), MUD_TEST_SEV_REQUIRE,			\
-		__FILE__, __LINE__, MUD_TEST_STRINGIZE(expr), "REQUIRE failed");	\
-	}										\
+#define REQUIRE_CTX(_ctx, expr)                                                 \
+    do {                                                                        \
+        if (!(expr)) {                                                          \
+            mud_testctx_record_failure((_ctx), MUD_TEST_SEV_REQUIRE,            \
+            __FILE__, __LINE__, MUD_TEST_STRINGIZE(expr), "REQUIRE failed");    \
+        }                                                                       \
     } while (0)
 
 // Default forms assume 'ctx'
@@ -219,40 +219,40 @@ static inline void mud_testctx_record_failuref(
 #define REQUIRE(expr) REQUIRE_CTX(ctx, expr)
 
 // Optional "message" forms
-#define CHECK_MSG_CTX(_ctx, expr, msg_cstr)						\
-    do {										\
-	if (!(expr)) {									\
-	    mud_testctx_record_failure((_ctx), MUD_TEST_SEV_CHECK,			\
-		__FILE__, __LINE__, MUD_TEST_STRINGIZE(expr), (msg_cstr));		\
-	}										\
+#define CHECK_MSG_CTX(_ctx, expr, msg_cstr)                                     \
+    do {                                                                        \
+        if (!(expr)) {                                                          \
+            mud_testctx_record_failure((_ctx), MUD_TEST_SEV_CHECK,              \
+            __FILE__, __LINE__, MUD_TEST_STRINGIZE(expr), (msg_cstr));          \
+        }                                                                       \
     } while (0)
 
-#define REQUIRE_MSG_CTX(_ctx, expr, msg_cstr)						\
-    do {										\
-	if (!(expr)) {									\
-	    mud_testctx_record_failure((_ctx), MUD_TEST_SEV_REQUIRE,			\
-		__FILE__, __LINE__, MUD_TEST_STRINGIZE(expr), (msg_cstr));		\
-	}										\
+#define REQUIRE_MSG_CTX(_ctx, expr, msg_cstr)                                   \
+    do {                                                                        \
+        if (!(expr)) {                                                          \
+            mud_testctx_record_failure((_ctx), MUD_TEST_SEV_REQUIRE,            \
+            __FILE__, __LINE__, MUD_TEST_STRINGIZE(expr), (msg_cstr));          \
+        }                                                                       \
     } while (0)
 
 #define CHECK_MSG(expr, msg_cstr) CHECK_MSG_CTX(ctx, expr, msg_cstr)
 #define REQUIRE_MSG(expr, msg_cstr) REQUIRE_MSG_CTX(ctx, expr, msg_cstr)
 
 // Optional printf-style forms
-#define CHECKF_CTX(_ctx, expr, fmt, ...)						\
-    do {										\
-	if (!(expr)) {									\
-	    mud_testctx_record_failuref((_ctx), MUD_TEST_SEV_CHECK,			\
-		__FILE__, __LINE__, MUD_TEST_STRINGIZE(expr), (fmt), ##__VA_ARGS__);	\
-	}										\
+#define CHECKF_CTX(_ctx, expr, fmt, ...)                                        \
+    do {                                                                        \
+        if (!(expr)) {                                                          \
+            mud_testctx_record_failuref((_ctx), MUD_TEST_SEV_CHECK,             \
+            __FILE__, __LINE__, MUD_TEST_STRINGIZE(expr), (fmt), ##__VA_ARGS__);\
+        }                                                                       \
     } while (0)
 
-#define REQUIREF_CTX(_ctx, expr, fmt, ...)						\
-    do {										\
-	if (!(expr)) {									\
-	    mud_testctx_record_failuref((_ctx), MUD_TEST_SEV_REQUIRE,			\
-		__FILE__, __LINE__, MUD_TEST_STRINGIZE(expr), (fmt), ##__VA_ARGS__);	\
-	}										\
+#define REQUIREF_CTX(_ctx, expr, fmt, ...)                                      \
+    do {                                                                        \
+        if (!(expr)) {                                                          \
+            mud_testctx_record_failuref((_ctx), MUD_TEST_SEV_REQUIRE,           \
+            __FILE__, __LINE__, MUD_TEST_STRINGIZE(expr), (fmt), ##__VA_ARGS__);\
+        }                                                                       \
     } while(0)
 
 #define CHECKF(expr, fmt, ...)		CHECKF_CTX(ctx, expr, fmt, ##__VA_ARGS__)
@@ -273,20 +273,20 @@ static inline void mud_testctx_print_failures(FILE* out, const MudTestCtx* ctx) 
     fprintf(out, "Failures stored: %u   Assertions Failed: %u\n", (unsigned)ctx->total_failures, (unsigned)ctx->assertions_failed);
 
     for (uint32_t i = 0; i < ctx->total_failures; ++i) {
-	 const MudTestFailure* f = &ctx->failures[i];
+        const MudTestFailure* f = &ctx->failures[i];
 
-	 fprintf(out, "  [%u] %s at %s:%d\n",
-	    (unsigned) (i + 1),
-	    mud_test_severity_str(f->severity),
-	    f->file ? f->file : "(unknown)",
-	    f->line);
+        fprintf(out, "  [%u] %s at %s:%d\n",
+        (unsigned) (i + 1),
+        mud_test_severity_str(f->severity),
+        f->file ? f->file : "(unknown)",
+        f->line);
 
-	 if (f->expr[0] != '\0') {
-	    fprintf(out, " expr: %s\n", f->expr);
-	 }
-	 if (f->msg[0] != '\0') {
-	    fprintf(out, " msg : %s\n", f->msg);
-	 }
+        if (f->expr[0] != '\0') {
+            fprintf(out, " expr: %s\n", f->expr);
+        }
+        if (f->msg[0] != '\0') {
+            fprintf(out, " msg : %s\n", f->msg);
+        }
     }
 }
 
