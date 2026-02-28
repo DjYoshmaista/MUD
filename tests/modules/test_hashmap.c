@@ -20,9 +20,9 @@ static void reset_destructor_count(void) {
 }
 
 TEST(hashmap_create_destroy) {
-MudHashmap* map = mud_hashmap_create();
+    MudHashmap* map = mud_hashmap_create();
 
-    REQUIRE_NOT_NULL(ctx, map);
+    CHECK_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
     CHECK_INT_EQ(ctx, mud_hashmap_size(map), 0);
@@ -41,7 +41,7 @@ TEST(hashmap_null_safety) {
 
     // NULL key handling
     MudHashmap* map = mud_hashmap_create();
-    REQUIRE_NOT_NULL(ctx, map);
+    CHECK_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
     CHECK(!mud_hashmap_set(map, NULL, "value"));
@@ -56,7 +56,7 @@ TEST(hashmap_null_safety) {
 
 TEST(hashmap_set_get) {
     MudHashmap* map = mud_hashmap_create();
-    REQUIRE_NOT_NULL(ctx, map);
+    CHECK_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
     int value1 = 100, value2 = 200, value3 = 300;
@@ -68,7 +68,7 @@ TEST(hashmap_set_get) {
 
     // Retrieve
     int* retrieved = mud_hashmap_get(map, "one");
-    REQUIRE_NOT_NULL(ctx, retrieved);
+    CHECK_NOT_NULL(ctx, retrieved);
     if (ctx->abort_current_test) { mud_hashmap_destroy(map); return; }
     CHECK_INT_EQ(ctx, *retrieved, 100);
 
@@ -86,7 +86,7 @@ TEST(hashmap_set_get) {
 
 TEST(hashmap_update) {
     MudHashmap* map = mud_hashmap_create();
-    REQUIRE_NOT_NULL(ctx, map);
+    CHECK_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
     int value1 = 100, value2 = 999;
@@ -106,7 +106,7 @@ TEST(hashmap_update) {
 
 TEST(hashmap_has) {
     MudHashmap* map = mud_hashmap_create();
-    REQUIRE_NOT_NULL(ctx, map);
+    CHECK_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
     int value = 42;
@@ -121,7 +121,7 @@ TEST(hashmap_has) {
 
 TEST(hashmap_remove) {
     MudHashmap* map = mud_hashmap_create();
-    REQUIRE_NOT_NULL(ctx, map);
+    CHECK_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
     int v1 = 1, v2 = 2, v3 = 3;
@@ -133,8 +133,8 @@ TEST(hashmap_remove) {
 
     // Remove middle
     CHECK(mud_hashmap_remove(map, "b"));
-    CHECK_INT-EQ(ctx, mud_hashmap_size(map), 2);
-    CHECK(!mud_hashmap_has9(map, "b"));
+    CHECK_INT_EQ(ctx, mud_hashmap_size(map), 2);
+    CHECK(!mud_hashmap_has(map, "b"));
     CHECK(mud_hashmap_has(map, "a"));
     CHECK(mud_hashmap_has(map, "c"));
 
@@ -152,7 +152,7 @@ TEST(hashmap_remove) {
 
 TEST(hashmap_remove_with_destructor) {
     MudHashmap* map = mud_hashmap_create();
-    REQUIRE_NOT_NULL(ctx, map);
+    CHECK_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
     reset_destructor_count();
@@ -171,7 +171,7 @@ TEST(hashmap_remove_with_destructor) {
 
 TEST(hashmap_clear) {
     MudHashmap* map = mud_hashmap_create();
-    REQUIRE_NOT_NULL(ctx, map);
+    CHECK_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
     int values[] = {1, 2, 3, 4, 5};
@@ -199,7 +199,7 @@ TEST(hashmap_clear) {
 
 TEST(hashmap_clear_with_destructor) {
     MudHashmap* map = mud_hashmap_create();
-    REQUIRE_NOT_NULL(ctx, map);
+    CHECK_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
     reset_destructor_count();
@@ -219,30 +219,30 @@ TEST(hashmap_clear_with_destructor) {
 
 TEST(hashmap_growth) {
     MudHahsmap* map = mud_hashmap_create();
-    REQUIRE_NOT_NULL(ctx, map);
+    CHECK_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
     // Insert many entries to trigger growth
     char key[32];
     for (int i = 0; i < 100; i++) {
-	snprintf(key, sizeof(key), "key_%d", i);
-	int* value = malloc(sizeof(int));
-	*value = i;
-	CHECK(mud_hashmap_set(map, key, value));
+        snprintf(key, sizeof(key), "key_%d", i);
+        int* value = malloc(sizeof(int));
+        *value = i;
+        CHECK(mud_hashmap_set(map, key, value));
     }
 
     CHECK_INT_EQ(ctx, mud_hashmap_size(map), 100);
 
     // Verify all entries
     for (int i = 0; i < 100; i++) {
-	snprintf(key, sizeof(key), "key_%d", i);
-	int* retrieved = mud_hashmap_get(map, key);
-	REQUIRE_NOT_NULL(ctx, retrieved);
-	if (ctx->abort_current_test) {
-	    mud_hashmap_destroy_with(map, free);
-	    return;
-	}
-	CHECK_INT_EQ(ctx, *retrieved, i);
+        snprintf(key, sizeof(key), "key_%d", i);
+        int* retrieved = mud_hashmap_get(map, key);
+        CHECK_NOT_NULL(ctx, retrieved);
+        if (ctx->abort_current_test) {
+            mud_hashmap_destroy_with(map, free);
+            return;
+        }
+        CHECK_INT_EQ(ctx, *retrieved, i);
     }
 
     mud_hashmap_destroy_with(map, free);
@@ -250,7 +250,7 @@ TEST(hashmap_growth) {
 
 TEST(hashmap_iteration) {
     MudHashmap* map = mud_hashmap_create();
-    REQUIRE_NOT_NULL(ctx, map);
+    CHECK_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
     int v1 = 1, v2 = 2, v3 = 3;
@@ -262,13 +262,13 @@ TEST(hashmap_iteration) {
     int count = 0, sum = 0;
     MudHashmapIter iter = mud_hashmap_iter_start(map);
     while (mud_hashmap_iter_next(map, &iter)) {
-	count++;
-	sum += *(int*)iter.value;
+        count++;
+        sum += *(int*)iter.value;
 
-	// Key should be one of our keys
-	CHECK(strcmp(iter.key, "one") == 0 ||
-		   strcmp(iter.key, "two") == 0 ||
-		   strcmp(iter.key, "three") == 0);
+        // Key should be one of our keys
+        CHECK(strcmp(iter.key, "one") == 0 ||
+              strcmp(iter.key, "two") == 0 ||
+              strcmp(iter.key, "three") == 0);
     }
 
     CHECK_INT_EQ(ctx, count, 3);
@@ -279,7 +279,7 @@ TEST(hashmap_iteration) {
 
 TEST(hashmap_iteration_empty) {
     MudHashmap* map = mud_hashmap_create();
-    REQUIRE_NOT_NULL(ctx, map);
+    CHECK_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
     MudHashmapIter iter = mud_hashmap_iter_start(map);
@@ -290,7 +290,7 @@ TEST(hashmap_iteration_empty) {
 
 TEST(hashmap_keys) {
     MudHashmap* map = mud_hashmap_create();
-    REQUIRE_NOT_NULL(ctx, map);
+    CHECK_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
     int dummy = 42;
@@ -306,15 +306,15 @@ TEST(hashmap_keys) {
     // Verify all keys present (order not guaranteed)
     int found_alpha = 0, found_beta = 0, found_gamma = 0;
     for (size_t i = 0; i < count; i++) {
-	if (strcmp(keys[i], "alpha") == 0)) {
-	    found_alpha += 1;
-	} else if (strcmp(keys[i], "beta") == 0)) {
-	    found_beta += 1;
-	} else if (strcmp(keys[i], "gamma" == 0)) {
-	    found_gamma += 1;
-	} else {
-	    FAIL(ctx, "Unexpected key: %s", keys[i], "\nNo 'alpha', 'beta', or 'gamma' keys found");
-	}
+        if (strcmp(keys[i], "alpha") == 0) {
+            found_alpha += 1;
+        } else if (strcmp(keys[i], "beta") == 0) {
+            found_beta += 1;
+        } else if (strcmp(keys[i], "gamma") == 0) {
+            found_gamma += 1;
+        } else {
+            FAIL(ctx, "Unexpected key: %s", keys[i], "\nNo 'alpha', 'beta', or 'gamma' keys found");
+        }
     CHECK(found_alpha && found_beta && found_gamma);
 
     // Limited buffer
@@ -326,7 +326,7 @@ TEST(hashmap_keys) {
 
 TEST(hashmap_destroy_with_destructor) {
     MudHashmap* map = mud_hashmap_create();
-    REQUIRE_NOT_NULL(ctx, map);
+    CHECK_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
     reset_destructor_count();
@@ -344,7 +344,7 @@ TEST(hashmap_destroy_with_destructor) {
 
 TEST(hashmap_key_independence) {
     MudHashmap* map = mud_hashmap_create();
-    REQUIRE_NOT_NULL(ctx, map);
+    CHECK_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
     // Use mutable buffer for key
@@ -366,7 +366,7 @@ TEST(hashmap_key_independence) {
 TEST(hashmap_similar_keys) {
     MudHashmap* map = mud_hashmap_create();
     MudHashmap* map2 = mud_hashmap_create();
-    REQUIRE_NOT_NULL(ctx, map, map2);
+    CHECK_NOT_NULL(ctx, map, map2);
     if (ctx->abort_current_test) return;
 
     // Keys that might collide or be similar
@@ -398,7 +398,7 @@ TEST(hashmap_similar_keys) {
 
 TEST(hashmap_empty_key) {
     MudHashmap* map = mud_hashmap_create();
-    REQUIRE_NOT_NULL(ctx, map);
+    CHECK_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
     int value = 42;

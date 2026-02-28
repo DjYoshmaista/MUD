@@ -10,7 +10,7 @@
 TEST(vector_create_destroy) {
     MudVector* vec = mud_vector_create(sizeof(int));
 
-    REQUIRE_NOT_NULL(ctx, vec);
+    CHECK_NOT_NULL(ctx, vec);
     if (ctx->abort_current_test) return;
 
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 0);
@@ -45,7 +45,7 @@ TEST(vector_null_safety) {
 
 TEST(vector_push_single) {
     MudVector* vec = mud_vector_create(sizeof(int));
-    REQUIRE_NOT_NULL(ctx, vec);
+    CHECK_NOT_NULL(ctx, vec);
     if (ctx->abort_current_test) return;
 
     int value = 42;
@@ -54,8 +54,8 @@ TEST(vector_push_single) {
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 1);
     CHECK(!mud_vector_is_empty(vec));
 
-    int* retrieved = mud-vector_get(vec, 0);
-    REQUIRE_NOT_NULL(ctx, retrieved);
+    int* retrieved = mud_vector_get(vec, 0);
+    CHECK_NOT_NULL(ctx, retrieved);
     if (ctx->abort_current_test) { mud_vector_destroy(vec); return; }
 
     CHECK_INT_EQ(ctx, *retrieved, 42);
@@ -65,7 +65,7 @@ TEST(vector_push_single) {
 
 TEST(vector_push_multiple) {
     MudVector* vec = mud_vector_create(sizeof(int));
-    REQUIRE_NOT_NULL(ctx, vec);
+    CHECK_NOT_NULL(ctx, vec);
     if (ctx->abort_current_test) return;
 
     for (int i = 0; i < 10; i++) {
@@ -76,8 +76,8 @@ TEST(vector_push_multiple) {
 
     // Verify all values
     for (int i = 0; i < 10; i++) {
-	int* val = mud-vector-get(vec, (size_t)i);
-	REQUIRE_NOT_NULL(ctx, val);
+	int* val = mud_vector_get(vec, (size_t)i);
+	CHECK_NOT_NULL(ctx, val);
 	if (ctx->abort_current_test) { mud_vector_destroy(vec); return; }
 	CHECK_INT_EQ(ctx, *val, i);
     }
@@ -87,7 +87,7 @@ TEST(vector_push_multiple) {
 
 TEST(vector_growth) {
     MudVector* vec = mud_vector_create(sizeof(int));
-    REQUIRE_NOT_NULL(ctx, vec);
+    CHECK_NOT_NULL(ctx, vec);
     if (ctx->abort_current_test) return;
 
     size_t initial_capacity = mud_vector_capacity(vec);
@@ -103,7 +103,7 @@ TEST(vector_growth) {
     // Verify data integrity after growth
     for (int i = 0; i < 20; i++) {
 	int* val = mud_vector_get(vec, (size_t)i);
-	REQUIRE_NOT_NULL(ctx, val);
+	CHECK_NOT_NULL(ctx, val);
 	if (ctx->abort_current_test) { mud_vector_destroy(vec); return; }
 	CHECK_INT_EQ(ctx, *val, i);
     }
@@ -113,7 +113,7 @@ TEST(vector_growth) {
 
 TEST(vector_get_out_of_bounds) {
     MudVector* vec = mud_vector_create(sizeof(int));
-    REQUIRE_NOT_NULL(ctx, vec);
+    CHECK_NOT_NULL(ctx, vec);
     if (ctx->abort_current_test) return;
 
     // Empty vector - all indices invalid
@@ -133,7 +133,7 @@ TEST(vector_get_out_of_bounds) {
 
 TEST(vector_set) {
     MudVector* vec = mud_vector_create(sizeof(int));
-    REQUIRE_NOT_NULL(ctx, vec);
+    CHECK_NOT_NULL(ctx, vec);
     if (ctx->abort_current_test) return;
 
     int values[] = {10, 20, 30};
@@ -147,7 +147,7 @@ TEST(vector_set) {
 
     // Verify modification
     int* retrieved = mud_vector_get(vec, 1);
-    REQUIRE_NOT_NULL(ctx, retrieved);
+    CHECK_NOT_NULL(ctx, retrieved);
     if (ctx->abort_current_test) { mud_vector_destroy(vec); return; }
     CHECK_INT_EQ(ctx, *retrieved, 99);
 
@@ -163,7 +163,7 @@ TEST(vector_set) {
 
 TEST(vector_pop) {
     MudVector* vec = mud_vector_create(sizeof(int));
-    REQUIRE_NOT_NULL(ctx, vec);
+    CHECK_NOT_NULL(ctx, vec);
     if (ctx->abort_current_test) return;
 
     int values[] = {10, 20, 30};
@@ -197,7 +197,7 @@ TEST(vector_pop) {
 
 TEST(vector_insert) {
     MudVector* vec = mud_vector_create(sizeof(int));
-    REQUIRE_NOT_NULL(ctx, vec);
+    CHECK_NOT_NULL(ctx, vec);
     if (ctx->abort_current_test) return;
 
     int values[] = {10, 30};
@@ -234,7 +234,7 @@ TEST(vector_insert) {
 
 TEST(vector_remove) {
     MudVector* vec = mud_vector_create(sizeof(int));
-    REQUIRE_NOT_NULL(ctx, vec);
+    CHECK_NOT_NULL(ctx, vec);
     if (ctx->abort_current_test) return;
 
     int values[] = {10, 20, 30, 40, 50};
@@ -244,7 +244,7 @@ TEST(vector_remove) {
 
     // Remove middle
     CHECK(mud_vector_remove(vec, 2));  // Remove 30
-    CHECK_INT_EQ(ctx, mud_vector_size(vec, 4);
+    CHECK_INT_EQ(ctx, mud_vector_size(vec, 4));
     CHECK_INT_EQ(ctx, *(int*)mud_vector_get(vec, 2), 40);  // 40 shifted
 
     // Remove first
@@ -268,7 +268,7 @@ TEST(vector_remove) {
 
 TEST(vector_clear) {
     MudTest* vec = mud_vector_create(sizeof(int));
-    REQUIRE_NOT_NULL(ctx, vec);
+    CHECK_NOT_NULL(ctx, vec);
     if (ctx->abort_current_test) return;
 
     for (int i = 0; i < 10; i++) {
@@ -293,7 +293,7 @@ TEST(vector_clear) {
 
 TEST(vector_reserve) {
     MudVector* vec = mud_vector_create(sizeof(int));
-    REQUIRE_NOT_NULL(ctx, vec);
+    CHECK_NOT_NULL(ctx, vec);
     if (ctx->abort_current_test) return;
 
     size_t initial = mud_vector_capacity(vec);
@@ -319,7 +319,7 @@ TEST(vector_reserve) {
 
 TEST(vector_shrink_to_fit) {
     MudVector* vec = mud_vector_create(sizeof(int));
-    REQUIRE_NOT_NULL(ctx, vec);
+    CHECK_NOT_NULL(ctx, vec);
     if (ctx->abort_current_test) return;
 
     // Add many elements to grow
@@ -349,7 +349,7 @@ TEST(vector_shrink_to_fit) {
 
 TEST(vector_data_access) {
     MudVector* vec = mud_vector_create(sizeof(int));
-    REQUIRE_NOT_NULL(ctx, vec);
+    CHECK_NOT_NULL(ctx, vec);
     if (ctx->abort_current_test) return;
 
     for (int i = 0; i < 5; i++) {
@@ -357,7 +357,7 @@ TEST(vector_data_access) {
     }
 
     int* data = mud_vector_data(vec);
-    REQUIRE_NOT_NULL(ctx, data);
+    CHECK_NOT_NULL(ctx, data);
     if (ctx->abort_current_test) { mud_vector_destroy(vec); return; }
 
     // Access via raw pointer
@@ -371,7 +371,7 @@ TEST(vector_data_access) {
 
     // Const version
     const int* const_data = mud_vector_data_const(vec);
-    REQUIRE_NOT_NULL(ctx, const_data);
+    CHECK_NOT_NULL(ctx, const_data);
     if (ctx->abort_current_test) { mud_vector_destroy(vec); return; }
     CHECK_PTR_EQ(ctx, (void*)const_data, (void*)data);
 
@@ -386,7 +386,7 @@ TEST(vector_struct_elements) {
     } Point;
 
     MudVector* vec = mud_vector_create(sizeof(Point));
-    REQUIRE_NOT_NULL(ctx, vec);
+    CHECK_NOT_NULL(ctx, vec);
     if (ctx->abort_current_test) return;
 
     Point p1 = {10, 20, "alpha"};
@@ -396,7 +396,7 @@ TEST(vector_struct_elements) {
     CHECK(mud_vector_push(vec, &p2));
 
     Point* retrieved = mud_vector_get(vec, 0);
-    REQUIRE_NOT_NULL(ctx, retrieved);
+    CHECK_NOT_NULL(ctx, retrieved);
     if (ctx->abort_current_test) { mud_vector_destroy(vec); return; }
 
     CHECK_INT_EQ(ctx, retrieved->x, 10);
@@ -412,7 +412,7 @@ TEST(vector_struct_elements) {
 
 TEST(vector_type_safe_macros) {
     MudVector* vec = mud_vector_create(sizeof(int));
-    REQUIRE_NOT_NULL(ctx, vec);
+    CHECK_NOT_NULL(ctx, vec);
     if (ctx->abort_current_test) return;
 
     // Use type-safe push macro
@@ -431,7 +431,7 @@ TEST(vector_type_safe_macros) {
 
     // Get pointer version
     double* ptr = MUD_VECTOR_GET_PTR(vec, double, 2);
-    REQUIRE_NOT_NULL(ctx, ptr);
+    CHECK_NOT_NULL(ctx, ptr);
     if (ctx->abort_current_test) { mud_vector_destroy(vec); retrun; }
     CHECK(*ptr > 1.41 && *ptr < 1.42);
 
