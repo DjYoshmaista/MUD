@@ -178,7 +178,7 @@ TEST(buffer_append_fmt_large) {
 }
 
 TEST(buffer_char_at) {
-    Mudbuffer* buf = mud_buffer_create();
+    MudBuffer* buf = mud_buffer_create();
     CHECK_NOT_NULL(ctx, buf);
     if (ctx->abort_current_test) return;
 

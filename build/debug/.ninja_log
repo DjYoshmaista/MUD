@@ -1,9 +1,13 @@
 # ninja log v7
 7	72	1772170824679236787	tests/CMakeFiles/test_buffer.dir/run_single_module.c.o	8156b2d8cb51f578
 9	73	1772170824681285933	tests/CMakeFiles/test_hashmap.dir/run_single_module.c.o	16f45f3f9394ec27
-2	55	1772170824674140303	tests/CMakeFiles/run_all_tests.dir/run_all_tests.c.o	21b431227560ef31
+2	42	1772318162054196486	tests/CMakeFiles/run_all_tests.dir/run_all_tests.c.o	21b431227560ef31
 3	76	1772170824675002711	tests/CMakeFiles/test_vector.dir/run_single_module.c.o	9b05c1f653c60652
 8	85	1772170824680649920	tests/CMakeFiles/test_str.dir/run_single_module.c.o	bc49faaa94d0cfe0
-1	74	1772170824672236612	src/CMakeFiles/mud_core.dir/mud_vector.c.o	ddad1b1de8915563
-1	66	1772170824673819036	src/CMakeFiles/mud_core.dir/mud_str.c.o	f7a0a78e8ae4f982
-2	64	1772170824673972660	src/CMakeFiles/mud_core.dir/mud_hashmap.c.o	b8ace6a8f0d286ae
+1	44	1772318162052180858	src/CMakeFiles/mud_core.dir/mud_vector.c.o	ddad1b1de8915563
+2	52	1772318162053876870	src/CMakeFiles/mud_core.dir/mud_str.c.o	f7a0a78e8ae4f982
+2	38	1772318162054027843	src/CMakeFiles/mud_core.dir/mud_hashmap.c.o	b8ace6a8f0d286ae
+4	136	1772569709046876101	tests/CMakeFiles/test_vector.dir/run_single_module.c.o	9b05c1f653c60652
+6	136	1772569709048968071	tests/CMakeFiles/test_buffer.dir/run_single_module.c.o	8156b2d8cb51f578
+6	144	1772569709049250635	tests/CMakeFiles/test_str.dir/run_single_module.c.o	bc49faaa94d0cfe0
+9	144	1772569709050975320	tests/CMakeFiles/test_hashmap.dir/run_single_module.c.o	16f45f3f9394ec27
