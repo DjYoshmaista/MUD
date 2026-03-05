@@ -11,3 +11,8 @@
 6	136	1772569709048968071	tests/CMakeFiles/test_buffer.dir/run_single_module.c.o	8156b2d8cb51f578
 6	144	1772569709049250635	tests/CMakeFiles/test_str.dir/run_single_module.c.o	bc49faaa94d0cfe0
 9	144	1772569709050975320	tests/CMakeFiles/test_hashmap.dir/run_single_module.c.o	16f45f3f9394ec27
+6	66	1772678822337319090	tests/CMakeFiles/test_vector.dir/run_single_module.c.o	9b05c1f653c60652
+6	66	1772678822337698867	tests/CMakeFiles/test_buffer.dir/run_single_module.c.o	8156b2d8cb51f578
+7	66	1772678822338129235	tests/CMakeFiles/test_str.dir/run_single_module.c.o	bc49faaa94d0cfe0
+10	77	1772678822340642441	tests/CMakeFiles/test_hashmap.dir/run_single_module.c.o	16f45f3f9394ec27
+1	87	1772678822332501080	tests/CMakeFiles/run_all_tests.dir/run_all_tests.c.o	21b431227560ef31

@@ -56,11 +56,12 @@ static inline int mud_test_register(MudTestInfo info) {
                     "NULL mismatch: actual=%p, expected=%p",                    \
                     (void*)_a, (void*)_e);                                      \
             }                                                                   \
+        }                                                                       \
     } else if (strcmp(_a, _e) != 0) {                                           \
         mud_testctx_record_failuref((ctx), MUD_TEST_SEV_CHECK,                  \
         __FILE__, __LINE__,                                                     \
         "CHECK_STR_EQ(" #actual ", " #expected ")",                             \
-        "strings differ: actual=\"%s\", expected=\"%s\"",                       \
+        "strings differ: actual=\%s\", expected=\"%s\"",                        \
         _a, _e);                                                                \
     } while (0)
 
@@ -139,7 +140,7 @@ static inline int mud_test_register(MudTestInfo info) {
             __FILE__, __LINE__,                                                 \
             "CHECK_MEM_EQ(" #actual ", " #expected ", " #size ")",              \
             "memory block differ (size=%zu)", _s);                              \
-        }\
+        }                                                                       \
     } while (0)
 
 #define CHECK_TRUE(ctx, expr) CHECK_CTX(ctx, (expr))
