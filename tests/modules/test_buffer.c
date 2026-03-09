@@ -26,7 +26,7 @@ TEST(buffer_create_with_capacity) {
     CHECK_NOT_NULL(ctx, buf);
     if (ctx->abort_current_test) return;
 
-    CHECK_INT_EQ(ctx, mud-buffer_size(buf), 0);
+    CHECK_INT_EQ(ctx, mud_buffer_size(buf), 0);
     CHECK(mud_buffer_capacity(buf) >= 1024);
 
     mud_buffer_destroy(buf);

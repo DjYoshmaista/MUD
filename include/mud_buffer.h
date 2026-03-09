@@ -5,6 +5,10 @@
 #include <stdbool.h>
 #include <stdarg.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct MudBuffer MudBuffer;
 
 /* =============================================================================
@@ -68,7 +72,7 @@ bool mud_buffer_set_char(MudBuffer* buf, size_t index, char c);
  -- `equals_str`: Compare buffer to C string
 =============================================================================*/
 MudBuffer* mud_buffer_clone(const MudBuffer* buf);
-bool mud_buffer_euqals(const MudBuffer* a, const MudBuffer* b);
+bool mud_buffer_equals(const MudBuffer* a, const MudBuffer* b);
 bool mud_buffer_equals_str(const MudBuffer* buf, const char* str);
 
 #ifdef __cplusplus

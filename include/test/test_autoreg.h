@@ -13,37 +13,37 @@
 #define MUD_TEST_CONCAT(a, b) MUD_TEST_CONCAT_IMPL(a, b)
 #define MUD_TEST_UNIQUE(prefix) MUD_TEST_CONCAT(prefix, __LINE__)
 
-#define TEST(name)                                              \
-    static void name(MudTestCtx* ctx);                          \
+#define TEST(testname)                                              \
+    static void testname(MudTestCtx* ctx);                          \
     MUD_TEST_CONSTRUCTOR                                        \
     static void MUD_TEST_UNIQUE(mud_test_register_)(void) {    \
         MudTestInfo info = {                                    \
-            .name = #name,                                      \
+            .name = #testname,                                      \
             .file = __FILE__,                                   \
             .line = __LINE__,                                   \
-            .func = name,                                       \
+            .func = testname,                                       \
             .tags = ""                                          \
         };                                                      \
         mud_test_register(info);                                \
     }                                                           \
-    static void name(MudTestCtx* ctx)
+    static void testname(MudTestCtx* ctx)
 
-#define TEST_TAGGED(name, tag_string)                           \
-    static void name(MudTestCtx* ctx);                          \
+#define TEST_TAGGED(testtagname, tag_string)                           \
+    static void testtagname(MudTestCtx* ctx);                          \
     MUD_TEST_CONSTRUCTOR                                        \
     static void MUD_TEST_UNIQUE(mud_test_register_)(void) {     \
         MudTestInfo info = {                                    \
-            .name = #name,                                      \
+            .name = #testtagname,                                      \
             .file = __FILE__,                                   \
             .line = __LINE__,                                   \
-            .func = name,                                       \
+            .func = testtagname,                                       \
             .tags = tag_string                                  \
         };                                                      \
         mud_test_register(info);                                \
     }                                                           \
-    static void name(MudTestCtx* ctx)
+    static void testtagname(MudTestCtx* ctx)
 
-#define TEST_DISABLED(name)                                     \
-    static void name(MudTestCtx* ctx)
+#define TEST_DISABLED(disabledname)                                     \
+    static void disabledname(MudTestCtx* ctx)
 
 #endif /* MUD_TEST_AUTOREG_H */

@@ -5,6 +5,7 @@
 
 #include "test/test_autoreg.h"
 #include "mud_hashmap.h"
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
@@ -160,7 +161,7 @@ TEST(hashmap_remove_with_destructor) {
     int* value = malloc(sizeof(int));
     *value = 42;
 
-    mod_hashmap_set(map, "key", value);
+    mud_hashmap_set(map, "key", value);
     CHECK(mud_hashmap_remove_with(map, "key", free));
 
     // Value was freed (we can't verify directly, but no leak with sanitizer)
@@ -181,8 +182,8 @@ TEST(hashmap_clear) {
     mud_hashmap_set(map, "d", &values[3]);
     mud_hashmap_set(map, "e", &values[4]);
 
-    CHECK_INT_EQ(ctx, mud_hashmap_size((map), 5);
-    
+    CHECK_INT_EQ(ctx, mud_hashmap_size((map), 5));
+
     mud_hashmap_clear(map);
 
     CHECK_INT_EQ(ctx, mud_hashmap_size(map), 0);
@@ -211,14 +212,14 @@ TEST(hashmap_clear_with_destructor) {
 
     mud_hashmap_clear_with(map, counting_destructor);
 
-    CHECK_INT_EQ(ctx, destructor_call_Count, 3);
+    CHECK_INT_EQ(ctx,destructor_call_count, 3);
     CHECK(mud_hashmap_is_empty(map));
 
     mud_hashmap_destroy(map);
 }
 
 TEST(hashmap_growth) {
-    MudHahsmap* map = mud_hashmap_create();
+    MudHashmap* map = mud_hashmap_create();
     CHECK_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
@@ -229,6 +230,10 @@ TEST(hashmap_growth) {
         int* value = malloc(sizeof(int));
         *value = i;
         CHECK(mud_hashmap_set(map, key, value));
+        if (ctx->abort_current_test) {
+            mud_hashmap_destroy_with(map, free);
+            return;
+        }
     }
 
     CHECK_INT_EQ(ctx, mud_hashmap_size(map), 100);
@@ -315,6 +320,7 @@ TEST(hashmap_keys) {
         } else {
             FAIL(ctx, "Unexpected key: %s", keys[i], "\nNo 'alpha', 'beta', or 'gamma' keys found");
         }
+    }
     CHECK(found_alpha && found_beta && found_gamma);
 
     // Limited buffer
@@ -339,7 +345,7 @@ TEST(hashmap_destroy_with_destructor) {
 
     mud_hashmap_destroy_with(map, counting_destructor);
 
-    CHECK_INT_EQ(ctx, destructor_call_count, 4);
+    CHECK_INT_EQ(ctx, destructor_call_count, 8);
 }
 
 TEST(hashmap_key_independence) {
@@ -365,12 +371,14 @@ TEST(hashmap_key_independence) {
 
 TEST(hashmap_similar_keys) {
     MudHashmap* map = mud_hashmap_create();
-    MudHashmap* map2 = mud_hashmap_create();
-    CHECK_NOT_NULL(ctx, map, map2);
+    CHECK_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
     // Keys that might collide or be similar
     int values[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    char* str_val;
+
+    // Set values to map
     CHECK(mud_hashmap_set(map, "a", &values[0]));
     CHECK(mud_hashmap_set(map, "aa", &values[1]));
     CHECK(mud_hashmap_set(map, "aaa", &values[2]));
@@ -380,20 +388,18 @@ TEST(hashmap_similar_keys) {
     CHECK(mud_hashmap_set(map, "abc", &values[6]));
     CHECK(mud_hashmap_set(map, "cba", &values[7]));
 
-    CHECK_INT_EQ(ctx, mud_hashmap_size(map), 0);
+    CHECK_INT_EQ(ctx, mud_hashmap_size(map), 8);
 
     // Verify each
-    char val_str[] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
-    
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 26; j++) {
-            str_val = &val_str[j];
+            char key[2] = {(char)('a' + j), '\0'};
+            str_val = key;
             CHECK_INT_EQ(ctx, *(int*)mud_hashmap_get(map2, str_val), i + 1);
          }
     }
 
     mud_hashmap_destroy(map);
-    mud_hashmap_destroy(map2);
 }
 
 TEST(hashmap_empty_key) {

@@ -37,7 +37,7 @@ static inline MudTestRegistry* mud_test_get_registry(void) {
 static inline int mud_test_register(MudTestInfo info) {
     MudTestRegistry* reg = mud_test_get_registry();
     if (reg->count >= MUD_MAX_TESTS) {
-	return -1;
+        return -1;
     }
     reg->tests[reg->count] = info;
     reg->count++;
@@ -56,13 +56,13 @@ static inline int mud_test_register(MudTestInfo info) {
                     "NULL mismatch: actual=%p, expected=%p",                    \
                     (void*)_a, (void*)_e);                                      \
             }                                                                   \
-        }                                                                       \
-    } else if (strcmp(_a, _e) != 0) {                                           \
+        } else if (strcmp(_a, _e) != 0) {                                       \
         mud_testctx_record_failuref((ctx), MUD_TEST_SEV_CHECK,                  \
         __FILE__, __LINE__,                                                     \
         "CHECK_STR_EQ(" #actual ", " #expected ")",                             \
         "strings differ: actual=\%s\", expected=\"%s\"",                        \
         _a, _e);                                                                \
+        }                                                                       \
     } while (0)
 
 #define CHECK_INT_EQ(ctx, actual, expected)                                     \
@@ -88,14 +88,14 @@ static inline int mud_test_register(MudTestInfo info) {
                     "REQUIRE_STR_EQ(" #actual ", " #expected ")",               \
                     "NULL mismatch: actual=%p, expected=%p",                    \
                     (void*)_a, (void*)_e);                                      \
-            }                                                                   \
-        } else if (strcmp(_a, _e) != 0) {                                       \
+            } else if (strcmp(_a, _e) != 0) {                                   \
             mud_testctx_record_failuref((ctx), MUD_TEST_SEV_REQUIRE,            \
             __FILE__, __LINE__,                                                 \
             "REQUIRE_STR_EQ(" #actual ", " #expected ")",                       \
             "strings differ: actual=\%s\", expected=\"%s\"",                    \
             _a, _e);                                                            \
             }                                                                   \
+        }                                                                       \
     } while (0)
 
 #define CHECK_PTR_EQ(ctx, actual, expected)                                     \
@@ -113,7 +113,7 @@ static inline int mud_test_register(MudTestInfo info) {
 #define CHECK_NOT_NULL(ctx, ptr)                                                \
     do {                                                                        \
         if ((ptr) == NULL) {                                                    \
-            mud_testctx_record_fialuref((ctx), MUD_TEST_SEV_CHECK,              \
+            mud_testctx_record_failuref((ctx), MUD_TEST_SEV_CHECK,              \
             __FILE__, __LINE__,                                                 \
             "CHECK_NOT_NULL(" #ptr ")",                                         \
             "pointer is NULL");                                                 \

@@ -44,6 +44,13 @@ MudBuffer* mud_buffer_create_with_capacity(size_t capacity) {
     return buf;
 }
 
+MudBuffer* mud_buffer_create_from(const char* fromStr) {
+    MudBuffer* buf = mud_buffer_create_with_capacity(str ? strlen(str) : 0);
+    if (!buf) return NULL;
+    if (fromStr) mud_buffer_append_str(buf, str);
+    return buf;
+}
+
 /* =============================================================================
  - Destruction and Accessors
 =============================================================================*/
@@ -106,6 +113,10 @@ static bool buffer_ensure_capacity(MudBuffer* buf, size_t needed) {
     buf->data = new_data;
     buf->capacity = new_capacity;
     return true;
+}
+
+bool mud_buffer_reserve(MudBuffer* buf, size_t capacity) {
+    return buf != NULL && buffer_ensure_capacity(buf, capacity);
 }
 
 /* =============================================================================

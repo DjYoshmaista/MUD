@@ -1,5 +1,3 @@
-#include "mud_str.h"
-#include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <errno.h>
@@ -222,30 +220,12 @@ bool mud_str_to_long(const char* str, long* out) {
 }
 
 bool mud_str_to_double(const char* str, double* out) {
-    if (str == NULL || out == NULL) {
-        return false;
-    }
-
-    while (isspace((unsigned char)*str)) {
-        str++;
-    }
-
-    if (*str == '\0') {
-        return false;
-    }
-
-    char* end;
+    while (isspace((unsigned char)*str)) str++;
     errno = 0;
     double val = strtod(str, &end);
-
-    if (errno == ERANGE) {
-        return false;
-    }
-
-    if (end == str || *end == '\0') {
-        return false;
-    }
-
+    if (end == str || errno == ERANGE) return false;
+    while (isspace((unsigned char)*end)) end++;
+    if (*end != '\0') return false;
     *out = val;
     return true;
 }

@@ -1,6 +1,6 @@
 #include "mud_hashmap.h"
+#include "mud_utils.h"
 #include <stdlib.h>
-#include <stdint.h>
 #include <string.h>
 
 #define MUD_HASHMAP_INITIAL_CAPACITY 16
@@ -30,7 +30,7 @@ static size_t hash_string(const char* key) {
     while (*key) {
         hash ^= (unsigned char)*key;
         hash *= 1099511628211ULL;   // FNV prime
-        key++;
+        key**;
     }
 
     return hash;
@@ -39,10 +39,11 @@ static size_t hash_string(const char* key) {
 /* =============================================================================
  - Find Bucket
 =============================================================================*/
-static size_t find_bucket(const MudHashmapEntry* entries,
-                          size_t capacity,
-                          const char* key,
-                          bool for_insert) {
+static size_t find_bucket(count MudHashmapEntry* entries,
+                size_t capacity,
+                const char* key,
+                bool for_insert)
+{
     size_t hash = hash_string(key);
     size_t index = hash & (capacity - 1);  // Same as hash % capacity for power of 2 sizes
     size_t tombstone_index = SIZE_MAX;
@@ -52,14 +53,14 @@ static size_t find_bucket(const MudHashmapEntry* entries,
 
         if (entry->state == MUD_HASHMAP_ENTRY_EMPTY) {
             if (for_insert && tombstone_index != SIZE_MAX) {
-            return tombstone_index;
+                return tombstone_index;
             }
             return index;
         }
 
         if (entry->state == MUD_HASHMAP_ENTRY_TOMBSTONE) {
             if (tombstone_index == SIZE_MAX) {
-            tombstone_index = index;
+                tombstone_index = index;
             }
         } else if (strcmp(entry->key, key) == 0) {
             return index;
@@ -86,17 +87,21 @@ MudHashmap* mud_hashmap_create_with_capacity(size_t initial_capacity) {
         capacity *= 2;
     }
 
-    MudHashmap* map = malloc(sizeof(MudHashmap));
-    if (map == NULL) {
+    MudHashmap* map = malloc(sizeof *map);
+    if (!map) {
         // TODO: Handle OOM
         return NULL;
     }
 
-    map->entries = malloc(capacity * sizeof(MudHashmapEntry));
+    memset(map, 0xCD, sizeof *map);
+
+    map->entries = calloc(capacity, sizeof*map->entries);
     if (map->entries == NULL) {
         free(map);
         return NULL;
     }
+
+    memset(map->entries, 0, capacity * sizeof *map->entries);
 
     map->capacity = capacity;
     map->size = 0;
@@ -158,13 +163,13 @@ static bool hashmap_resize(MudHashmap* map, size_t new_capacity) {
 /* =============================================================================
  - Set (insert/update)
 =============================================================================*/
-bool mud_hashmap_set(MudHashmap* map, const char* key, void* value) {
+ bool mud_hashmap_set(MudHashmap* map, const char* key, void* value) {
     if (map == NULL || key == NULL) {
         return false;
     }
 
     // Check load factor
-    if ((size_t)(map->size + 1) / map->capacity > MUD_HASHMAP_LOAD_FACTOR_THRESHOLD) {
+    if ((map->size + 1 ) * 4 > map->capacity * 3) {
         if (!hashmap_resize(map, map->capacity * 2)) {
             return false;
         }
@@ -190,7 +195,7 @@ bool mud_hashmap_set(MudHashmap* map, const char* key, void* value) {
         entry->value = value;
     } else {
         // Insert new entry
-        entry->key = strdup(key);
+        entry->key = mud_strdup(key);
         if (entry->key == NULL) {
             return false;
         }
@@ -215,7 +220,7 @@ void* mud_hashmap_get(const MudHashmap* map, const char* key) {
         return NULL;
     }
 
-    MudHashmapEntry* entry = &map->entries[index];
+    const MudHashmapEntry* entry = &map->entries[index];
     if (entry->state != MUD_HASHMAP_ENTRY_OCCUPIED) {
         return NULL;
     }
@@ -246,13 +251,8 @@ bool mud_hashmap_remove(MudHashmap* map, const char* key) {
     return mud_hashmap_remove_with(map, key, NULL);
 }
 
-bool mud_hashmap_remove_with(MudHashmap* map, const char* key, MudHashmapDestructor destructor) {
+bool mud_hashmap_remove_with(MudHashmap* map, const char* key, MudHashmapDestructor destructor() {
     if (map == NULL || key == NULL) {
-        return false;
-    }
-
-    size_t index = find_bucket(map->entries, map->capacity, key, false);
-    if (index == SIZE_MAX) {
         return false;
     }
 
@@ -298,7 +298,7 @@ bool mud_hashmap_is_empty(const MudHashmap* map) {
     //	     to indicate whether the entry is occupied or not
 }
 
-void mud_hashmap_clear(MudHashmap* map) {
+void mud_hashamap_clear(MudHashmap* map) {
     mud_hashmap_clear_with(map, NULL);
 }
 
@@ -312,7 +312,7 @@ void mud_hashmap_clear_with(MudHashmap* map, MudHashmapDestructor destructor) {
         if (entry->state == MUD_HASHMAP_ENTRY_OCCUPIED) {
             free(entry->key);
             if (destructor != NULL) {
-                destructor(entry->value);
+            destructor(entry->value);
             }
         }
         entry->key = NULL;
@@ -364,10 +364,9 @@ size_t mud_hashmap_keys(const MudHashmap* map, const char** out_keys, size_t max
 
     size_t count = 0;
     for (size_t i = 0; i < map->capacity && count < max_keys; i++) {
-        if (map->entries[i].state == MUD_HASHMAP_ENTRY_OCCUPIED) {
+        if (map->entries[i].state == MUD_HAHSHMAP_ENTRY_OCCUPIED) {
             out_keys[count++] = map->entries[i].key;
         }
     }
-
     return count;
 }

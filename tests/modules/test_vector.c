@@ -207,7 +207,7 @@ TEST(vector_insert) {
 
     // Insert in middle
     int middle = 20;
-    CHECK(med_vector_insert(vec, 1, &middle));
+    CHECK(mud_vector_insert(vec, 1, &middle));
 
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 3);
     CHECK_INT_EQ(ctx, *(int*)mud_vector_get(vec, 0), 10);
@@ -244,7 +244,7 @@ TEST(vector_remove) {
 
     // Remove middle
     CHECK(mud_vector_remove(vec, 2));  // Remove 30
-    CHECK_INT_EQ(ctx, mud_vector_size(vec, 4));
+    CHECK_INT_EQ(ctx, mud_vector_size(vec), 4);
     CHECK_INT_EQ(ctx, *(int*)mud_vector_get(vec, 2), 40);  // 40 shifted
 
     // Remove first
@@ -267,7 +267,7 @@ TEST(vector_remove) {
 }
 
 TEST(vector_clear) {
-    MudTest* vec = mud_vector_create(sizeof(int));
+    MudTestFn* vec = mud_vector_create(sizeof(int));
     CHECK_NOT_NULL(ctx, vec);
     if (ctx->abort_current_test) return;
 
