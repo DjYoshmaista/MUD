@@ -5,18 +5,13 @@
 
 // Custom errno definitions
 #ifndef EFPINVAL
-    #define EFPINVAL 1000
+#define EFPINVAL 1000
 #endif
 #ifndef EFINVAL
-    #define EFINVAL 1001
+#define EFINVAL 1001
 #endif
 #ifndef EFHINVAL
-    #define EFHINVAL 1002
-#endif
-
-// Ensure no conflict with system errno values
-#if EFPINVAL < 1000 || EFHINVAL < 1000 || EFINVAL < 1000
-    #error "mud_utils.c: Custom errno values defined in mud_utils.c conflict with system errno values"
+#define EFHINVAL 1002
 #endif
 
 char* mud_strdup(const char* src) {

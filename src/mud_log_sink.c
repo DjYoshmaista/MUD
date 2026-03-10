@@ -7,6 +7,8 @@
 #include <stdbool.h>
 #include <unistd.h>  // for isatty() to detect if stderr is a terminal (for colors)
 
+#define MUD_LOG_FILE_SINK "logs/mud.log"
+
 // Custom errno values (local to this file)
 #ifndef EFPINVAL
     #define EFPINVAL 1000
@@ -88,25 +90,29 @@ static void console_write(MudLogSink* sink, const MudLogRecord* record) {
 
 // Console Sink: Flush
 static void console_flush(MudLogSink* sink) {
-    (void)sink; // unused
-    fflush(sink);  // Force buffered output to be written
+    ConsoleSink* console = (ConsoleSink*)sink;
+    // stream is not owned by this sink -- do not fclose() it; no other heap allocations to free
+    fflush(console->stream);  // Force buffered output to be written
+    free(console); // Frees the ConsoleSink allocation
 }
 
 // Console Sink: Destroy
 static void console_destroy(MudLogSink* sink) {
-    free(sink);
+    ConsoleSink* console = (ConsoleSink*)sink;
+    // stream is not owned by this sink -- do not fclose() it; no other heap allocations to free
+    free(console); // Frees the ConsoleSink allocation
 }
 
 // Convenience function to create a sink that writes to stderr (most common)
-MudLogSink* mud_log_sink_stderr_create(FILE* stderr_sink, MudLogLevel min_level) {
-    MudLogSink* temp_stderr_sink = mud_log_sink_console_create(stderr_sink, min_level);
-    return temp_stderr_sink;
+MudLogSink* mud_log_sink_stderr_create(MudLogLevel min_level) {
+    MudLogSink* stderr_sink = mud_log_sink_console_create(stderr, min_level);
+    return stderr_sink;
 }
 
 // Convenience function to create a sink that writes to stdout
-MudLogSink* mud_log_sink_stdout_create(FILE* stdout_sink, MudLogLevel min_level) {
-    MudLogSink* temp_stdout_sink = mud_log_sink_console_create(stdout_sink, min_level);
-    return temp_stdout_sink;
+MudLogSink* mud_log_sink_stdout_create(MudLogLevel min_level) {
+    MudLogSink* stdout_sink = mud_log_sink_console_create(stdout, min_level);
+    return stdout_sink;
 }
 
 // Console Sink: Create

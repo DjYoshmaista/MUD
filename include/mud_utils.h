@@ -10,6 +10,16 @@
 extern "C" {
 #endif
 
+#ifndef EFPINVAL
+#define EFPINVAL 1000
+#ifndef EFINVAL
+#define EFINVAL 1001
+#ifndef EFHINVAL
+#define EFHINVAL 1002
+#endif
+#endif
+#endif
+
 /*  strdup replacement for C source, header and other files
     mud_strdup
     Portable replacement for POSIX strdup

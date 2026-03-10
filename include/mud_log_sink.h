@@ -82,14 +82,14 @@ MudLogSink* mud_log_sink_callback_create(MudLogCallbackFn callback, void* user_d
     @param min_level Minimum level for this sink
     @return New sink, or NULL on failure
 */
-MudLogSink* mud_log_sink_stderr_create(FILE* stream, MudLogLevel min_level);
+MudLogSink* mud_log_sink_stderr_create(MudLogLevel min_level);
 
 /*  @brief Create a sink that writes to stdout with no colors
 
     @param min_level Minimum level for this sink
     @return New sink, or NULL on failure
 */
-MudLogSink* mud_log_sink_stdout_create(FILE* stream, MudLogLevel min_level);
+MudLogSink* mud_log_sink_stdout_create(MudLogLevel min_level);
 
 /*  @brief Create a sink that writes to a custom stream
 
