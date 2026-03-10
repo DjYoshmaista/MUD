@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <strings.h>
 #include <time.h>               // Timestamps
 #include <pthread.h>            // POSIX threads for mutex.  Linux specific; Win needs different approach
 
@@ -79,7 +80,7 @@ MudLogLevel mud_log_get_level(void) {
 // Timestamp generation
 static void format_timestamp(char* buf, size_t size) {
     time_t now = time(NULL);
-    struct tm tm_buf
+    struct tm tm_buf;
     struct tm* tm_info = localtime_r(&now, &tm_buf);                   // Uses local timezone.  For servers, consider gmtime (UTC).  `localtime_r` POSIX thread-safe
 
     strftime(buf, size, "%Y-%m-%d %H:%M:%S", tm_info);      // ISO 8601-ish format -- 2024-01-15 14:30:45 -- Sortable & Readable
@@ -103,7 +104,7 @@ void mud_log_writev(MudLogLevel level, const char* file, int line, const char* f
 
     // Format the message
     char message[MUD_LOG_MAX_MESSAGE];
-    vsnprintf(message, sizeof(message, fmt, args);
+    vsnprintf(message, sizeof(message), fmt, args);
 
     // Generate timestamp
     char timestamp[32];
@@ -111,7 +112,7 @@ void mud_log_writev(MudLogLevel level, const char* file, int line, const char* f
 
     // Extract filename from path
     const char* filename = file;
-    const char* slash = strrchr(file, '/');
+    const char* slash = strrchr(filename, '/');
     if (slash) {
         filename = slash + 1;
     }
@@ -120,7 +121,7 @@ void mud_log_writev(MudLogLevel level, const char* file, int line, const char* f
     MudLogRecord record = {
         .level = level,
         .timestamp = timestamp,
-        .filename = filename,
+        .file = file,
         .line = line,
         .message = message
     };
@@ -159,7 +160,7 @@ bool mud_log_init(void) {
     g_log.initialized = true;
 
     // Add default console sink
-    MudLogSink* console = mud_log-sink_console_create(MUD_LOG_DEBUG);
+    MudLogSink* console = mud_log_sink_console_create(MUD_LOG_DEBUG);
     if (console != NULL) {
         mud_log_add_sink(console);
     }
@@ -184,7 +185,7 @@ void mud_log_shutdown(void) {
     }
     g_log.sink_count = 0;
 
-    pthread_muex_unlock(&g_log.mutex);
+    pthread_mutex_unlock(&g_log.mutex);
 
     pthread_mutex_destroy(&g_log.mutex);
     g_log.initialized = false;
@@ -199,7 +200,7 @@ bool mud_log_add_sink(MudLogSink* sink) {
     pthread_mutex_lock(&g_log.mutex);
 
     if (g_log.sink_count >= MUD_LOG_MAX_SINKS) {
-        pthread_mutex_unlock*&g_log.mutex);
+        pthread_mutex_unlock(&g_log.mutex);
         return false;
     }
 
@@ -220,7 +221,7 @@ void mud_log_clear_sinks(void) {
     }
     g_log.sink_count = 0;
 
-    pthread-mutex_unlock(&g_log.mutex);
+    pthread_mutex_unlock(&g_log.mutex);
 }
 
 void mud_log_flush(void) {

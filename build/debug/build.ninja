@@ -481,6 +481,24 @@ build CMakeFiles/ContinuousSubmit | ${cmake_ninja_workdir}CMakeFiles/ContinuousS
 
 build cmake_object_order_depends_target_mud_core: phony || .
 
+build src/CMakeFiles/mud_core.dir/mud_log.c.o: C_COMPILER__mud_core_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_log.c || cmake_object_order_depends_target_mud_core
+  CONFIG = Debug
+  DEP_FILE = src/CMakeFiles/mud_core.dir/mud_log.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include
+  OBJECT_DIR = src/CMakeFiles/mud_core.dir
+  OBJECT_FILE_DIR = src/CMakeFiles/mud_core.dir
+  TARGET_SUPPORT_DIR = src/CMakeFiles/mud_core.dir
+
+build src/CMakeFiles/mud_core.dir/mud_log_sink.c.o: C_COMPILER__mud_core_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_log_sink.c || cmake_object_order_depends_target_mud_core
+  CONFIG = Debug
+  DEP_FILE = src/CMakeFiles/mud_core.dir/mud_log_sink.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include
+  OBJECT_DIR = src/CMakeFiles/mud_core.dir
+  OBJECT_FILE_DIR = src/CMakeFiles/mud_core.dir
+  TARGET_SUPPORT_DIR = src/CMakeFiles/mud_core.dir
+
 build src/CMakeFiles/mud_core.dir/mud_vector.c.o: C_COMPILER__mud_core_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_vector.c || cmake_object_order_depends_target_mud_core
   CONFIG = Debug
   DEP_FILE = src/CMakeFiles/mud_core.dir/mud_vector.c.o.d
@@ -561,7 +579,7 @@ build src/CMakeFiles/mud_core.dir/mud_arena_string.c.o: C_COMPILER__mud_core_uns
 #############################################
 # Link the static library src/libmud_core.a
 
-build src/libmud_core.a: C_STATIC_LIBRARY_LINKER__mud_core_Debug src/CMakeFiles/mud_core.dir/mud_vector.c.o src/CMakeFiles/mud_core.dir/mud_buffer.c.o src/CMakeFiles/mud_core.dir/mud_str.c.o src/CMakeFiles/mud_core.dir/mud_hashmap.c.o src/CMakeFiles/mud_core.dir/mud_utils.c.o src/CMakeFiles/mud_core.dir/mud_arena.c.o src/CMakeFiles/mud_core.dir/mud_arena_temp.c.o src/CMakeFiles/mud_core.dir/mud_arena_string.c.o
+build src/libmud_core.a: C_STATIC_LIBRARY_LINKER__mud_core_Debug src/CMakeFiles/mud_core.dir/mud_log.c.o src/CMakeFiles/mud_core.dir/mud_log_sink.c.o src/CMakeFiles/mud_core.dir/mud_vector.c.o src/CMakeFiles/mud_core.dir/mud_buffer.c.o src/CMakeFiles/mud_core.dir/mud_str.c.o src/CMakeFiles/mud_core.dir/mud_hashmap.c.o src/CMakeFiles/mud_core.dir/mud_utils.c.o src/CMakeFiles/mud_core.dir/mud_arena.c.o src/CMakeFiles/mud_core.dir/mud_arena_temp.c.o src/CMakeFiles/mud_core.dir/mud_arena_string.c.o
   CONFIG = Debug
   LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = src/CMakeFiles/mud_core.dir

@@ -269,7 +269,7 @@ TEST(arena_exhaustion) {
     TEST_LOG_INFO("Arena Created And Tested Successfully\nBeginning Arena Exhaustion Test...\n");
     // Allocate most of the arena
     void* ptr1 = mud_arena_alloc(arena, 200);
-    !CHECK_NULL(ctx, ptr1);
+    CHECK_NOT_NULL(ctx, ptr1);
     TEST_LOG_TRACE("Allocated 200 bytes of memory to ptr1\n");
 
     // Try to allocate more than remaining
@@ -283,9 +283,9 @@ TEST(arena_exhaustion) {
     if (remaining > 0) {
         void* ptr3 = mud_arena_alloc_aligned(arena, 1, 1);  // 1-Byte alignment
         // May or may not succeed depending on exact remaining
-        if (!CHECK_NULL(ctx, *ptr3)) {
+        if (CHECK_NOT_NULL(ctx, (void*)ptr3)) {
             TEST_LOG_INFO("Allocated %d bytes to ptr3\n", remaining);
-        } else if (CHECK_NULL(ctx, *ptr3)) {
+        } else if (CHECK_NULL(ctx, (void*)ptr3)) {
             TEST_LOG_WARN("Failed to allocate %d bytes to ptr3\n", remaining);
         } else {
             TEST_LOG_ERROR("Unexpected allocation result for ptr3.  Value of \"remaining\": \"%d\"\n", remaining);
@@ -328,7 +328,7 @@ TEST(arena_reset) {
     TEST_LOG_DEBUG("Checking that allocating again after resetting the arena completed successfully\n");
     void* ptr = mud_arena_alloc(arena, 500);
     TEST_LOG_TRACE("Allocated 500 bytes of memory to ptr\n");
-    !CHECK_NULL(ctx, ptr);
+    CHECK_NOT_NULL(ctx, ptr);
     TEST_LOG_TRACE("ptr successfully tested not NULL\n");
 
     mud_arena_destroy(arena);
@@ -348,7 +348,7 @@ TEST(arena_pos_save_restore) {
 
     TEST_LOG_DEBUG("Checking that allocating some initial data completed successfully\n");
     size_t used_before = mud_arena_used(arena);
-    MudArenaPos saved = mud_arena-pos_save(arena);
+    MudArenaPos saved = mud_arena_pos_save(arena);
     TEST_LOG_TRACE("Saved position: %d\n", saved.offset);
 
     // Allocate temp data
@@ -377,7 +377,7 @@ TEST(arena_pos_save_restore) {
     // Can allocate in reclaimed space
     TEST_LOG_DEBUG("Checking that allocating in reclaimed space completed successfully\n");
     void* new_ptr = mud_arena_alloc(arena, 50);
-    !CHECK_NULL(ctx, new_ptr);
+    CHECK_NOT_NULL(ctx, new_ptr);
     TEST_LOG_TRACE("Allocated 50 bytes of memory to new_ptr (and pointer not NULL)\n");
 
     mud_arena_destroy(arena);
@@ -405,7 +405,7 @@ TEST(arena_temp_basic) {
     mud_arena_alloc(arena, 100);
     TEST_LOG_TRACE("Allocated 100 bytes of memory\n");
     char* temporary = mud_arena_strdup(arena, "temporary");
-    TEST_LOG_TRACE("Allocated string \"%s\" to temporary scope using mud_arena_strdup\n", tempoarary);
+    TEST_LOG_TRACE("Allocated string \"%s\" to temporary scope using mud_arena_strdup\n", temporary);
     mud_arena_alloc(arena, 200);
     TEST_LOG_TRACE("Allocated 200 bytes of memory\n");
 
@@ -557,7 +557,7 @@ TEST(arena_sprintf) {
     char* simple = mud_arena_sprintf(arena, "Value: %d", 42);
     REQUIRE_NOT_NULL(ctx, simple);
     if (ctx->abort_current_test) { mud_arena_destroy(arena); return; }
-    CHECK_STR_EQ(ctx, simpole, "Value: 42");
+    CHECK_STR_EQ(ctx, simple, "Value: 42");
     TEST_LOG_TRACE("Copy: %s\nOriginal: %s", simple, "Value: 42");
 
     // Multiple arguments
@@ -608,7 +608,7 @@ TEST(arena_strcat) {
     char* empty = mud_arena_strcat(arena, 0);
     REQUIRE_NOT_NULL(ctx, empty);
     if (ctx->abort_current_test) { mud_arena_destroy(arena); return; }
-    CHECK_STR_EQ(ctx, single, "");
+    CHECK_STR_EQ(ctx, empty, "");
     TEST_LOG_TRACE("Copy: %s\nOriginal: %s", empty, "");
 
     // With NULL in arguemnts (treated as empty)
@@ -713,7 +713,7 @@ TEST(arena_substr) {
     TEST_LOG_DEBUG("Checking that start beyond string works\n");
     char* empty = mud_arena_substr(arena, original, 100, 5);
     REQUIRE_NOT_NULL(ctx, empty);
-    if (ctx->abort_current_test) { mud_arena-destroy(arena); return; }
+    if (ctx->abort_current_test) { mud_arenadestroy(arena); return; }
     CHECK_STR_EQ(ctx, empty, "");
     TEST_LOG_TRACE("Copy: %s\nOriginal: %s", empty, "");
 

@@ -11,7 +11,7 @@ TEST(vector_create_destroy) {
     TEST_LOG_DEBUG("Creating vector with sizeof(int)");
 
     MudVector* vec = mud_vector_create(sizeof(int));
-    !CHECK_NULL(ctx, vec);
+    CHECK_NOT_NULL(ctx, vec);
     if (ctx->abort_current_test) return;
 
     TEST_LOG_TRACE("Verifying initial state");
@@ -51,7 +51,7 @@ TEST(vector_null_safety) {
 
 TEST(vector_push_get_set) {
     MudVector* vec = mud_vector_create(sizeof(int));
-    !CHECK_NULL(ctx, vec);
+    CHECK_NOT_NULL(ctx, vec);
     if (ctx->abort_current_test) return;
 
     TEST_LOG_DEBUG("Pushing 10 integers");
@@ -65,7 +65,7 @@ TEST(vector_push_get_set) {
 
     for (int i = 0; i < 10; i++) {
         int* val = mud_vector_get(vec, (size_t)i);
-        !CHECK_NULL(ctx, val);
+        CHECK_NOT_NULL(ctx, val);
         if (ctx->abort_current_test) { mud_vector_destroy(vec); return; }
         CHECK_INT_EQ(ctx, *val, i);
     }
@@ -83,7 +83,7 @@ TEST(vector_push_get_set) {
 
 TEST(vector_insert_pop_remove) {
     MudVector* vec = mud_vector_create(sizeof(int));
-    !CHECK_NULL(ctx, vec);
+    CHECK_NOT_NULL(ctx, vec);
     if (ctx->abort_current_test) return;
 
     TEST_LOG_DEBUG("Setting up initial values [10, 30, 40]");
@@ -127,7 +127,7 @@ TEST(vector_insert_pop_remove) {
 
 TEST(vector_clear_reserve_shrink) {
     MudVector* vec = mud_vector_create(sizeof(int));
-    !CHECK_NULL(ctx, vec);
+    CHECK_NOT_NULL(ctx, vec);
     if (ctx->abort_current_test) return;
 
     size_t initial_capacity = mud_vector_capacity(vec);
@@ -163,7 +163,7 @@ TEST(vector_clear_reserve_shrink) {
 
 TEST(vector_data_access) {
     MudVector* vec = mud_vector_create(sizeof(int));
-    !CHECK_NULL(ctx, vec);
+    CHECK_NOT_NULL(ctx, vec);
     if (ctx->abort_current_test) return;
 
     TEST_LOG_DEBUG("Pushing 5 elements...");
@@ -174,7 +174,7 @@ TEST(vector_data_access) {
 
     TEST_LOG_DEBUG("Getting raw data pointer");
     int* data = mud_vector_data(vec);
-    !CHECK_NULL(ctx, data);
+    CHECK_NOT_NULL(ctx, data);
     if (ctx->abort_current_test) { mud_vector_destroy(vec); return; }
 
     TEST_LOG_DEBUG("Modifying via raw pointer (index 2 = 77)");
@@ -196,7 +196,7 @@ TEST(vector_struct_elements) {
 
     TEST_LOG_DEBUG("Creating vector of Point structs");
     MudVector* vec = mud_vector_create(sizeof(Point));
-    !CHECK_NULL(ctx, vec);
+    CHECK_NOT_NULL(ctx, vec);
     if (ctx->abort_current_test) return;
 
     Point p1 = {10, 20, "alpha"};
@@ -210,7 +210,7 @@ TEST(vector_struct_elements) {
 
     TEST_LOG_DEBUG("Retrieving and verifying p1");
     Point* retrieved = mud_vector_get(vec, 0);
-    !CHECK_NULL(ctx, retrieved);
+    CHECK_NOT_NULL(ctx, retrieved);
     if (ctx->abort_current_test) { mud_vector_destroy(vec); return; }
 
     CHECK_INT_EQ(ctx, retrieved->x, 10);
@@ -227,7 +227,7 @@ TEST(vector_struct_elements) {
 
 TEST(vector_type_safe_macros) {
     MudVector* vec = mud_vector_create(sizeof(double));
-    !CHECK_NULL(ctx, vec);
+    CHECK_NOT_NULL(ctx, vec);
     if (ctx->abort_current_test) return;
 
     TEST_LOG_DEBUG("Using MUD_VECTOR_PUSH macro");
@@ -249,7 +249,7 @@ TEST(vector_type_safe_macros) {
 
     TEST_LOG_DEBUG("Using MUD_VECTOR_GET_PTR macro");
     double* dbl_ptr = MUD_VECTOR_GET_PTR(vec, double, 2);
-    !CHECK_NULL(ctx, dbl_ptr);
+    CHECK_NOT_NULL(ctx, dbl_ptr);
     if (ctx->abort_current_test) { mud_vector_destroy(vec); return; }
     CHECK(*dbl_ptr > 1.41 && *dbl_ptr < 1.42);
     TEST_LOG_TRACE("Index 2 (via ptr): %f (expected ~1.41421)", *dbl_ptr);

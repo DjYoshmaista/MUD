@@ -19,7 +19,7 @@ TEST(hashmap_create_null_safety) {
     int dummy = 1;
 
     MudHashmap* map = mud_hashmap_create();
-    !CHECK_NULL(ctx, map);
+    CHECK_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
     CHECK_INT_EQ(ctx, mud_hashmap_size(map), 0);
@@ -41,7 +41,7 @@ TEST(hashmap_create_null_safety) {
 
 TEST(hashmap_set_get_update_remove) {
     MudHashmap* map = mud_hashmap_create();
-    !CHECK_NULL(ctx, map);
+    CHECK_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
     int one = 100;
@@ -68,7 +68,7 @@ TEST(hashmap_set_get_update_remove) {
 
 TEST(hashmap_clear_and_empty_key) {
     MudHashmap* map = mud_hashmap_create();
-    !CHECK_NULL(ctx, map);
+    CHECK_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
     int a = 1;
@@ -89,13 +89,13 @@ TEST(hashmap_clear_and_empty_key) {
 
 TEST(hashmap_remove_and_destroy_with_destructor) {
     MudHashmap* map = mud_hashmap_create();
-    !CHECK_NULL(ctx, map);
+    CHECK_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
     destructor_call_count = 0;
 
     int* value = malloc(sizeof(int));
-    !CHECK_NULL(ctx, value);
+    CHECK_NOT_NULL(ctx, value);
     if (ctx->abort_current_test) { mud_hashmap_destroy(map); return; }
     *value = 42;
 
@@ -105,7 +105,7 @@ TEST(hashmap_remove_and_destroy_with_destructor) {
 
     for (int i = 0; i < 4; i++) {
         int* heap_value = malloc(sizeof(int));
-        !CHECK_NULL(ctx, heap_value);
+        CHECK_NOT_NULL(ctx, heap_value);
         if (ctx->abort_current_test) { mud_hashmap_destroy(map); return; }
         *heap_value = i;
 
@@ -121,12 +121,12 @@ TEST(hashmap_remove_and_destroy_with_destructor) {
 
 TEST(hashmap_growth_iteration_and_keys) {
     MudHashmap* map = mud_hashmap_create();
-    !CHECK_NULL(ctx, map);
+    CHECK_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
     for (int i = 0; i < 32; i++) {
         int* value = malloc(sizeof(int));
-        !CHECK_NULL(ctx, value);
+        CHECK_NOT_NULL(ctx, value);
         if (ctx->abort_current_test) { mud_hashmap_destroy(map); return; }
         *value = i;
 
@@ -140,8 +140,8 @@ TEST(hashmap_growth_iteration_and_keys) {
     int seen = 0;
     MudHashmapIter iter = mud_hashmap_iter_start(map);
     while (mud_hashmap_iter_next(map, &iter)) {
-        !CHECK_NULL(ctx, iter.key);
-        !CHECK_NULL(ctx, iter.value);
+        CHECK_NOT_NULL(ctx, iter.key);
+        CHECK_NOT_NULL(ctx, iter.value);
         if (ctx->abort_current_test) { mud_hashmap_destroy_with(map, free); return; }
         seen++;
     }
@@ -156,7 +156,7 @@ TEST(hashmap_growth_iteration_and_keys) {
 
 TEST(hashmap_key_independence) {
     MudHashmap* map = mud_hashmap_create();
-    !CHECK_NULL(ctx, map);
+    CHECK_NOT_NULL(ctx, map);
     if (ctx->abort_current_test) return;
 
     char key_buf[32] = "original";

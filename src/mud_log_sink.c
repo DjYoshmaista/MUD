@@ -1,5 +1,7 @@
 #include "mud_log_sink.h"
+#include "test/test_log.h"
 #include "mud_utils.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>  // for isatty() to detect if stderr is a terminal (for colors)
@@ -23,7 +25,7 @@ void mud_log_sink_destroy(MudLogSink* sink) {
 static const char* level_colors[] = {
     ANSI_GRAY,      // TRACE
     ANSI_CYAN,      // DEBUG
-    ANSI_GREN,      // INFO
+    ANSI_GREEN,      // INFO
     ANSI_YELLOW,    // WARN
     ANSI_RED,       // ERROR
     ANSI_MAGENTA,   // FATAL
@@ -34,6 +36,14 @@ typedef struct {
     MudLogSink base;
     bool use_colors;
 } ConsoleSink;
+
+// Callback Sink structure
+typedef struct {
+    MudLogSink base;
+    MudLogCallbackFn callback;
+    void* user_data;
+    MudLogLevel min_level;
+} CallbackSink;
 
 // Console Sink: Write
 static void console_write(MudLogSink* sink, const MudLogRecord* record) {
@@ -83,9 +93,19 @@ MudLogSink* mud_log_sink_console_create(MudLogLevel min_level) {
     sink->base.destroy = console_destroy;
     sink->base.min_level = min_level;
 
-    // Check if stderr is a terminal
-    sink->use_colors = isatty(fileno(stderr));
+    TEST_LOG_DEBUG("Checking file descirptor %p for sink\n", sink);
 
+    // Check if stderr is a terminal.  If it is, enable color support
+    if (isatty(sink) == 0) {
+        sink->use_colors = false;
+        TEST_LOG_WARN("stderr is NOT a terminal--but is a valid file descriptor.  Disabling color support\n");
+    } else if (isatty(sink) == 1) {
+        sink->use_colors = true;
+        TEST_LOG_INFO("stderr is a terminal\nActivating color support\n");
+    } else {
+        sink->use_colors = false;
+        TEST_LOG_FAIL("Failed to check if stderr is a terminal\nFatal Error!\n");
+    }
     return &sink->base;
 }
 

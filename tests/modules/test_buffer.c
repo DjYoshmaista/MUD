@@ -8,7 +8,7 @@
 
 TEST(buffer_create_destroy) {
     MudBuffer* buf = mud_buffer_create();
-    !CHECK_NULL(ctx, buf);
+    CHECK_NOT_NULL(ctx, buf);
     if (ctx->abort_current_test) return;
 
     CHECK_INT_EQ(ctx, mud_buffer_size(buf), 0);
@@ -21,7 +21,7 @@ TEST(buffer_create_destroy) {
 
 TEST(buffer_create_from_and_null_safety) {
     MudBuffer* buf = mud_buffer_create_from("Hello, World!");
-    !CHECK_NULL(ctx, buf);
+    CHECK_NOT_NULL(ctx, buf);
     if (ctx->abort_current_test) return;
 
     CHECK_INT_EQ(ctx, mud_buffer_size(buf), 13);
@@ -29,7 +29,7 @@ TEST(buffer_create_from_and_null_safety) {
     mud_buffer_destroy(buf);
 
     buf = mud_buffer_create_from(NULL);
-    !CHECK_NULL(ctx, buf);
+    CHECK_NOT_NULL(ctx, buf);
     if (ctx->abort_current_test) return;
     CHECK(mud_buffer_is_empty(buf));
     mud_buffer_destroy(buf);
@@ -50,7 +50,7 @@ TEST(buffer_create_from_and_null_safety) {
 
 TEST(buffer_append_operations) {
     MudBuffer* buf = mud_buffer_create();
-    !CHECK_NULL(ctx, buf);
+    CHECK_NOT_NULL(ctx, buf);
     if (ctx->abort_current_test) return;
 
     CHECK(mud_buffer_append_char(buf, 'H'));
@@ -73,7 +73,7 @@ TEST(buffer_append_operations) {
 
 TEST(buffer_char_access_and_truncate) {
     MudBuffer* buf = mud_buffer_create_from("Hello");
-    !CHECK_NULL(ctx, buf);
+    CHECK_NOT_NULL(ctx, buf);
     if (ctx->abort_current_test) return;
 
     CHECK_INT_EQ(ctx, mud_buffer_char_at(buf, 0), 'H');
@@ -97,11 +97,11 @@ TEST(buffer_char_access_and_truncate) {
 
 TEST(buffer_clear_clone_equals) {
     MudBuffer* original = mud_buffer_create_from("Original content");
-    !CHECK_NULL(ctx, original);
+    CHECK_NOT_NULL(ctx, original);
     if (ctx->abort_current_test) return;
 
     MudBuffer* clone = mud_buffer_clone(original);
-    !CHECK_NULL(ctx, clone);
+    CHECK_NOT_NULL(ctx, clone);
     if (ctx->abort_current_test) { mud_buffer_destroy(original); return; }
 
     CHECK(mud_buffer_equals(original, clone));
@@ -128,7 +128,7 @@ TEST(buffer_clear_clone_equals) {
 
 TEST(buffer_reserve_and_growth) {
     MudBuffer* buf = mud_buffer_create();
-    !CHECK_NULL(ctx, buf);
+    CHECK_NOT_NULL(ctx, buf);
     if (ctx->abort_current_test) return;
 
     CHECK(mud_buffer_reserve(buf, 1000));

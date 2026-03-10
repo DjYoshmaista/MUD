@@ -12,7 +12,7 @@ TEST(utils_strdup_basic) {
     const char* str = "Hello World";
     char* dupe = mud_strdup(str);
 
-    !CHECK_NULL(ctx, dupe);
+    CHECK_NOT_NULL(ctx, dupe);
     if (ctx->abort_current_test) return;
 
     CHECK(strcmp(str, dupe) == 0);
@@ -35,7 +35,7 @@ TEST(utils_strdup_empty) {
     const char* str = "";
     char* dupe = mud_strdup(str);
 
-    !CHECK_NULL(ctx, dupe);
+    CHECK_NOT_NULL(ctx, dupe);
     if (ctx->abort_current_test) return;
 
     CHECK(strcmp(str, dupe) == 0);

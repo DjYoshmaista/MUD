@@ -86,6 +86,16 @@ int mud_test_register(MudTestInfo info);
         }                                                                       \
     } while (0)
 
+#define REQUIRE_NOT_NULL(ctx, ptr)                                              \
+    do {                                                                        \
+        if ((ptr) == NULL) {                                                    \
+            mud_testctx_record_failuref((ctx), MUD_TEST_SEV_REQUIRE,            \
+                __FILE__, __LINE__,                                             \
+                "REQUIRE_NOT_NULL(" #ptr ")",                                   \
+                "pointer is NULL");                                             \
+        }                                                                       \
+    } while (0)
+
 #define CHECK_PTR_EQ(ctx, actual, expected)                                     \
     do {                                                                        \
         const void* _a = (actual);                                              \

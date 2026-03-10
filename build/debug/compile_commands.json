@@ -1,6 +1,18 @@
 [
 {
   "directory": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug",
+  "command": "/usr/bin/cc -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2 -o src/CMakeFiles/mud_core.dir/mud_log.c.o -c /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_log.c",
+  "file": "/home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_log.c",
+  "output": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/src/CMakeFiles/mud_core.dir/mud_log.c.o"
+},
+{
+  "directory": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug",
+  "command": "/usr/bin/cc -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2 -o src/CMakeFiles/mud_core.dir/mud_log_sink.c.o -c /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_log_sink.c",
+  "file": "/home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_log_sink.c",
+  "output": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/src/CMakeFiles/mud_core.dir/mud_log_sink.c.o"
+},
+{
+  "directory": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug",
   "command": "/usr/bin/cc -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2 -o src/CMakeFiles/mud_core.dir/mud_vector.c.o -c /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_vector.c",
   "file": "/home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_vector.c",
   "output": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/src/CMakeFiles/mud_core.dir/mud_vector.c.o"

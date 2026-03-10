@@ -5,6 +5,8 @@
 # Creates a variable listing all source files for the core library
 # ------------------------------------------------------------------------------
 set(MUD_CORE_SOURCES
+	mud_log.c
+	mud_log_sink.c
     mud_vector.c
     mud_buffer.c
     mud_str.c

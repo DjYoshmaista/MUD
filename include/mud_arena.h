@@ -66,14 +66,14 @@ void* mud_arena_alloc_aligned(MudArena* arena, size_t size, size_t align);
     Usage: MyStruct* obj = MUD_ARENA_NEW(arena, MyStruct);
 */
 #define MUD_ARENA_NEW(arena, type)                                                      \
-    ((type*)mud_arena_alloc_zero(arena), sizeof(type)))
+    (type*)mud_arena_alloc_zero((arena, sizeof(type)))
 
 /*  @brief Allocates an array of objects of the given type.
 
     Usage: int* numbers = MUD_ARENA_NEW_ARRAY(arena, int, 100);
 */
 #define MUD_ARENA_NEW_ARRAY(arena, type, count)                                         \
-    ((type*)mud_arena_alloc_zero((arena), sizeof(type) * (count)))
+    (type*)mud_arena_alloc_zero((arena), sizeof(type) * (count))
 
 /*  @brief Reset the arena, making all memory available for reuse
 
