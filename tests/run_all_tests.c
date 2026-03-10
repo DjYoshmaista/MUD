@@ -39,12 +39,12 @@ static RunnerConfig parse_args(int argc, char* argv[]) {
 	    }
 	}
 	else if (strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0) {
-	    printf("Usage; %s [options]\n", argv[0]);
-	    printf("  -v, --verbose	Verbose output\n");
-	    printf("  -s, --stop	Stop on first failure\n");
-	    printf("  -n, --name STR	Only run tests containing STR in name\n");
-	    printf("  -t, --tag STR	Only run tests containing STR in tags\n");
-	    printf("  -h, --help	Show this help\n");
+	    MUD_LOG_INFO("Usage; %s [options]\n", argv[0]);
+	    MUD_LOG_INFO("  -v, --verbose	Verbose output\n");
+	    MUD_LOG_INFO("  -s, --stop	Stop on first failure\n");
+	    MUD_LOG_INFO("  -n, --name STR	Only run tests containing STR in name\n");
+	    MUD_LOG_INFO("  -t, --tag STR	Only run tests containing STR in tags\n");
+	    MUD_LOG_INFO("  -h, --help	Show this help\n");
 	    exit(EXIT_SUCCESS);
 	}
     }
@@ -54,15 +54,15 @@ static RunnerConfig parse_args(int argc, char* argv[]) {
 
 static int test_matches_filter(const MudTestInfo* test, const RunnerConfig* cfg) {
     if (cfg->filter_name != NULL) {
-	if (strstr(test->name, cfg->filter_name) == NULL) {
-	    return 0;
-	}
+        if (strstr(test->name, cfg->filter_name) == NULL) {
+            return 0;
+        }
     }
 
     if (cfg->filter_tag != NULL) {
-	if (test->tags == NULL || strstr(test->tags, cfg->filter_tag) == NULL) {
-	    return 0;
-	}
+        if (test->tags == NULL || strstr(test->tags, cfg->filter_tag) == NULL) {
+            return 0;
+        }
     }
 
     return 1;
@@ -82,13 +82,13 @@ static int run_single_test(const MudTestInfo* test, const RunnerConfig* cfg) {
     int passed = (ctx.assertions_failed == 0);
 
     if (cfg->verbose || !passed) {
-	printf("%s %s (%.2f ms)\n",
-	    passed ? "PASS" : "FAIL",
-	    test->name,
-	    elapsed_ms);
-	if (!passed) {
-	    mud_testctx_print_failures(stdout, &ctx);
-	}
+        MUD_LOG_INFO("%s %s (%.2f ms)\n",
+            passed ? "PASS" : "FAIL",
+            test->name,
+            elapsed_ms);
+        if (!passed) {
+            mud_testctx_print_failures(stdout, &ctx);
+        }
     }
 
     return passed;
@@ -121,9 +121,8 @@ int main(int argc, char* argv[]) {
     int skipped = 0;
 
     MUD_LOG_INFO("Found %zu registered tests.  Running...\n", reg->count);
-    if (cfg.filter_name) printf("  Name filter: %s\n", cfg.filter_name);
-    if (cfg.filter_tag) printf("  Tag filter: %s\n", cfg.filter_tag);
-    printf("\n");
+    if (cfg.filter_name) MUD_LOG_INFO("  Name filter: %s\n", cfg.filter_name);
+    if (cfg.filter_tag) MUD_LOG_INFO("  Tag filter: %s\n", cfg.filter_tag);
 
     clock_t suite_start = clock();
 

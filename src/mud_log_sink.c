@@ -1,5 +1,4 @@
 #include "mud_log_sink.h"
-#include "test/test_log.h"
 #include "mud_utils.h"
 #include <stdio.h>
 #include <stdlib.h>
