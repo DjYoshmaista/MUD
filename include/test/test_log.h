@@ -34,4 +34,9 @@
 #define TEST_LOG_CHECKPOINT(name)                                 \
     MUD_LOG_TRACE("[%s] Checkpoint: %s", ctx->current_test_name, name)
 
+/* Context aware macro layer for tests */
+#define TEST_LOG_TO(sink, level, fmt, ...)                        \
+    mud_log_write_to_sink((sink), (level), __FILE__, __LINE__,    \
+            "[%s] " fmt, ctx->current_test_name, ##__VA_ARGS__)
+
 #endif /* MUD_TEST_LOG_H */

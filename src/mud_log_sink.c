@@ -88,8 +88,8 @@ static void console_write(MudLogSink* sink, const MudLogRecord* record) {
 
 // Console Sink: Flush
 static void console_flush(MudLogSink* sink) {
-    ConsoleSink* sink; // unused
-    fflush(console->stream);  // Force buffered output to be written
+    (void)sink; // unused
+    fflush(sink);  // Force buffered output to be written
 }
 
 // Console Sink: Destroy

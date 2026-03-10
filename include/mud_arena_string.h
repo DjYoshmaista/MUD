@@ -77,12 +77,10 @@ char* mud_arena_strcat(MudArena* arena, size_t count, ...);
 char* mud_arena_strjoin(MudArena* arena, const char* separator, const char** strings, size_t count);
 
 //  String View to Owned String
-/*  @brief Copy a substring into arena memory
+/*  @brief Copy a substring into an owned C String 
 
     @param arena Arena to allocate from
-    @param str Source string
-    @param start Starting offset
-    @param len Number of characters to copy
+    @param sv String view
     @return Null-terminated string copy, or NULL on failure
 */
 char* mud_arena_strview_to_cstr(MudArena* arena, MudStrView sv);

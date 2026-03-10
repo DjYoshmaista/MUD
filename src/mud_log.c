@@ -93,6 +93,14 @@ void mud_log_writev(MudLogLevel level, const char* file, int line, const char* f
         return;
     }
 
+    // Acquire the mutex
+    pthread_mutex_lock(&g_log.mutex);
+    if (!g_log.initialized) {
+        pthread_mutex_unlock(&g_log.mutex);
+        MUD_LOG_ERROR("mud_log_writev: Logging not initialized");
+        return;     // Logging not initialized
+    }
+
     // Check runtime level
     if (level < g_log.min_level) {
         return;
@@ -127,7 +135,6 @@ void mud_log_writev(MudLogLevel level, const char* file, int line, const char* f
     };
 
     // Send to all sinks
-    pthread_mutex_lock(&g_log.mutex);
     for (size_t i = 0; i < g_log.sink_count; i++) {
         MudLogSink* sink = g_log.sinks[i];
         if (sink != NULL && sink->write != NULL) {

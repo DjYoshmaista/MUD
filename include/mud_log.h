@@ -169,6 +169,18 @@ void mud_log_clear_sinks(void);
 /*  @brief Flush all sinks (write buffered data) */
 void mud_log_flush(void);
 
+/*  @brief Write a message to a sink
+
+    @param sink Sink to write to
+    @param level Severity level of message
+    @param file Source file name (__FILE__)
+    @param line Source line number (__LINE__)
+    @param fmt Format string (printf-style)
+    @param .. Format arguments
+    @return true on success, false on failure
+*/
+void mud_log_write_to_sink(MudLogSink* sink, MudLogLevel level, const char* file, int line, const char* fmt, ...);
+
 #ifdef __cplusplus
 }
 #endif
