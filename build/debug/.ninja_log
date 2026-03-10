@@ -86,3 +86,5 @@
 2	79	1773122994170128214	tests/CMakeFiles/run_all_tests.dir/modules/test_vector.c.o	91a63f8fe4ced026
 1	137	1773123053191551118	tests/CMakeFiles/run_all_tests.dir/modules/test_arena.c.o	4a05e28d61629a4b
 137	164	1773123053327554901	tests/run_all_tests	dee02f26c910ef6f
+1	127	1773123671109781830	tests/CMakeFiles/run_all_tests.dir/modules/test_arena.c.o	4a05e28d61629a4b
+127	155	1773123671235785009	tests/run_all_tests	dee02f26c910ef6f
