@@ -28,7 +28,7 @@ static RunnerConfig parse_args(int argc, char* argv[]) {
 	else if (strcmp(argv[i], "-s") == 0 || strcmp(argv[i], "--stop") == 0) {
 	    cfg.stop_on_failure = 1;
 	}
-	else if (strcmp(argv[i], "-n") == 0 || strcmp(argv[i], "--namme") == 0) {
+	else if (strcmp(argv[i], "-n") == 0 || strcmp(argv[i], "--name") == 0) {
 	    if (i + 1 < argc) {
 		cfg.filter_name = argv[++i];
 	    }

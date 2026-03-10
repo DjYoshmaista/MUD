@@ -1,8 +1,10 @@
-#ifndef MUD_STRDUP_H
-#define MUD_STRDUP_H
+#ifndef MUD_UTILS_H
+#define MUD_UTILS_H
 
 #include <stddef.h>
 #include <stdio.h>
+#include <stdbool.h>
+#include <errno.h>
 
 #ifdef __cplusplus
 extern "C" {

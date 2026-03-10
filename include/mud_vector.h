@@ -68,7 +68,6 @@ const void* mud_vector_data_const(const MudVector* vec);
 
 #define MUD_VECTOR_REMOVE(vec, type, index)      \
     do {                                          \
-        type _tmp;                                   \
         mud_vector_remove((vec), (index));            \
     } while (0)                                   \
 

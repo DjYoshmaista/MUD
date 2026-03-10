@@ -608,7 +608,6 @@ TEST(arena_strcat) {
     char* empty = mud_arena_strcat(arena, 0);
     CHECK_NULL(ctx, empty);
     if (ctx->abort_current_test) { mud_arena_destroy(arena); return; }
-    CHECK_STR_EQ(ctx, empty, "");
     TEST_LOG_TRACE("Copy: %s\nOriginal: %s", empty, "");
 
     // With NULL in arguemnts (treated as empty)
@@ -668,9 +667,9 @@ TEST(arena_strjoin) {
     TEST_LOG_DEBUG("Checking that zero count works");
     char* empty = mud_arena_strjoin(arena, ", ", words, 0);
     TEST_LOG_TRACE("EMPTY: %s", empty);
-    REQUIRE_NOT_NULL(ctx, &empty);
+    REQUIRE_NOT_NULL(ctx, empty);
     if (ctx->abort_current_test) { mud_arena_destroy(arena); return; }
-    CHECK_STR_EQ(ctx, empty, ", ");
+    CHECK_STR_EQ(ctx, empty, "");
     TEST_LOG_TRACE("Copy: %s\nOriginal: %s", empty, "");
 
     mud_arena_destroy(arena);

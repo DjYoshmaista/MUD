@@ -121,7 +121,7 @@ void mud_log_writev(MudLogLevel level, const char* file, int line, const char* f
     MudLogRecord record = {
         .level = level,
         .timestamp = timestamp,
-        .file = file,
+        .file = filename,
         .line = line,
         .message = message
     };
