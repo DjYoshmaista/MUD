@@ -3,6 +3,8 @@
 
 #include "mud_log.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -49,7 +51,7 @@ void mud_log_sink_destroy(MudLogSink* sink); // Wrapper function: calls the sink
     @param min_level Minimum level for this sink
     @return New sink, or NULL on failure
 */
-MudLogSink* mud_log_sink_console_create(MudLogLevel min_level);  // Output: colored, human-readable -- Colors: ANSI escape codes.  Makes lvl visually distinct
+MudLogSink* mud_log_sink_console_create(FILE* stream, MudLogLevel min_level);  // Output: colored, human-readable -- Colors: ANSI escape codes.  Makes lvl visually distinct
 
 // File Sink
 /*  @brief Create a sink that writes to a file
@@ -73,6 +75,29 @@ typedef void (*MudLogCallbackFn)(const MudLogRecord* record, void* user_data);
     @return New sink, or NULL on failure
 */
 MudLogSink* mud_log_sink_callback_create(MudLogCallbackFn callback, void* user_data, MudLogLevel min_level); // Integration w/ other systems
+
+// Convenience functions
+/*  @brief Create a sink that writes to stderr with no colors
+
+    @param min_level Minimum level for this sink
+    @return New sink, or NULL on failure
+*/
+MudLogSink* mud_log_sink_stderr_create(FILE* stream, MudLogLevel min_level);
+
+/*  @brief Create a sink that writes to stdout with no colors
+
+    @param min_level Minimum level for this sink
+    @return New sink, or NULL on failure
+*/
+MudLogSink* mud_log_sink_stdout_create(FILE* stream, MudLogLevel min_level);
+
+/*  @brief Create a sink that writes to a custom stream
+
+    @param stream Stream to write to
+    @param min_level Minimum level for this sink
+    @return New sink, or NULL on failure
+MudLogSink* mud_log_sink_custom_create(FILE* stream, MudLogLevel min_level);
+*/
 
 #ifdef __cplusplus
 }

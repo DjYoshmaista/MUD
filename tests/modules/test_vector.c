@@ -97,7 +97,7 @@ TEST(vector_insert_pop_remove) {
     CHECK(mud_vector_insert(vec, 1, &middle));
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 4);
     CHECK_INT_EQ(ctx, *(int*)mud_vector_get(vec, 1), 20);
-    for (int i = 0; i <= 3; i++) {
+    for (size_t i = 0; i <= 3; i++) {
         TEST_LOG_TRACE("Vector[%d]: %d", i, *(int*)mud_vector_get(vec, i));
     }
 
@@ -105,7 +105,7 @@ TEST(vector_insert_pop_remove) {
     CHECK(mud_vector_remove(vec, 2));
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 3);
     CHECK_INT_EQ(ctx, *(int*)mud_vector_get(vec, 2), 40);
-    for (int i = 0; i <= 2; i++) {
+    for (size_t i = 0; i <= 2; i++) {
         TEST_LOG_TRACE("Vector[%d]: %d", i, *(int*)mud_vector_get(vec, i));
     }
 
@@ -115,7 +115,7 @@ TEST(vector_insert_pop_remove) {
     CHECK_INT_EQ(ctx, popped, 40);
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 2);
     TEST_LOG_TRACE("Popped value: %d", popped);
-    for (int i = 0; i <= 1; i++) {
+    for (size_t i = 0; i <= 1; i++) {
         TEST_LOG_TRACE("Vector[%d]: %d", i, *(int*)mud_vector_get(vec, i));
     }
 
@@ -167,7 +167,7 @@ TEST(vector_data_access) {
     if (ctx->abort_current_test) return;
 
     TEST_LOG_DEBUG("Pushing 5 elements...");
-    for (int i = 0; i < 5; i++) {
+    for (size_t i = 0; i < 5; i++) {
         CHECK(mud_vector_push(vec, &i));
         TEST_LOG_TRACE("Vector[%d] checked: %d", i + 1, *(int*)mud_vector_get(vec, i));
     }

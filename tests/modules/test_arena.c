@@ -283,9 +283,9 @@ TEST(arena_exhaustion) {
     if (remaining > 0) {
         void* ptr3 = mud_arena_alloc_aligned(arena, 1, 1);  // 1-Byte alignment
         // May or may not succeed depending on exact remaining
-        if (CHECK_NOT_NULL(ctx, (void*)ptr3)) {
+        if ((void*)ptr3 != NULL) {
             TEST_LOG_INFO("Allocated %d bytes to ptr3\n", remaining);
-        } else if (CHECK_NULL(ctx, (void*)ptr3)) {
+        } else if ((void*)ptr3 == NULL) {
             TEST_LOG_WARN("Failed to allocate %d bytes to ptr3\n", remaining);
         } else {
             TEST_LOG_ERROR("Unexpected allocation result for ptr3.  Value of \"remaining\": \"%d\"\n", remaining);
@@ -713,7 +713,7 @@ TEST(arena_substr) {
     TEST_LOG_DEBUG("Checking that start beyond string works\n");
     char* empty = mud_arena_substr(arena, original, 100, 5);
     REQUIRE_NOT_NULL(ctx, empty);
-    if (ctx->abort_current_test) { mud_arenadestroy(arena); return; }
+    if (ctx->abort_current_test) { mud_arena_destroy(arena); return; }
     CHECK_STR_EQ(ctx, empty, "");
     TEST_LOG_TRACE("Copy: %s\nOriginal: %s", empty, "");
 
@@ -794,7 +794,7 @@ TEST(arena_practical_usage) {
 
     // Simulate receiving a command
     TEST_LOG_INFO("Arena Created And Tested Successfully\nBeginning Arena Practical Usage Test...\n");
-    const char* raw_command = "  say Hello, everyone! How are you?  ";
+    // const char* raw_command = "  say Hello, everyone! How are you?  ";
 
     // Process in temporary scope
     TEST_LOG_DEBUG("Beginning temporary scope\n");
@@ -802,7 +802,7 @@ TEST(arena_practical_usage) {
 
     // "Parse" the command (simplified)
     TEST_LOG_DEBUG("Checking that \"Parse\" the command (simplified) works\n");
-    char* trimmed = mud_arena_strdup(arena, raw_command);
+    // char* trimmed = mud_arena_strdup(arena, raw_command);
     // TODO: Implement actual trimming
 
     // Extract command verb (first word)

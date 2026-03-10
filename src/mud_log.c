@@ -160,7 +160,7 @@ bool mud_log_init(void) {
     g_log.initialized = true;
 
     // Add default console sink
-    MudLogSink* console = mud_log_sink_console_create(MUD_LOG_DEBUG);
+    MudLogSink* console = mud_log_sink_console_create(stderr, MUD_LOG_DEBUG);
     if (console != NULL) {
         mud_log_add_sink(console);
     }

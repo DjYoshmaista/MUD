@@ -483,6 +483,7 @@ build cmake_object_order_depends_target_mud_core: phony || .
 
 build src/CMakeFiles/mud_core.dir/mud_log.c.o: C_COMPILER__mud_core_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_log.c || cmake_object_order_depends_target_mud_core
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = src/CMakeFiles/mud_core.dir/mud_log.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include
@@ -492,6 +493,7 @@ build src/CMakeFiles/mud_core.dir/mud_log.c.o: C_COMPILER__mud_core_unscanned_De
 
 build src/CMakeFiles/mud_core.dir/mud_log_sink.c.o: C_COMPILER__mud_core_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_log_sink.c || cmake_object_order_depends_target_mud_core
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = src/CMakeFiles/mud_core.dir/mud_log_sink.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include
@@ -501,6 +503,7 @@ build src/CMakeFiles/mud_core.dir/mud_log_sink.c.o: C_COMPILER__mud_core_unscann
 
 build src/CMakeFiles/mud_core.dir/mud_vector.c.o: C_COMPILER__mud_core_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_vector.c || cmake_object_order_depends_target_mud_core
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = src/CMakeFiles/mud_core.dir/mud_vector.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include
@@ -510,6 +513,7 @@ build src/CMakeFiles/mud_core.dir/mud_vector.c.o: C_COMPILER__mud_core_unscanned
 
 build src/CMakeFiles/mud_core.dir/mud_buffer.c.o: C_COMPILER__mud_core_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_buffer.c || cmake_object_order_depends_target_mud_core
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = src/CMakeFiles/mud_core.dir/mud_buffer.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include
@@ -519,6 +523,7 @@ build src/CMakeFiles/mud_core.dir/mud_buffer.c.o: C_COMPILER__mud_core_unscanned
 
 build src/CMakeFiles/mud_core.dir/mud_str.c.o: C_COMPILER__mud_core_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_str.c || cmake_object_order_depends_target_mud_core
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = src/CMakeFiles/mud_core.dir/mud_str.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include
@@ -528,6 +533,7 @@ build src/CMakeFiles/mud_core.dir/mud_str.c.o: C_COMPILER__mud_core_unscanned_De
 
 build src/CMakeFiles/mud_core.dir/mud_hashmap.c.o: C_COMPILER__mud_core_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_hashmap.c || cmake_object_order_depends_target_mud_core
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = src/CMakeFiles/mud_core.dir/mud_hashmap.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include
@@ -537,6 +543,7 @@ build src/CMakeFiles/mud_core.dir/mud_hashmap.c.o: C_COMPILER__mud_core_unscanne
 
 build src/CMakeFiles/mud_core.dir/mud_utils.c.o: C_COMPILER__mud_core_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_utils.c || cmake_object_order_depends_target_mud_core
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = src/CMakeFiles/mud_core.dir/mud_utils.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include
@@ -546,6 +553,7 @@ build src/CMakeFiles/mud_core.dir/mud_utils.c.o: C_COMPILER__mud_core_unscanned_
 
 build src/CMakeFiles/mud_core.dir/mud_arena.c.o: C_COMPILER__mud_core_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_arena.c || cmake_object_order_depends_target_mud_core
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = src/CMakeFiles/mud_core.dir/mud_arena.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include
@@ -555,6 +563,7 @@ build src/CMakeFiles/mud_core.dir/mud_arena.c.o: C_COMPILER__mud_core_unscanned_
 
 build src/CMakeFiles/mud_core.dir/mud_arena_temp.c.o: C_COMPILER__mud_core_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_arena_temp.c || cmake_object_order_depends_target_mud_core
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = src/CMakeFiles/mud_core.dir/mud_arena_temp.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include
@@ -564,6 +573,7 @@ build src/CMakeFiles/mud_core.dir/mud_arena_temp.c.o: C_COMPILER__mud_core_unsca
 
 build src/CMakeFiles/mud_core.dir/mud_arena_string.c.o: C_COMPILER__mud_core_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_arena_string.c || cmake_object_order_depends_target_mud_core
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = src/CMakeFiles/mud_core.dir/mud_arena_string.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include
@@ -640,6 +650,7 @@ build cmake_object_order_depends_target_mud_test_support: phony || cmake_object_
 
 build tests/CMakeFiles/mud_test_support.dir/test_registry.c.o: C_COMPILER__mud_test_support_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/test_registry.c || cmake_object_order_depends_target_mud_test_support
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = tests/CMakeFiles/mud_test_support.dir/test_registry.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
@@ -676,6 +687,7 @@ build cmake_object_order_depends_target_run_all_tests: phony || cmake_object_ord
 
 build tests/CMakeFiles/run_all_tests.dir/run_all_tests.c.o: C_COMPILER__run_all_tests_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_all_tests.c || cmake_object_order_depends_target_run_all_tests
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = tests/CMakeFiles/run_all_tests.dir/run_all_tests.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
@@ -685,6 +697,7 @@ build tests/CMakeFiles/run_all_tests.dir/run_all_tests.c.o: C_COMPILER__run_all_
 
 build tests/CMakeFiles/run_all_tests.dir/modules/test_vector.c.o: C_COMPILER__run_all_tests_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_vector.c || cmake_object_order_depends_target_run_all_tests
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = tests/CMakeFiles/run_all_tests.dir/modules/test_vector.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
@@ -694,6 +707,7 @@ build tests/CMakeFiles/run_all_tests.dir/modules/test_vector.c.o: C_COMPILER__ru
 
 build tests/CMakeFiles/run_all_tests.dir/modules/test_buffer.c.o: C_COMPILER__run_all_tests_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_buffer.c || cmake_object_order_depends_target_run_all_tests
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = tests/CMakeFiles/run_all_tests.dir/modules/test_buffer.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
@@ -703,6 +717,7 @@ build tests/CMakeFiles/run_all_tests.dir/modules/test_buffer.c.o: C_COMPILER__ru
 
 build tests/CMakeFiles/run_all_tests.dir/modules/test_str.c.o: C_COMPILER__run_all_tests_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_str.c || cmake_object_order_depends_target_run_all_tests
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = tests/CMakeFiles/run_all_tests.dir/modules/test_str.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
@@ -712,6 +727,7 @@ build tests/CMakeFiles/run_all_tests.dir/modules/test_str.c.o: C_COMPILER__run_a
 
 build tests/CMakeFiles/run_all_tests.dir/modules/test_hashmap.c.o: C_COMPILER__run_all_tests_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_hashmap.c || cmake_object_order_depends_target_run_all_tests
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = tests/CMakeFiles/run_all_tests.dir/modules/test_hashmap.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
@@ -721,6 +737,7 @@ build tests/CMakeFiles/run_all_tests.dir/modules/test_hashmap.c.o: C_COMPILER__r
 
 build tests/CMakeFiles/run_all_tests.dir/modules/test_utils.c.o: C_COMPILER__run_all_tests_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_utils.c || cmake_object_order_depends_target_run_all_tests
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = tests/CMakeFiles/run_all_tests.dir/modules/test_utils.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
@@ -730,6 +747,7 @@ build tests/CMakeFiles/run_all_tests.dir/modules/test_utils.c.o: C_COMPILER__run
 
 build tests/CMakeFiles/run_all_tests.dir/modules/test_arena.c.o: C_COMPILER__run_all_tests_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_arena.c || cmake_object_order_depends_target_run_all_tests
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = tests/CMakeFiles/run_all_tests.dir/modules/test_arena.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
@@ -769,6 +787,7 @@ build cmake_object_order_depends_target_test_vector: phony || cmake_object_order
 
 build tests/CMakeFiles/test_vector.dir/run_single_module.c.o: C_COMPILER__test_vector_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_single_module.c || cmake_object_order_depends_target_test_vector
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = tests/CMakeFiles/test_vector.dir/run_single_module.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
@@ -778,6 +797,7 @@ build tests/CMakeFiles/test_vector.dir/run_single_module.c.o: C_COMPILER__test_v
 
 build tests/CMakeFiles/test_vector.dir/modules/test_vector.c.o: C_COMPILER__test_vector_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_vector.c || cmake_object_order_depends_target_test_vector
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = tests/CMakeFiles/test_vector.dir/modules/test_vector.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
@@ -817,6 +837,7 @@ build cmake_object_order_depends_target_test_buffer: phony || cmake_object_order
 
 build tests/CMakeFiles/test_buffer.dir/run_single_module.c.o: C_COMPILER__test_buffer_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_single_module.c || cmake_object_order_depends_target_test_buffer
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = tests/CMakeFiles/test_buffer.dir/run_single_module.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
@@ -826,6 +847,7 @@ build tests/CMakeFiles/test_buffer.dir/run_single_module.c.o: C_COMPILER__test_b
 
 build tests/CMakeFiles/test_buffer.dir/modules/test_buffer.c.o: C_COMPILER__test_buffer_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_buffer.c || cmake_object_order_depends_target_test_buffer
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = tests/CMakeFiles/test_buffer.dir/modules/test_buffer.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
@@ -865,6 +887,7 @@ build cmake_object_order_depends_target_test_str: phony || cmake_object_order_de
 
 build tests/CMakeFiles/test_str.dir/run_single_module.c.o: C_COMPILER__test_str_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_single_module.c || cmake_object_order_depends_target_test_str
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = tests/CMakeFiles/test_str.dir/run_single_module.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
@@ -874,6 +897,7 @@ build tests/CMakeFiles/test_str.dir/run_single_module.c.o: C_COMPILER__test_str_
 
 build tests/CMakeFiles/test_str.dir/modules/test_str.c.o: C_COMPILER__test_str_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_str.c || cmake_object_order_depends_target_test_str
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = tests/CMakeFiles/test_str.dir/modules/test_str.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
@@ -913,6 +937,7 @@ build cmake_object_order_depends_target_test_hashmap: phony || cmake_object_orde
 
 build tests/CMakeFiles/test_hashmap.dir/run_single_module.c.o: C_COMPILER__test_hashmap_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_single_module.c || cmake_object_order_depends_target_test_hashmap
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = tests/CMakeFiles/test_hashmap.dir/run_single_module.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
@@ -922,6 +947,7 @@ build tests/CMakeFiles/test_hashmap.dir/run_single_module.c.o: C_COMPILER__test_
 
 build tests/CMakeFiles/test_hashmap.dir/modules/test_hashmap.c.o: C_COMPILER__test_hashmap_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_hashmap.c || cmake_object_order_depends_target_test_hashmap
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = tests/CMakeFiles/test_hashmap.dir/modules/test_hashmap.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
@@ -961,6 +987,7 @@ build cmake_object_order_depends_target_test_utils: phony || cmake_object_order_
 
 build tests/CMakeFiles/test_utils.dir/run_single_module.c.o: C_COMPILER__test_utils_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_single_module.c || cmake_object_order_depends_target_test_utils
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = tests/CMakeFiles/test_utils.dir/run_single_module.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
@@ -970,6 +997,7 @@ build tests/CMakeFiles/test_utils.dir/run_single_module.c.o: C_COMPILER__test_ut
 
 build tests/CMakeFiles/test_utils.dir/modules/test_utils.c.o: C_COMPILER__test_utils_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_utils.c || cmake_object_order_depends_target_test_utils
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = tests/CMakeFiles/test_utils.dir/modules/test_utils.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
@@ -1009,6 +1037,7 @@ build cmake_object_order_depends_target_test_arena: phony || cmake_object_order_
 
 build tests/CMakeFiles/test_arena.dir/run_single_module.c.o: C_COMPILER__test_arena_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_single_module.c || cmake_object_order_depends_target_test_arena
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = tests/CMakeFiles/test_arena.dir/run_single_module.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
@@ -1018,6 +1047,7 @@ build tests/CMakeFiles/test_arena.dir/run_single_module.c.o: C_COMPILER__test_ar
 
 build tests/CMakeFiles/test_arena.dir/modules/test_arena.c.o: C_COMPILER__test_arena_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_arena.c || cmake_object_order_depends_target_test_arena
   CONFIG = Debug
+  DEFINES = -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
   DEP_FILE = tests/CMakeFiles/test_arena.dir/modules/test_arena.c.o.d
   FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
   INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test

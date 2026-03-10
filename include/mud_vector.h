@@ -44,8 +44,8 @@ const void* mud_vector_data_const(const MudVector* vec);
 /* Type-Safe Wrapper Macros */
 #define MUD_VECTOR_PUSH(vec, type, value)       \
     do {                                        \
-	type _tmp = (value);                        \
-	mud_vector_push((vec), &_tmp);              \
+        type _tmp = (value);                        \
+        mud_vector_push((vec), &_tmp);              \
     } while (0)                                 \
 
 #define MUD_VECTOR_GET(vec, type, index)        \
@@ -56,20 +56,20 @@ const void* mud_vector_data_const(const MudVector* vec);
 
 #define MUD_VECTOR_SET(vec, type, index, value) \
     do {                                        \
-	type _tmp = (value);                        \
-	mud_vector_set((vec), (index), &_tmp);      \
+        type _tmp = (value);                        \
+        mud_vector_set((vec), (index), &_tmp);      \
     } while (0)                                 \
 
 #define MUD_VECTOR_INSERT(vec, type, index, value) \
     do {                                            \
-	type _tmp = (value);                            \
-	mud_vector_insert((vec), (index), &_tmp);       \
+        type _tmp = (value);                            \
+        mud_vector_insert((vec), (index), &_tmp);       \
     } while (0)                                     \
 
 #define MUD_VECTOR_REMOVE(vec, type, index)      \
     do {                                          \
-	type _tmp;                                   \
-	mud_vector_remove((vec), (index));            \
+        type _tmp;                                   \
+        mud_vector_remove((vec), (index));            \
     } while (0)                                   \
 
 #ifdef __cplusplus

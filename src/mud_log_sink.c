@@ -4,7 +4,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
+#include <stdbool.h>
 #include <unistd.h>  // for isatty() to detect if stderr is a terminal (for colors)
+
+// Custom errno values (local to this file)
+#ifndef EFPINVAL
+    #define EFPINVAL 1000
+#endif
+#ifndef EFINVAL
+    #define EFINVAL 1001
+#endif
+#ifndef EFHINVAL
+    #define EFHINVAL 1002
+#endif
 
 // Generic Destroy
 void mud_log_sink_destroy(MudLogSink* sink) {
@@ -34,7 +47,10 @@ static const char* level_colors[] = {
 // Console sink structure
 typedef struct {
     MudLogSink base;
-    bool use_colors;
+    FILE* stream;               // Actual output stream (stderr, stdout, etc)
+    bool use_colors;            // Pre-computed: Whether to use ANSI color codes
+    bool is_interactive;        // Pre-computed: Whether stream is an interactive terminal
+    bool colors_forced;         // User override via env/config
 } ConsoleSink;
 
 // Callback Sink structure
@@ -48,9 +64,10 @@ typedef struct {
 // Console Sink: Write
 static void console_write(MudLogSink* sink, const MudLogRecord* record) {
     ConsoleSink* console = (ConsoleSink*)sink;
+    FILE* out = console->stream;  // Use the stored stream
 
     if (console->use_colors) {
-        fprintf(stderr, "%s[%s]%s %s%s%s %s:%d: %s\n",
+        fprintf(out, "%s[%s]%s %s%s%s %s:%d: %s\n",
                 level_colors[record->level],
                 mud_log_level_name(record->level),
                 ANSI_RESET,
@@ -61,7 +78,7 @@ static void console_write(MudLogSink* sink, const MudLogRecord* record) {
                 record->line,
                 record->message);
     } else {
-        fprintf(stderr, "[%s] %s %s:%d: %s\n",
+        fprintf(out, "[%s] %s %s:%d: %s\n",
                 mud_log_level_name(record->level),
                 record->timestamp,
                 record->file,
@@ -81,31 +98,58 @@ static void console_destroy(MudLogSink* sink) {
     free(sink);
 }
 
+// Convenience function to create a sink that writes to stderr (most common)
+MudLogSink* mud_log_sink_stderr_create(FILE* stderr, MudLogLevel min_level) {
+    MudLogSink* stderr_sink = mud_log_sink_console_create(stderr, min_level);
+    return stderr_sink;
+}
+
+// Convenience function to create a sink that writes to stdout
+MudLogSink* mud_log_sink_stdout_create(FILE* stdout, MudLogLevel min_level) {
+    MudLogSink* stdout_sink = mud_log_sink_console_create(stdout, min_level);
+    return stdout_sink;
+}
+
 // Console Sink: Create
-MudLogSink* mud_log_sink_console_create(MudLogLevel min_level) {
+MudLogSink* mud_log_sink_console_create(FILE* stream, MudLogLevel min_level) {
+    if (stream == NULL) {
+        errno = EFPINVAL;
+        return NULL;
+    }
+
     ConsoleSink* sink = malloc(sizeof(ConsoleSink));
     if (sink == NULL) {
         return NULL;
     }
 
+    // Initialize base functionality
     sink->base.write = console_write;
     sink->base.flush = console_flush;
     sink->base.destroy = console_destroy;
     sink->base.min_level = min_level;
 
-    TEST_LOG_DEBUG("Checking file descirptor %p for sink\n", sink);
+    // Store the stream
+    sink->stream = stream;
 
-    // Check if stderr is a terminal.  If it is, enable color support
-    if (isatty(sink) == 0) {
-        sink->use_colors = false;
-        TEST_LOG_WARN("stderr is NOT a terminal--but is a valid file descriptor.  Disabling color support\n");
-    } else if (isatty(sink) == 1) {
+    // Pre-compute capabilities
+    sink->is_interactive = (mud_stream_is_tty(stream) == 1);
+    sink->use_colors = mud_stream_supports_color(stream);
+
+    // Allow runtime override via environment
+    if (getenv("MUD_LOG_FORCE_COLOR") != NULL) {
         sink->use_colors = true;
-        TEST_LOG_INFO("stderr is a terminal\nActivating color support\n");
-    } else {
-        sink->use_colors = false;
-        TEST_LOG_FAIL("Failed to check if stderr is a terminal\nFatal Error!\n");
+        sink->colors_forced = true;
     }
+    if (getenv("MUD_LOG_NO_COLOR") != NULL) {
+        sink->use_colors = false;
+        sink->colors_forced = true;
+    }
+    
+    MUD_LOG_DEBUG("Console Sink created: stream=%p, colors=%s, interactive=%s\n",
+                  (void*)stream,
+                  sink->use_colors ? "enabled" : "disabled",
+                  sink->is_interactive ? "yes" : "no");
+
     return &sink->base;
 }
 

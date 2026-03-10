@@ -7,6 +7,24 @@ project(MUD
 )
 
 # ------------------------------------------------------------------------------
+# CMake Compile Definitions
+# ------------------------------------------------------------------------------
+if(UNIX OR APPLE)
+	# Enable POSIX.1-2008 for fileno, isatty and getcwd
+	add_compile_definitions(_POSIX_C_SOURCE=200809L)
+
+	# For GNU extensions
+	add_compile_definitions(_GNU_SOURCE)
+endif()
+
+# Windows: Suppress MSVC warnings about "unsafe" functions
+if(WIN32)
+	add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
+endif()
+
+
+
+# ------------------------------------------------------------------------------
 # C Language Standard
 # ------------------------------------------------------------------------------
 
