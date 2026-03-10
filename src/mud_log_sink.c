@@ -93,7 +93,6 @@ static void console_flush(MudLogSink* sink) {
     ConsoleSink* console = (ConsoleSink*)sink;
     // stream is not owned by this sink -- do not fclose() it; no other heap allocations to free
     fflush(console->stream);  // Force buffered output to be written
-    free(console); // Frees the ConsoleSink allocation
 }
 
 // Console Sink: Destroy

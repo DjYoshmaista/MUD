@@ -17,6 +17,8 @@
 #include "mud_arena_string.h"
 #include <string.h>
 #include <stdint.h>
+#include <stdbool.h>
+#include <inttypes.h>
 
 // Test: Creation and Destruction -- Tests basic lifecycle, initial state correctness
 TEST(arena_create_destroy) {
@@ -135,7 +137,7 @@ TEST(arena_alignment_default) {
     for (int i = 0; i < 10; i++) {
         if (i % 10 == 0) TEST_LOG_TRACE("Checking alignment of allocation of size %d", i);
         size_t size = (size_t)(i * 7 + 1); // Varying sizes: 1, 8, 15, 22, ...
-        if (i % 10 == 0) TEST_LOG_TRACE("Allocating %d bytes of memory to ptr", size);
+        if (i % 10 == 0) TEST_LOG_TRACE("Allocating %zu bytes of memory to ptr", size);
         void* ptr = mud_arena_alloc(arena, size);
 
         REQUIRE_NOT_NULL(ctx, ptr);
@@ -157,29 +159,37 @@ TEST(arena_alignment_custom) {
     MudArena* arena = mud_arena_create(4096);
     REQUIRE_NOT_NULL(ctx, arena);
     if (ctx->abort_current_test) return;
+    TEST_LOG_INFO("Arena and other Values Created Successfully\nBeginning Arena Custom Alignment Test...");
 
-    TEST_LOG_INFO("Arena Created And Tested Successfully\nBeginning Arena Custom Alignment Test...");
     // Test various alignments
     size_t alignments[] = {1, 2, 4, 8, 16, 32, 64, 128, 256};
     size_t num_alignments = sizeof(alignments) / sizeof(alignments[0]);
 
+    TEST_LOG_INFO("Testing various alignments. %zu alignments to test.", num_alignments);
+    
     for (size_t i = 0; i < num_alignments; i++) {
-        if (i % 9 == 0) TEST_LOG_TRACE("Checking alignment of allocation of size %d", i);
         size_t align = alignments[i];
-        void* ptr = mud_arena_alloc_aligned(arena, 32, align);
-        if (i % 9 == 0) TEST_LOG_TRACE("Allocating 32 bytes of memory to ptr");
+
+        if (i % 3 == 0) TEST_LOG_TRACE("Checking 32-byte allocation with alignment %zu: ", align);
+
+        void* ptr = mud_arena_alloc_aligned((MudArena*)arena, 32, align);
+
+        if (i % 3 == 0) TEST_LOG_TRACE("Allocation attempted");
 
         REQUIRE_NOT_NULL(ctx, ptr);
         if (ctx->abort_current_test) { mud_arena_destroy(arena); return; }
-        if (i % 9 == 0) TEST_LOG_TRACE("ptr successfully tested not NULL\nChecking alignment of ptr...");
 
         uintptr_t addr = (uintptr_t)ptr;
-        CHECK_INT_EQ(ctx, addr % align, 0);
-        if (i % 9 == 0) TEST_LOG_TRACE("ptr successfully checked alignment %d", i);
-    }
 
+        TEST_LOG_INFO("addr value: %" PRIuPTR " -- align value: %zu -- remainder: %" PRIuPTR, addr, align, addr % align);
+        CHECK_INT_EQ(ctx, (int)(addr % align), 0);
+        if (ctx->abort_current_test) { mud_arena_destroy(arena); return; }
+
+        if (i % 3 == 0) TEST_LOG_TRACE("ptr successfully passed alignment check for alignment %zu", align);
+    }
+    TEST_LOG_INFO("Arena Custom Alignment Test Successfully Completed!");
     mud_arena_destroy(arena);
-    TEST_LOG_INFO("Arena Custom Alignment Test Successfully Completed!\nArena Destroyed; Memory Freed");
+    TEST_LOG_INFO("Arena Destroyed; Memory Freed");
 }
 
 // Test: Invalid Alignment Rejected -- Tests non-power-of-two alignments are rejected
@@ -324,20 +334,21 @@ TEST(arena_temp_basic) {
 
     // Begin temporary scope
     MudArenaTemp temp = mud_arena_temp_begin(arena);
+    TEST_LOG_DEBUG("arena_temp_basic: Arena Temporary Scope Started Successfully");
 
     // Allocate temporary data
     mud_arena_alloc(arena, 100);
     char* temporary = mud_arena_strdup(arena, "temporary");
     mud_arena_alloc(arena, 200);
-    CHECK_INT_EQ(ctx, mud_arena_used(arena), temporary);
 
     CHECK(mud_arena_used(arena) > used_after_persistent);
+    TEST_LOG_DEBUG("arena_temp_basic: Temporary Scope Allocated Successfully.  Values: Arena - %p :: persistent - %s :: used_after_persistent - %zu :: temporary %s", arena, persistent, used_after_persistent, temporary);
 
     // End temp scope
     mud_arena_temp_end(temp);
 
     // Back to state after persistent allocation
-    CHECK_INT_EQ(ctx, mud_arena_used(arena), used_after_persistent);
+    CHECK_INT_EQ(ctx, (int)mud_arena_used(arena), (int)used_after_persistent);
 
     // Persistent data still valid
     CHECK_STR_EQ(ctx, persistent, "persistent");

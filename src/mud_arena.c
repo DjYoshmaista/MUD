@@ -61,7 +61,7 @@ void mud_arena_destroy(MudArena* arena) {
     - Update offset: Advance for next allocation
 */
 void* mud_arena_alloc_aligned(MudArena* arena, size_t size, size_t align) {
-    if (arena == NULL || size == 0) {
+    if (arena == NULL || arena->data == NULL || size == 0) {
         return NULL;
     }
 
@@ -71,20 +71,25 @@ void* mud_arena_alloc_aligned(MudArena* arena, size_t size, size_t align) {
     }
 
     // Calculate aligned offset
-    size_t aligned_offset = align_up(arena->offset, align);
+    uintptr_t base = (uintptr_t)arena->data;
+    uintptr_t current = base + arena->offset;
+    uintptr_t aligned = (current + align - 1) & ~((uintptr_t)align - 1);
+    size_t padding = (size_t)(aligned - current);
+
+    // Check that padding itself did not already push past capacity
+    if (arena->offset > arena->capacity || padding > arena->capacity - arena->offset) {
+        return NULL;
+    }
+
+    size_t aligned_offset = arena->offset + padding;
 
     // Cheeck for overflow and capacity
-    if (aligned_offset > arena->capacity) {
+    if (size > arena->capacity - aligned_offset) {
         return NULL;  // Alignment pushed past end of arena
     }
 
-    size_t new_offset = aligned_offset + size;
-    if (new_offset > arena->capacity || new_offset < aligned_offset) {
-        return NULL;  // Not enough space or overflow
-    }
-
-    void* ptr = arena->data + aligned_offset;
-    arena->offset = new_offset;
+    void* ptr = (void*)(base + aligned_offset);
+    arena->offset = aligned_offset + size;
 
     return ptr;
 }

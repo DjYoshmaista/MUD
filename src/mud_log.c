@@ -94,10 +94,8 @@ void mud_log_writev(MudLogLevel level, const char* file, int line, const char* f
     }
 
     // Acquire the mutex
-    pthread_mutex_lock(&g_log.mutex);
     if (!g_log.initialized) {
-        pthread_mutex_unlock(&g_log.mutex);
-        MUD_LOG_ERROR("mud_log_writev: Logging not initialized");
+        MUD_LOG_ERROR("Logging not initialized");
         return;     // Logging not initialized
     }
 
@@ -106,10 +104,7 @@ void mud_log_writev(MudLogLevel level, const char* file, int line, const char* f
         return;
     }
 
-    if (!g_log.initialized) {
-        return;     // Logging not initialized
-    }
-
+    pthread_mutex_lock(&g_log.mutex);
     // Format the message
     char message[MUD_LOG_MAX_MESSAGE];
     vsnprintf(message, sizeof(message), fmt, args);
