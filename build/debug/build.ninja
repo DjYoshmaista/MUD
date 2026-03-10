@@ -517,6 +517,42 @@ build src/CMakeFiles/mud_core.dir/mud_hashmap.c.o: C_COMPILER__mud_core_unscanne
   OBJECT_FILE_DIR = src/CMakeFiles/mud_core.dir
   TARGET_SUPPORT_DIR = src/CMakeFiles/mud_core.dir
 
+build src/CMakeFiles/mud_core.dir/mud_utils.c.o: C_COMPILER__mud_core_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_utils.c || cmake_object_order_depends_target_mud_core
+  CONFIG = Debug
+  DEP_FILE = src/CMakeFiles/mud_core.dir/mud_utils.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include
+  OBJECT_DIR = src/CMakeFiles/mud_core.dir
+  OBJECT_FILE_DIR = src/CMakeFiles/mud_core.dir
+  TARGET_SUPPORT_DIR = src/CMakeFiles/mud_core.dir
+
+build src/CMakeFiles/mud_core.dir/mud_arena.c.o: C_COMPILER__mud_core_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_arena.c || cmake_object_order_depends_target_mud_core
+  CONFIG = Debug
+  DEP_FILE = src/CMakeFiles/mud_core.dir/mud_arena.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include
+  OBJECT_DIR = src/CMakeFiles/mud_core.dir
+  OBJECT_FILE_DIR = src/CMakeFiles/mud_core.dir
+  TARGET_SUPPORT_DIR = src/CMakeFiles/mud_core.dir
+
+build src/CMakeFiles/mud_core.dir/mud_arena_temp.c.o: C_COMPILER__mud_core_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_arena_temp.c || cmake_object_order_depends_target_mud_core
+  CONFIG = Debug
+  DEP_FILE = src/CMakeFiles/mud_core.dir/mud_arena_temp.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include
+  OBJECT_DIR = src/CMakeFiles/mud_core.dir
+  OBJECT_FILE_DIR = src/CMakeFiles/mud_core.dir
+  TARGET_SUPPORT_DIR = src/CMakeFiles/mud_core.dir
+
+build src/CMakeFiles/mud_core.dir/mud_arena_string.c.o: C_COMPILER__mud_core_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_arena_string.c || cmake_object_order_depends_target_mud_core
+  CONFIG = Debug
+  DEP_FILE = src/CMakeFiles/mud_core.dir/mud_arena_string.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include
+  OBJECT_DIR = src/CMakeFiles/mud_core.dir
+  OBJECT_FILE_DIR = src/CMakeFiles/mud_core.dir
+  TARGET_SUPPORT_DIR = src/CMakeFiles/mud_core.dir
+
 
 # =============================================================================
 # Link build statements for STATIC_LIBRARY target mud_core
@@ -525,7 +561,7 @@ build src/CMakeFiles/mud_core.dir/mud_hashmap.c.o: C_COMPILER__mud_core_unscanne
 #############################################
 # Link the static library src/libmud_core.a
 
-build src/libmud_core.a: C_STATIC_LIBRARY_LINKER__mud_core_Debug src/CMakeFiles/mud_core.dir/mud_vector.c.o src/CMakeFiles/mud_core.dir/mud_buffer.c.o src/CMakeFiles/mud_core.dir/mud_str.c.o src/CMakeFiles/mud_core.dir/mud_hashmap.c.o
+build src/libmud_core.a: C_STATIC_LIBRARY_LINKER__mud_core_Debug src/CMakeFiles/mud_core.dir/mud_vector.c.o src/CMakeFiles/mud_core.dir/mud_buffer.c.o src/CMakeFiles/mud_core.dir/mud_str.c.o src/CMakeFiles/mud_core.dir/mud_hashmap.c.o src/CMakeFiles/mud_core.dir/mud_utils.c.o src/CMakeFiles/mud_core.dir/mud_arena.c.o src/CMakeFiles/mud_core.dir/mud_arena_temp.c.o src/CMakeFiles/mud_core.dir/mud_arena_string.c.o
   CONFIG = Debug
   LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = src/CMakeFiles/mud_core.dir
@@ -576,13 +612,49 @@ build src/rebuild_cache: phony src/CMakeFiles/rebuild_cache.util
 # =============================================================================
 
 # =============================================================================
+# Object build statements for STATIC_LIBRARY target mud_test_support
+
+
+#############################################
+# Order-only phony target for mud_test_support
+
+build cmake_object_order_depends_target_mud_test_support: phony || cmake_object_order_depends_target_mud_core
+
+build tests/CMakeFiles/mud_test_support.dir/test_registry.c.o: C_COMPILER__mud_test_support_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/test_registry.c || cmake_object_order_depends_target_mud_test_support
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/mud_test_support.dir/test_registry.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
+  OBJECT_DIR = tests/CMakeFiles/mud_test_support.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/mud_test_support.dir
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/mud_test_support.dir
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target mud_test_support
+
+
+#############################################
+# Link the static library tests/libmud_test_support.a
+
+build tests/libmud_test_support.a: C_STATIC_LIBRARY_LINKER__mud_test_support_Debug tests/CMakeFiles/mud_test_support.dir/test_registry.c.o || src/libmud_core.a
+  CONFIG = Debug
+  LANGUAGE_COMPILE_FLAGS = -g
+  OBJECT_DIR = tests/CMakeFiles/mud_test_support.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = tests/libmud_test_support.a
+  TARGET_PDB = mud_test_support.a.dbg
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/mud_test_support.dir
+
+# =============================================================================
 # Object build statements for EXECUTABLE target run_all_tests
 
 
 #############################################
 # Order-only phony target for run_all_tests
 
-build cmake_object_order_depends_target_run_all_tests: phony || cmake_object_order_depends_target_mud_core
+build cmake_object_order_depends_target_run_all_tests: phony || cmake_object_order_depends_target_mud_core cmake_object_order_depends_target_mud_test_support
 
 build tests/CMakeFiles/run_all_tests.dir/run_all_tests.c.o: C_COMPILER__run_all_tests_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_all_tests.c || cmake_object_order_depends_target_run_all_tests
   CONFIG = Debug
@@ -629,6 +701,24 @@ build tests/CMakeFiles/run_all_tests.dir/modules/test_hashmap.c.o: C_COMPILER__r
   OBJECT_FILE_DIR = tests/CMakeFiles/run_all_tests.dir/modules
   TARGET_SUPPORT_DIR = tests/CMakeFiles/run_all_tests.dir
 
+build tests/CMakeFiles/run_all_tests.dir/modules/test_utils.c.o: C_COMPILER__run_all_tests_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_utils.c || cmake_object_order_depends_target_run_all_tests
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/run_all_tests.dir/modules/test_utils.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
+  OBJECT_DIR = tests/CMakeFiles/run_all_tests.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/run_all_tests.dir/modules
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/run_all_tests.dir
+
+build tests/CMakeFiles/run_all_tests.dir/modules/test_arena.c.o: C_COMPILER__run_all_tests_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_arena.c || cmake_object_order_depends_target_run_all_tests
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/run_all_tests.dir/modules/test_arena.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
+  OBJECT_DIR = tests/CMakeFiles/run_all_tests.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/run_all_tests.dir/modules
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/run_all_tests.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target run_all_tests
@@ -637,12 +727,12 @@ build tests/CMakeFiles/run_all_tests.dir/modules/test_hashmap.c.o: C_COMPILER__r
 #############################################
 # Link the executable tests/run_all_tests
 
-build tests/run_all_tests: C_EXECUTABLE_LINKER__run_all_tests_Debug tests/CMakeFiles/run_all_tests.dir/run_all_tests.c.o tests/CMakeFiles/run_all_tests.dir/modules/test_vector.c.o tests/CMakeFiles/run_all_tests.dir/modules/test_buffer.c.o tests/CMakeFiles/run_all_tests.dir/modules/test_str.c.o tests/CMakeFiles/run_all_tests.dir/modules/test_hashmap.c.o | src/libmud_core.a || src/libmud_core.a
+build tests/run_all_tests: C_EXECUTABLE_LINKER__run_all_tests_Debug tests/CMakeFiles/run_all_tests.dir/run_all_tests.c.o tests/CMakeFiles/run_all_tests.dir/modules/test_vector.c.o tests/CMakeFiles/run_all_tests.dir/modules/test_buffer.c.o tests/CMakeFiles/run_all_tests.dir/modules/test_str.c.o tests/CMakeFiles/run_all_tests.dir/modules/test_hashmap.c.o tests/CMakeFiles/run_all_tests.dir/modules/test_utils.c.o tests/CMakeFiles/run_all_tests.dir/modules/test_arena.c.o | tests/libmud_test_support.a src/libmud_core.a || src/libmud_core.a tests/libmud_test_support.a
   CONFIG = Debug
   DEP_FILE = tests/CMakeFiles/run_all_tests.dir/link.d
   FLAGS = -g
   LINK_FLAGS = -Wl,--dependency-file=tests/CMakeFiles/run_all_tests.dir/link.d
-  LINK_LIBRARIES = src/libmud_core.a
+  LINK_LIBRARIES = tests/libmud_test_support.a  src/libmud_core.a
   OBJECT_DIR = tests/CMakeFiles/run_all_tests.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -657,7 +747,7 @@ build tests/run_all_tests: C_EXECUTABLE_LINKER__run_all_tests_Debug tests/CMakeF
 #############################################
 # Order-only phony target for test_vector
 
-build cmake_object_order_depends_target_test_vector: phony || cmake_object_order_depends_target_mud_core
+build cmake_object_order_depends_target_test_vector: phony || cmake_object_order_depends_target_mud_core cmake_object_order_depends_target_mud_test_support
 
 build tests/CMakeFiles/test_vector.dir/run_single_module.c.o: C_COMPILER__test_vector_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_single_module.c || cmake_object_order_depends_target_test_vector
   CONFIG = Debug
@@ -685,12 +775,12 @@ build tests/CMakeFiles/test_vector.dir/modules/test_vector.c.o: C_COMPILER__test
 #############################################
 # Link the executable tests/test_vector
 
-build tests/test_vector: C_EXECUTABLE_LINKER__test_vector_Debug tests/CMakeFiles/test_vector.dir/run_single_module.c.o tests/CMakeFiles/test_vector.dir/modules/test_vector.c.o | src/libmud_core.a || src/libmud_core.a
+build tests/test_vector: C_EXECUTABLE_LINKER__test_vector_Debug tests/CMakeFiles/test_vector.dir/run_single_module.c.o tests/CMakeFiles/test_vector.dir/modules/test_vector.c.o | tests/libmud_test_support.a src/libmud_core.a || src/libmud_core.a tests/libmud_test_support.a
   CONFIG = Debug
   DEP_FILE = tests/CMakeFiles/test_vector.dir/link.d
   FLAGS = -g
   LINK_FLAGS = -Wl,--dependency-file=tests/CMakeFiles/test_vector.dir/link.d
-  LINK_LIBRARIES = src/libmud_core.a
+  LINK_LIBRARIES = tests/libmud_test_support.a  src/libmud_core.a
   OBJECT_DIR = tests/CMakeFiles/test_vector.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -705,7 +795,7 @@ build tests/test_vector: C_EXECUTABLE_LINKER__test_vector_Debug tests/CMakeFiles
 #############################################
 # Order-only phony target for test_buffer
 
-build cmake_object_order_depends_target_test_buffer: phony || cmake_object_order_depends_target_mud_core
+build cmake_object_order_depends_target_test_buffer: phony || cmake_object_order_depends_target_mud_core cmake_object_order_depends_target_mud_test_support
 
 build tests/CMakeFiles/test_buffer.dir/run_single_module.c.o: C_COMPILER__test_buffer_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_single_module.c || cmake_object_order_depends_target_test_buffer
   CONFIG = Debug
@@ -733,12 +823,12 @@ build tests/CMakeFiles/test_buffer.dir/modules/test_buffer.c.o: C_COMPILER__test
 #############################################
 # Link the executable tests/test_buffer
 
-build tests/test_buffer: C_EXECUTABLE_LINKER__test_buffer_Debug tests/CMakeFiles/test_buffer.dir/run_single_module.c.o tests/CMakeFiles/test_buffer.dir/modules/test_buffer.c.o | src/libmud_core.a || src/libmud_core.a
+build tests/test_buffer: C_EXECUTABLE_LINKER__test_buffer_Debug tests/CMakeFiles/test_buffer.dir/run_single_module.c.o tests/CMakeFiles/test_buffer.dir/modules/test_buffer.c.o | tests/libmud_test_support.a src/libmud_core.a || src/libmud_core.a tests/libmud_test_support.a
   CONFIG = Debug
   DEP_FILE = tests/CMakeFiles/test_buffer.dir/link.d
   FLAGS = -g
   LINK_FLAGS = -Wl,--dependency-file=tests/CMakeFiles/test_buffer.dir/link.d
-  LINK_LIBRARIES = src/libmud_core.a
+  LINK_LIBRARIES = tests/libmud_test_support.a  src/libmud_core.a
   OBJECT_DIR = tests/CMakeFiles/test_buffer.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -753,7 +843,7 @@ build tests/test_buffer: C_EXECUTABLE_LINKER__test_buffer_Debug tests/CMakeFiles
 #############################################
 # Order-only phony target for test_str
 
-build cmake_object_order_depends_target_test_str: phony || cmake_object_order_depends_target_mud_core
+build cmake_object_order_depends_target_test_str: phony || cmake_object_order_depends_target_mud_core cmake_object_order_depends_target_mud_test_support
 
 build tests/CMakeFiles/test_str.dir/run_single_module.c.o: C_COMPILER__test_str_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_single_module.c || cmake_object_order_depends_target_test_str
   CONFIG = Debug
@@ -781,12 +871,12 @@ build tests/CMakeFiles/test_str.dir/modules/test_str.c.o: C_COMPILER__test_str_u
 #############################################
 # Link the executable tests/test_str
 
-build tests/test_str: C_EXECUTABLE_LINKER__test_str_Debug tests/CMakeFiles/test_str.dir/run_single_module.c.o tests/CMakeFiles/test_str.dir/modules/test_str.c.o | src/libmud_core.a || src/libmud_core.a
+build tests/test_str: C_EXECUTABLE_LINKER__test_str_Debug tests/CMakeFiles/test_str.dir/run_single_module.c.o tests/CMakeFiles/test_str.dir/modules/test_str.c.o | tests/libmud_test_support.a src/libmud_core.a || src/libmud_core.a tests/libmud_test_support.a
   CONFIG = Debug
   DEP_FILE = tests/CMakeFiles/test_str.dir/link.d
   FLAGS = -g
   LINK_FLAGS = -Wl,--dependency-file=tests/CMakeFiles/test_str.dir/link.d
-  LINK_LIBRARIES = src/libmud_core.a
+  LINK_LIBRARIES = tests/libmud_test_support.a  src/libmud_core.a
   OBJECT_DIR = tests/CMakeFiles/test_str.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -801,7 +891,7 @@ build tests/test_str: C_EXECUTABLE_LINKER__test_str_Debug tests/CMakeFiles/test_
 #############################################
 # Order-only phony target for test_hashmap
 
-build cmake_object_order_depends_target_test_hashmap: phony || cmake_object_order_depends_target_mud_core
+build cmake_object_order_depends_target_test_hashmap: phony || cmake_object_order_depends_target_mud_core cmake_object_order_depends_target_mud_test_support
 
 build tests/CMakeFiles/test_hashmap.dir/run_single_module.c.o: C_COMPILER__test_hashmap_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_single_module.c || cmake_object_order_depends_target_test_hashmap
   CONFIG = Debug
@@ -829,12 +919,12 @@ build tests/CMakeFiles/test_hashmap.dir/modules/test_hashmap.c.o: C_COMPILER__te
 #############################################
 # Link the executable tests/test_hashmap
 
-build tests/test_hashmap: C_EXECUTABLE_LINKER__test_hashmap_Debug tests/CMakeFiles/test_hashmap.dir/run_single_module.c.o tests/CMakeFiles/test_hashmap.dir/modules/test_hashmap.c.o | src/libmud_core.a || src/libmud_core.a
+build tests/test_hashmap: C_EXECUTABLE_LINKER__test_hashmap_Debug tests/CMakeFiles/test_hashmap.dir/run_single_module.c.o tests/CMakeFiles/test_hashmap.dir/modules/test_hashmap.c.o | tests/libmud_test_support.a src/libmud_core.a || src/libmud_core.a tests/libmud_test_support.a
   CONFIG = Debug
   DEP_FILE = tests/CMakeFiles/test_hashmap.dir/link.d
   FLAGS = -g
   LINK_FLAGS = -Wl,--dependency-file=tests/CMakeFiles/test_hashmap.dir/link.d
-  LINK_LIBRARIES = src/libmud_core.a
+  LINK_LIBRARIES = tests/libmud_test_support.a  src/libmud_core.a
   OBJECT_DIR = tests/CMakeFiles/test_hashmap.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -842,11 +932,107 @@ build tests/test_hashmap: C_EXECUTABLE_LINKER__test_hashmap_Debug tests/CMakeFil
   TARGET_PDB = test_hashmap.dbg
   TARGET_SUPPORT_DIR = tests/CMakeFiles/test_hashmap.dir
 
+# =============================================================================
+# Object build statements for EXECUTABLE target test_utils
+
+
+#############################################
+# Order-only phony target for test_utils
+
+build cmake_object_order_depends_target_test_utils: phony || cmake_object_order_depends_target_mud_core cmake_object_order_depends_target_mud_test_support
+
+build tests/CMakeFiles/test_utils.dir/run_single_module.c.o: C_COMPILER__test_utils_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_single_module.c || cmake_object_order_depends_target_test_utils
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/test_utils.dir/run_single_module.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
+  OBJECT_DIR = tests/CMakeFiles/test_utils.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/test_utils.dir
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/test_utils.dir
+
+build tests/CMakeFiles/test_utils.dir/modules/test_utils.c.o: C_COMPILER__test_utils_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_utils.c || cmake_object_order_depends_target_test_utils
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/test_utils.dir/modules/test_utils.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
+  OBJECT_DIR = tests/CMakeFiles/test_utils.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/test_utils.dir/modules
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/test_utils.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target test_utils
+
+
+#############################################
+# Link the executable tests/test_utils
+
+build tests/test_utils: C_EXECUTABLE_LINKER__test_utils_Debug tests/CMakeFiles/test_utils.dir/run_single_module.c.o tests/CMakeFiles/test_utils.dir/modules/test_utils.c.o | tests/libmud_test_support.a src/libmud_core.a || src/libmud_core.a tests/libmud_test_support.a
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/test_utils.dir/link.d
+  FLAGS = -g
+  LINK_FLAGS = -Wl,--dependency-file=tests/CMakeFiles/test_utils.dir/link.d
+  LINK_LIBRARIES = tests/libmud_test_support.a  src/libmud_core.a
+  OBJECT_DIR = tests/CMakeFiles/test_utils.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = tests/test_utils
+  TARGET_PDB = test_utils.dbg
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/test_utils.dir
+
+# =============================================================================
+# Object build statements for EXECUTABLE target test_arena
+
+
+#############################################
+# Order-only phony target for test_arena
+
+build cmake_object_order_depends_target_test_arena: phony || cmake_object_order_depends_target_mud_core cmake_object_order_depends_target_mud_test_support
+
+build tests/CMakeFiles/test_arena.dir/run_single_module.c.o: C_COMPILER__test_arena_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_single_module.c || cmake_object_order_depends_target_test_arena
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/test_arena.dir/run_single_module.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
+  OBJECT_DIR = tests/CMakeFiles/test_arena.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/test_arena.dir
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/test_arena.dir
+
+build tests/CMakeFiles/test_arena.dir/modules/test_arena.c.o: C_COMPILER__test_arena_unscanned_Debug /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_arena.c || cmake_object_order_depends_target_test_arena
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/test_arena.dir/modules/test_arena.c.o.d
+  FLAGS = -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror
+  INCLUDES = -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test
+  OBJECT_DIR = tests/CMakeFiles/test_arena.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/test_arena.dir/modules
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/test_arena.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target test_arena
+
+
+#############################################
+# Link the executable tests/test_arena
+
+build tests/test_arena: C_EXECUTABLE_LINKER__test_arena_Debug tests/CMakeFiles/test_arena.dir/run_single_module.c.o tests/CMakeFiles/test_arena.dir/modules/test_arena.c.o | tests/libmud_test_support.a src/libmud_core.a || src/libmud_core.a tests/libmud_test_support.a
+  CONFIG = Debug
+  DEP_FILE = tests/CMakeFiles/test_arena.dir/link.d
+  FLAGS = -g
+  LINK_FLAGS = -Wl,--dependency-file=tests/CMakeFiles/test_arena.dir/link.d
+  LINK_LIBRARIES = tests/libmud_test_support.a  src/libmud_core.a
+  OBJECT_DIR = tests/CMakeFiles/test_arena.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = tests/test_arena
+  TARGET_PDB = test_arena.dbg
+  TARGET_SUPPORT_DIR = tests/CMakeFiles/test_arena.dir
+
 
 #############################################
 # Utility command for build_tests
 
-build tests/build_tests: phony tests/run_all_tests tests/test_buffer tests/test_hashmap tests/test_str tests/test_vector
+build tests/build_tests: phony tests/run_all_tests tests/test_arena tests/test_buffer tests/test_hashmap tests/test_str tests/test_utils tests/test_vector
 
 
 #############################################
@@ -896,15 +1082,23 @@ build build_tests: phony tests/build_tests
 
 build libmud_core.a: phony src/libmud_core.a
 
+build libmud_test_support.a: phony tests/libmud_test_support.a
+
 build mud_core: phony src/libmud_core.a
 
+build mud_test_support: phony tests/libmud_test_support.a
+
 build run_all_tests: phony tests/run_all_tests
+
+build test_arena: phony tests/test_arena
 
 build test_buffer: phony tests/test_buffer
 
 build test_hashmap: phony tests/test_hashmap
 
 build test_str: phony tests/test_str
+
+build test_utils: phony tests/test_utils
 
 build test_vector: phony tests/test_vector
 
@@ -932,7 +1126,7 @@ build src/all: phony src/libmud_core.a
 #############################################
 # Folder: /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests
 
-build tests/all: phony tests/run_all_tests tests/test_vector tests/test_buffer tests/test_str tests/test_hashmap
+build tests/all: phony tests/libmud_test_support.a tests/run_all_tests tests/test_vector tests/test_buffer tests/test_str tests/test_hashmap tests/test_utils tests/test_arena
 
 # =============================================================================
 # Built-in targets

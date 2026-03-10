@@ -1,4 +1,6 @@
 #include "test/test_autoreg.h"
+#include "mud_log.h"
+#include "mud_log_sink.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -93,6 +95,23 @@ static int run_single_test(const MudTestInfo* test, const RunnerConfig* cfg) {
 }
 
 int main(int argc, char* argv[]) {
+    if (!mud_log_init()) {
+        fprintf(stderr, "Failed to initialize logging\n");
+        return EXIT_FAILURE;
+    }
+
+    // Configure logging for test verbosity
+    mud_log_set_level(MUD_LOG_DEBUG);
+
+    // Add a file sink for test logs
+    MudLogSink* file_sink = mud_log_sink_file_create(
+        "test_run_all.log", MUD_LOG_TRACE, false);   // `false` = overwrite each run
+    if (file_sink != NULL) {
+        mud_log_add_sink(file_sink);
+    }
+
+    MUD_LOG_INFO("=== Test Suite Starting ===");
+
     RunnerConfig cfg = parse_args(argc, argv);
     MudTestRegistry* reg = mud_test_get_registry();
 
@@ -101,7 +120,7 @@ int main(int argc, char* argv[]) {
     int failed = 0;
     int skipped = 0;
 
-    printf("Running tests...\n");
+    MUD_LOG_INFO("Found %zu registered tests.  Running...\n", reg->count);
     if (cfg.filter_name) printf("  Name filter: %s\n", cfg.filter_name);
     if (cfg.filter_tag) printf("  Tag filter: %s\n", cfg.filter_tag);
     printf("\n");
@@ -109,34 +128,38 @@ int main(int argc, char* argv[]) {
     clock_t suite_start = clock();
 
     for (size_t i = 0; i < reg->count; i++) {
-	const MudTestInfo* test = &reg->tests[i];
+        const MudTestInfo* test = &reg->tests[i];
 
-	if (!test_matches_filter(test, &cfg)) {
-	    skipped++;
-	    continue;
-	}
+        if (!test_matches_filter(test, &cfg)) {
+            skipped++;
+            continue;
+        }
 
-	total++;
+        total++;
+        MUD_LOG_DEBUG("Running test: %s", test->name);
 
-	if (run_single_test(test, &cfg)) {
-	    passed++;
-	} else {
-	    failed++;
-	    if (cfg.stop_on_failure) {
-		printf("\nStopping on first failure.\n");
-		break;
-	    }
-	}
+        if (run_single_test(test, &cfg)) {
+            passed++;
+            MUD_LOG_DEBUG("Test PASSED: %s", test->name);
+        } else {
+            failed++;
+            MUD_LOG_WARN("Test FAILED: %s", test->name);
+            if (cfg.stop_on_failure) {
+                MUD_LOG_INFO("\nStopping on first failure.\n");
+                break;
+            }
+        }
     }
 
     clock_t suite_end = clock();
     double suite_elapsed = ((double)(suite_end - suite_start) / CLOCKS_PER_SEC);
 
-    printf("\n");
-    printf("================================================================================\n");
-    printf("Results: %d passed, %d failed, %d skipped\n", passed, failed, skipped);
-    printf("Total time: %.3f seconds\n", suite_elapsed);
-    printf("================================================================================\n");
+    MUD_LOG_INFO("\n");
+    MUD_LOG_INFO("================================================================================\n");
+    MUD_LOG_INFO("Results: %d passed, %d failed, %d skipped\n", passed, failed, skipped);
+    MUD_LOG_INFO("Total time: %.3f seconds\n", suite_elapsed);
+    MUD_LOG_INFO("================================================================================\n");
+    mud_log_shutdown();
 
     return (failed > 0) ? EXIT_FAILURE : EXIT_SUCCESS;
 }

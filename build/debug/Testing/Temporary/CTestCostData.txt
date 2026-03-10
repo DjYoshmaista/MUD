@@ -1,11 +1,7 @@
-run_all_tests 0 0
-test_vector 0 0
-test_buffer 0 0
-test_str 0 0
-test_hashmap 0 0
+run_all_tests 3 0.000687192
+test_vector 5 0.00029245
+test_buffer 5 0.000386944
+test_str 3 0.000605456
+test_hashmap 5 0.00035049
+test_utils 5 0.00026554
 ---
-run_all_tests
-test_vector
-test_buffer
-test_str
-test_hashmap

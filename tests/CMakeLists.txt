@@ -28,6 +28,11 @@ target_link_libraries(mud_test_lib INTERFACE
     mud_core
 )
 
+add_library(mud_test_support STATIC
+    test_registry.c
+)
+target_link_libraries(mud_test_support PUBLIC mud_test_lib)
+
 # ------------------------------------------------------------------------------
 # List All Test Module Soruces - One file per module being tested
 # ------------------------------------------------------------------------------
@@ -36,6 +41,8 @@ set(TEST_MODULE_SOURCES
     modules/test_buffer.c
     modules/test_str.c
     modules/test_hashmap.c
+    modules/test_utils.c
+    modules/test_arena.c
 )
 
 # ------------------------------------------------------------------------------
@@ -52,7 +59,7 @@ add_executable(run_all_tests
 #   - Links the test executable against our test util lib
 # ------------------------------------------------------------------------------
 target_link_libraries(run_all_tests PRIVATE 
-    mud_test_lib
+    mud_test_support
 )
 
 # ------------------------------------------------------------------------------
@@ -97,7 +104,7 @@ foreach(test_source IN LISTS TEST_MODULE_SOURCES)
 	${test_source}
     )
 
-    target_link_libraries(${test_name} PRIVATE mud_test_lib)
+    target_link_libraries(${test_name} PRIVATE mud_test_support)
 
     # Register with CTest
     add_test(NAME ${test_name} COMMAND ${test_name})
@@ -129,7 +136,7 @@ message(STATUS "  Module tests: ${TEST_MODULE_SOURCES}")
 # ------------------------------------------------------------------------------
 if(MUD_ENABLE_SLOW_TESTS)
     add_executable(test_slow_integration slow/test_integartion.c)
-    target_link_libraries(test_slow_integration PRIVATE mud_test_lib)
+    target_link_libraries(test_slow_integration PRIVATE mud_test_support)
     add_test(NAME test_slow_integration COMMAND test_slow_integration)
     set_tests_properties(test_slow_integration PROPERTIES
 	LABELS "integration;slow"

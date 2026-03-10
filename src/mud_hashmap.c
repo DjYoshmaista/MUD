@@ -1,5 +1,6 @@
 #include "mud_hashmap.h"
 #include "mud_utils.h"
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -30,7 +31,7 @@ static size_t hash_string(const char* key) {
     while (*key) {
         hash ^= (unsigned char)*key;
         hash *= 1099511628211ULL;   // FNV prime
-        key**;
+        key++;
     }
 
     return hash;
@@ -39,7 +40,7 @@ static size_t hash_string(const char* key) {
 /* =============================================================================
  - Find Bucket
 =============================================================================*/
-static size_t find_bucket(count MudHashmapEntry* entries,
+static size_t find_bucket(MudHashmapEntry* entries,
                 size_t capacity,
                 const char* key,
                 bool for_insert)
@@ -251,37 +252,23 @@ bool mud_hashmap_remove(MudHashmap* map, const char* key) {
     return mud_hashmap_remove_with(map, key, NULL);
 }
 
-bool mud_hashmap_remove_with(MudHashmap* map, const char* key, MudHashmapDestructor destructor() {
-    if (map == NULL || key == NULL) {
-        return false;
-    }
+bool mud_hashmap_remove_with(MudHashmap* map, const char* key, MudHashmapDestructor destructor) {
+    if (map == NULL || key == NULL) return false;
+
+    size_t index = find_bucket(map->entries, map->capacity, key, false);
+    if (index == SIZE_MAX) return false;
 
     MudHashmapEntry* entry = &map->entries[index];
-    if (entry->state != MUD_HASHMAP_ENTRY_OCCUPIED) {
-        return false;
-    }
+    if (entry->state != MUD_HASHMAP_ENTRY_OCCUPIED) return false;
 
-    // TODO: Check for existing entry and return false if found
-    //       (to avoid overwriting existing value)
-    //       This would require a new flag in MudHashmapEntry
-    //       to indicate whether the entry is occupied or not
-    //       and a new flag to indicate whether the entry is
-    //	     to be updated or not
-    //       This would also require a new function to remove
-    //	 an entry
     free(entry->key);
+    if (destructor) destructor(entry->value);
     entry->key = NULL;
-
-    if (destructor != NULL) {
-        destructor(entry->value);
-    }
     entry->value = NULL;
-
     entry->state = MUD_HASHMAP_ENTRY_TOMBSTONE;
     map->size--;
 
     return true;
-    // TODO: Return false if not found
 }
 
 /* =============================================================================
@@ -298,7 +285,7 @@ bool mud_hashmap_is_empty(const MudHashmap* map) {
     //	     to indicate whether the entry is occupied or not
 }
 
-void mud_hashamap_clear(MudHashmap* map) {
+void mud_hashmap_clear(MudHashmap* map) {
     mud_hashmap_clear_with(map, NULL);
 }
 
@@ -364,7 +351,7 @@ size_t mud_hashmap_keys(const MudHashmap* map, const char** out_keys, size_t max
 
     size_t count = 0;
     for (size_t i = 0; i < map->capacity && count < max_keys; i++) {
-        if (map->entries[i].state == MUD_HAHSHMAP_ENTRY_OCCUPIED) {
+        if (map->entries[i].state == MUD_HASHMAP_ENTRY_OCCUPIED) {
             out_keys[count++] = map->entries[i].key;
         }
     }

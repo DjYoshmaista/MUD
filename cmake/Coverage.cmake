@@ -3,10 +3,12 @@ if(NOT MUD_ENABLE_COVERAGE)
     return()
 endif()
 
-if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug" OR NOT CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo" OR NOT CMAKE_BUILD_TYPE STREQUAL "Coverage")
+if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug"
+   AND NOT CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo"
+   AND NOT CMAKE_BUILD_TYPE STREQUAL "Coverage")
     message(WARNING
 	"Coverage is enabled but build type is '${CMAKE_BUILD_TYPE}'. "
-	"Code Coverage can only be enabled in Debug, RelWithDebInfor or Coverage builds. "
+	"Code Coverage can only be enabled in Debug, RelWithDebInfo or Coverage builds. "
 	"Consider using the 'coverage' preset which sets Debug mode."
     )
 endif()
@@ -110,7 +112,7 @@ if(MUD_COVERAGE_HTML_ENABLED)
     add_custom_target(coverage-combine
 	COMMAND ${LCOV_PATH}
 	    --add-tracefile "${COVERAGE_OUTPUT_DIR}/baseline.info"
-	    --add-tracefile "${COVERAGE_OUTPUT_DIR}/tests.info"
+	    --add-tracefile "${COVERAGE_OUTPUT_DIR}/test.info"
 	    --output-file "${COVERAGE_OUTPUT_DIR}/combined.info"
 	COMMENT "Combining baseline and test coverage"
 	VERBATIM
@@ -146,7 +148,7 @@ if(MUD_COVERAGE_HTML_ENABLED)
     add_custom_target(coverage-html
 	COMMAND ${GENHTML_PATH}
 	    "${COVERAGE_OUTPUT_DIR}/filtered.info"
-	    --output-direcotry "${COVERAGE_OUTPUT_DIR}/html"
+	    --output-directory "${COVERAGE_OUTPUT_DIR}/html"
 	    --title "MUD Coverage Report"
 	    --legend
 	    --show-details
@@ -171,7 +173,7 @@ if(MUD_COVERAGE_HTML_ENABLED)
     add_custom_target(coverage
 	COMMAND ${CMAKE_COMMAND} --build "${CMAKE_BINARY_DIR}" --target coverage-clean
 	COMMAND ${CMAKE_COMMAND} --build "${CMAKE_BINARY_DIR}" --target coverage-baseline
-	COMMAND ${CMAKE_TEST_COMMAND} --output-on-failure
+	COMMAND ${CMAKE_CTEST_COMMAND} --test-dir "${CMAKE_BINARY_DIR}" --output-on-failure
 	COMMAND ${CMAKE_COMMAND} --build "${CMAKE_BINARY_DIR}" --target coverage-capture
 	COMMAND ${CMAKE_COMMAND} --build "${CMAKE_BINARY_DIR}" --target coverage-combine
 	COMMAND ${CMAKE_COMMAND} --build "${CMAKE_BINARY_DIR}" --target coverage-filter

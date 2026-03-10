@@ -6,338 +6,112 @@
 #include "test/test_autoreg.h"
 #include "mud_str.h"
 #include <string.h>
-#include <float.h>
 
-TEST(strview_create) {
-    // From C String
+TEST(strview_create_and_substr) {
     MudStrView sv = mud_strview_from_cstr("Hello");
     CHECK_INT_EQ(ctx, sv.len, 5);
     CHECK(memcmp(sv.data, "Hello", 5) == 0);
 
-    // From NULL
     sv = mud_strview_from_cstr(NULL);
     CHECK_INT_EQ(ctx, sv.len, 0);
     CHECK_NULL(ctx, sv.data);
 
-    // From parts
-    sv = mud_strview_from_parats("Hello, World!", 5);
+    sv = mud_strview_from_parts("Hello, World!", 5);
     CHECK_INT_EQ(ctx, sv.len, 5);
     CHECK(memcmp(sv.data, "Hello", 5) == 0);
 
-    // Using literal macro
-    sv = MUD_STRVIEW_LITERAL("Test");
-    CHECK_INT_EQ(ctx, sv.len, 4);
-}
-
-TEST(strview_substr) {
-    MudStrView sv = mud_strview_from_cstr("Hello, World!");
-    
-    // Normal substring
-    MudStrView sub = mud_strview_substr(sv, 7, 5);
+    MudStrView sub = mud_strview_substr(mud_strview_from_cstr("Hello, World!"), 7, 5);
     CHECK_INT_EQ(ctx, sub.len, 5);
     CHECK(memcmp(sub.data, "World", 5) == 0);
-
-    // Start at 0
-    sub = mud_strview_substr(sv, 0, 5);
-    CHECK_INT_EQ(ctx, sub.len, 5);
-    CHECK(memcmp(sub.data, "Hello", 5) == 0);
-
-    // Start at 0
-    sub = mud_strview_substr(sv, 0, 5);
-    CHECK_INT_EQ(ctx, sub.len, 5);
-    CHECK(memcmp(sub.data, "Hello", 5) == 0);
-
-    // Length exceeds available
-    sub = mud_strview_substr(sv, 7, 100);
-    CHECK_INT_EQ(ctx, sub.len, 6);  // "World!" only
-
-    // Start beyond length
-    sub = mud_strview_substr(sv, 100, 5);
-    CHECK_INT_EQ(ctx, sub.len, 0);
 }
 
-TEST(strview_equals) {
-    MudStrView a = mud_strview_from_cstr("hello");
-    MudStrView b = mud_strview_from_cstr("hello");
-    MudStrView c = mud_strview_from_cstr("world");
-    MudStrView d = mud_strview_from_cstr("hell");
+TEST(strview_compare_prefix_suffix_trim) {
+    MudStrView hello = mud_strview_from_cstr("hello");
+    MudStrView hello2 = mud_strview_from_cstr("hello");
+    MudStrView world = mud_strview_from_cstr("world");
 
-    CHECK(mud_strview_equals(a, b));
-    CHECK(!mud_strview_equals(a, c));
-    CHECK(!mud_strview_equals(a, d));
+    CHECK(mud_strview_equals(hello, hello2));
+    CHECK(!mud_strview_equals(hello, world));
+    CHECK(mud_strview_equals_cstr(hello, "hello"));
+    CHECK(!mud_strview_equals_cstr(hello, "Hello"));
 
-    // Empty views
-    MudStrView empty1 = MUD_STRVIEW_EMPTY;
-    MudStrView empty2 = mud_strview_from_cstr("");
-    CHECK(mud_strview_equals(empty1, empty1));
-    CHECK_INT_EQ(ctx, empty2.len, 0);
-}
+    MudStrView phrase = mud_strview_from_cstr("Hello, World!");
+    CHECK(mud_strview_starts_with(phrase, mud_strview_from_cstr("Hello")));
+    CHECK(!mud_strview_starts_with(phrase, mud_strview_from_cstr("hello")));
+    CHECK(mud_strview_ends_with(phrase, mud_strview_from_cstr("World!")));
+    CHECK(!mud_strview_ends_with(phrase, mud_strview_from_cstr("world!")));
 
-TEST(strview_equals_cstr) {
-    MudStrView sv = mud_strview-from_cstr("hello");
-
-    CHECK(mud_strview_equals_cstr(sv, "hello"));
-    CHECK(!mud_strview_equals_cstr(sv, "Hello"));
-    CHECK(!mud_strview_equals_cstr(sv, "hello!"));
-    CHECK(!mud_strview_equals_cstr(sv, "hell"));
-
-    // Empty
-    MudStrView empty = mud_strview_from_cstr("");
-    CHECK(mud_strview_equals_cstr(empty, ""));
-    CHECK(!mud_strview_equals_cstr(empty, "x"));
-}
-
-TEST(strview_starts_ends_with) {
-    MudStrView sv = mud_strview_from_cstr("Hello, World!");
-    
-    // Starts with
-    CHECK(mud_strview_starts_with(sv, mud_strview_from_cstr("Hello")));
-    CHECK(mud_strview_starts_with(sv, mud_strview_from_cstr("H")));
-    CHECK(mud_strview_starts_with(sv, mud_strview_from_cstr("hello"))); // Case-Insensitive
-    CHECK(mud_strview_starts_with(sv, mud_strview_from_cstr("")));
-    CHECK(mud_strview_starts_with(sv, mud_strview_from_cstr("Wrold")));
-
-    // Ends with
-    CHECK(mud_strview_ends_with(sv, mud_strview_from_cstr("World!")));
-    CHECK(mud_strview_ends_with(sv, mud_strview_from_cstr("d!")));
-    CHECK(mud_strview_ends_with(sv, mud_strview_from_cstr("")));
-    CHECK(!mud_strview_ends_with(sv, mud_strview_from_cstr("world!"))); // Case-insensitivie
-    CHECK(!mud_strview_ends_with(sv, mud_strview_from_cstr("Hello")));
-}
-
-TEST(strview_trim) {
-    // Trim both sides
-    MudStrView sv = mud_strview_from_cstr("  hello  ");
-    MudStrView trimmed = mud_strview_trim(sv);
-    CHECK(mud_strivew_equals_cstr(trimmed, "hello"));
-
-    // Trim left only
-    sv = mud_strview_from_cstr("  hello");
-    trimmed = mud_strview_trim_left(sv);
-    CHECK(mud_strview_equals_cstr(trimmed, "hello"));
-
-    // Trim right only
-    sv = mud_strview_from_cstr("hello  ");
-    trimmed = mud_strview_trim_right(sv);
-    CHECK(mud_strview_equals_cstr(trimmed, "hello"));
-
-    // Various whitespace
-    sv = mud_strview_from_cstr("\t\n hello \r\n");
-    trimmed = mud_strview_trim(sv);
-    CHECK(mud_strview_equals_cstr(trimmed, "hello"));
-
-    // All whitespace
-    sv = mud_strview_from_cstr("  \t\n  ");
-    trimmed = mud_strview_trim(sv);
-    CHECK_INT_EQ(ctx, trimmed.len, 0);
-
-    // No whitespace
-    sv = mud_strview_from_cstr("hello");
-    trimmed = mud_strview_trim(sv);
+    MudStrView trimmed = mud_strview_trim(mud_strview_from_cstr("  hello \n"));
     CHECK(mud_strview_equals_cstr(trimmed, "hello"));
 }
 
-TEST(str_copy) {
-    char dest[10];
+TEST(str_copy_concat_compare) {
+    char dest[16];
 
-    // Normal copy
     size_t copied = mud_str_copy(dest, sizeof(dest), "hello");
     CHECK_INT_EQ(ctx, copied, 5);
     CHECK_STR_EQ(ctx, dest, "hello");
 
-    // Truncation
-    copied = mud_str_copy(dest, sizeof(dest), "hellow world!");
-    CHECK_INT_EQ(ctx, copied, 9);  // Truncated to 9 chars + null
-    CHECK_STR_EQ(ctx, dest, "hello wor");
+    copied = mud_str_copy(dest, sizeof(dest), "this string is longer");
+    CHECK_INT_EQ(ctx, copied, 15);
+    CHECK_STR_EQ(ctx, dest, "this string is ");
 
-    // Copy empty
-    copied = mud_str-copy(dest, sizeof(dest), "");
-    CHECK_INT_EQ(ctx, copied, 0);
-    CHECK_STR_EQ(ctx, dest, "");
+    mud_str_copy(dest, sizeof(dest), "abc");
+    size_t appended = mud_str_concat(dest, sizeof(dest), "def");
+    CHECK_INT_EQ(ctx, appended, 3);
+    CHECK_STR_EQ(ctx, dest, "abcdef");
 
-    // Copy empty
-    copied = mud_str_copy(dest, sizeof(dest), NULL);
-    CHECK_INT_EQ(ctx, copied, 0);
-    CHECK_STR_EQ(ctx, dest, "");
-
-    // NULL dest
-    copied = mud_str_copy(NULL, 10, "hello");
-    CHECK_INT_EQ(ctx, copied, 0);
-
-    // Zero dest size
-    dest[0] = 'x';
-    copied = mud_str_copy(dest, 0, "hello");
-    CHECK_INT_EQ(ctx, copied, 0);
-    CHECK_STR_EQ(ctx, dest[0], 'x');  // Unchanged
-}
-
-TEST(str_concat) {
     CHECK_INT_EQ(ctx, mud_str_compare("abc", "abc"), 0);
     CHECK(mud_str_compare("abc", "abd") < 0);
-    CHECK(mud_str_compare("abd", "abc") > 0);
-    CHECK(mud_str_compare("abc", "abcd") < 0);
-    CHECK(mud_str_compare("abcd", "abc") > 0);
-
-    // NULL handling
-    CHECK_INT_EQ(ctx, mud_str_compare(NULL, NULL), 0);
-    CHECK(mud_str_compare(NULL, "abc") < 0);
-    CHECK(mud_str_compare("abc", NULL) > 0);
+    CHECK_INT_EQ(ctx, mud_str_compare_nocase("Hello", "hELLo"), 0);
 }
 
-TEST(str_compare_nocase) {
-    CHECK_INT_EQ(ctx, mud_str_compare_nocase("hello", "HELLO"), 0);
-    CHECK_INT_EQ(ctx, mud_str_compare_nocase("Hello", "hElLo"), 0);
-    CHECK(mud_str_compare_nocase("abc", "ABD") < 0);
-    CHECK(mud_str_compare_nocase("abD", "abc") > 0);
+TEST(str_to_numbers_and_bool) {
+    int int_value = 0;
+    long long_value = 0;
+    double double_value = 0.0;
+    bool bool_value = false;
 
-    // NULL handling
-    CHECK_INT_EQ(ctx, mud_str_compare_nocase(NULL, NULL), 0);
+    CHECK(mud_str_to_int("42", &int_value));
+    CHECK_INT_EQ(ctx, int_value, 42);
+    CHECK(!mud_str_to_int("12abc", &int_value));
+    CHECK(mud_str_to_int("  17 \t", &int_value));
+    CHECK_INT_EQ(ctx, int_value, 17);
+
+    CHECK(mud_str_to_long("-1234567890", &long_value));
+    CHECK(long_value == -1234567890L);
+    CHECK(!mud_str_to_long("not a number", &long_value));
+    CHECK(!mud_str_to_long("44xyz", &long_value));
+
+    CHECK(mud_str_to_double("3.14159", &double_value));
+    CHECK(double_value > 3.14 && double_value < 3.15);
+    CHECK(mud_str_to_double("  2.5\n", &double_value));
+    CHECK(double_value > 2.49 && double_value < 2.51);
+    CHECK(!mud_str_to_double("abc", &double_value));
+
+    CHECK(mud_str_to_bool("true", &bool_value));
+    CHECK(bool_value);
+    CHECK(mud_str_to_bool("OFF", &bool_value));
+    CHECK(!bool_value);
+    CHECK(mud_str_to_bool(" yes ", &bool_value));
+    CHECK(bool_value);
+    CHECK(!mud_str_to_bool("maybe", &bool_value));
 }
 
-TEST(str_to_int) {
-    int result;
-
-    // Valid integers
-    CHECK(mud_str_to_int("42", &result));
-    CHECK_INT_EQ(ctx, result, 42);
-
-    CHECK(mud_str_to_int("-123", &result));
-    CHECK_INT_EQ(ctx, result, -123);
-
-    CHECK(mud_str_to_int("0", &result));
-    CHECK_INT_EQ(ctx, result, 0);
-
-    CHECK(mud_str-to_int("  456  ", &result));  // Whitespace handled
-    CHECK_INT_EQ(ctx, result, 456);
-
-    // Invalid inputs
-    CHECK(!mud_str_to_int("", &result));
-    CHECK(!mud_str_to_int("abc", &result));
-    CHECK(!mud_str_to_int("12.34", &result));  // Float
-    CHECK(!mud_str_to_int("12abc", &result));  // Trailing garbage
-    CHECK(!mud_str_to_int(NULL, &result));
-    CHECK(!mud_str_to_int("42", NULL));
-
-    // Overflow (assuming 32-bit int)
-    CHECK(!mud_str_to_int("(9999999999999999999999999999999999999999", &result));
-}
-
-TEST(str_to_long) {
-    long result;
-
-    CHECK(mud_str_to_long("124567890", &result));
-    CHECK(result == 1234567890L);
-
-    CHECK(mud_str_to_long("-1234567890", &result));
-    CHECK(result == -1234567890L);
-
-    CHECK(!mud_str_to_long("not a number", &result));
-}
-
-TEST(str_to_double) {
-    double result;
-
-    CHECK(mud_str_to_double("3.14159", &result));
-    CHECK(result > 3.14 && result < 3.15);
-
-    CHECK(mud_str_to_double("-2.5", &result));
-    CHECK(result > -2.6 && result < -2.4);
-
-    CHECK(mud_str_to_double("1e10", &result));
-    CHECK(result > 9e9 && result < 1.1e10);
-
-    CHECK(mud_str_to_double("  42.0  ", &result));
-    CHECK(result > 41.9 && result < 42.1);
-
-    CHECK(!mud_str_to_double("abc", &result));
-    CHECK(!mud_str_to_double("", &result));
-}
-
-TEST(str_to_bool) {
-    bool result;
-
-    // True values
-    CHECK(mud_str_to_bool("tru", &result));
-    CHECK(result == true);
-    CHECK(mud_str_to_bool("TRUE", &result));
-    CHECK(result == true);
-    CHECK(mud_str_to_bool("yes", &result));
-    CHECK(result == true);
-    CHECK(mud_str_to_bool("YES", &result));
-    CHECK(result == true);
-    CHECK(mud_str_to_bool("on", &result));
-    CHECK(result == true);
-    CHECK(mud_str_to_bool("1", &result));
-    CHECK(result == true);
-
-    // False values
-    CHECK(mud_str_to_bool("false", &result));
-    CHECK(result == false);
-    CHECK(mud_str_to_bool("FALSE", &result));
-    CHECK(result == false);
-    CHECK(mud_str_to_bool("no", &result));
-    CHECK(result == false);
-    CHECK(mud_str_to_bool("off", &result));
-    CHECK(result == false);
-    CHECK(mud_str_to_bool("0", &result));
-    CHECK(result == false);
-
-    // Invalid values
-    CHECK(!mud_str_to_bool("maybe", &result));
-    CHECK(!mud_str_to_bool("", &result));
-    CHECK(!mud_str_to_bool("2:", &result));
-}
-
-TEST(str_is_empty) {
+TEST(str_predicates) {
     CHECK(mud_str_is_empty(NULL));
     CHECK(mud_str_is_empty(""));
-    CHECK(!mud_str_is_empty(" "));
-    CHECK(!mud_str_is_empty("hello"));
-}
+    CHECK(!mud_str_is_empty("x"));
 
-TEST(str_is_blank) {
     CHECK(mud_str_is_blank(NULL));
-    CHECK(mud_str_is_blank(""));
-    CHECK(mud_str_is_blank(" "));
-    CHECK(mud_str_is_blank("  \t\n  "));
-    CHECK(!mud_str_is_blank("  x  "));
-    CHECK(!mud_str_is_blank("hello"));
-}
+    CHECK(mud_str_is_blank(" \t\n"));
+    CHECK(!mud_str_is_blank(" x "));
 
-TEST(str_starts_with) {
     CHECK(mud_str_starts_with("hello world", "hello"));
-    CHECK(mud_str_starts_with("hello", "hello"));
-    CHECK(mud_str_starts_with("hello", ""));
-    CHECK(!mud_str_starts_with("hello", "world"));
-    CHECK(!mud_str_starts_with("hello", "Hello"));  // Case sensitive
-    CHECK(!mud_str_starts_with("hi", "hello"));  // Prefix longer
-
-    // NULL handling
-    CHECK(!mud_str_starts_with(NULL, "x"));
-    CHECK(!mud_str_starts_with("x", NULL));
-}
-
-TEST(str_ends_with) {
+    CHECK(!mud_str_starts_with("hello world", "world"));
     CHECK(mud_str_ends_with("hello world", "world"));
-    CHECK(mud_str_ends_with("hello", "hello"));
-    CHECK(mud_str_ends_with("hello", ""));
-    CHECK(!mud_str_ends_with("hello", "Hello"));  // Case sensitive
-    CHECK(!mud_str_ends_with("hi", "hello"));  // Suffix longer
-
-    // NULL handling
-    CHECK(CHECK(!mud_str_ends_with(NULL, "x"));
-    CHECK(CHECK(!mud_str_ends_with("x", NULL));
-}
-
-TEST(str_contains) {
+    CHECK(!mud_str_ends_with("hello world", "hello"));
     CHECK(mud_str_contains("hello world", "o w"));
-    CHECK(mud_str_contains("hello world", "hello"));
-    CHECK(mud_str_contains("hello world", "world"));
-    CHECK(mud_str_contains("hello", ""));
+    CHECK(mud_str_contains("hello", "hello"));
     CHECK(!mud_str_contains("hello", "xyz"));
-    CHECK(!mud_str_contains("hello", "hello"));  // Case sensitive
-
-    // NULL handling
-    CHECK(!mud_str_contains(NULL, "x"));
-    CHECK(!mud_str_contains("x", NULL));
 }

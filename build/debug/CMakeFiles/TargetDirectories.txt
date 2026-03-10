@@ -33,11 +33,14 @@
 /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/src/CMakeFiles/test.dir
 /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/src/CMakeFiles/edit_cache.dir
 /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/src/CMakeFiles/rebuild_cache.dir
+/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests/CMakeFiles/mud_test_support.dir
 /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests/CMakeFiles/run_all_tests.dir
 /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests/CMakeFiles/test_vector.dir
 /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests/CMakeFiles/test_buffer.dir
 /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests/CMakeFiles/test_str.dir
 /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests/CMakeFiles/test_hashmap.dir
+/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests/CMakeFiles/test_utils.dir
+/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests/CMakeFiles/test_arena.dir
 /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests/CMakeFiles/build_tests.dir
 /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests/CMakeFiles/tests.dir
 /home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests/CMakeFiles/test.dir

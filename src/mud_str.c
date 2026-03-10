@@ -1,7 +1,39 @@
+#include "mud_str.h"
+#include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <errno.h>
 #include <limits.h>
+
+static const char* skip_space(const char* str) {
+    while (isspace((unsigned char)*str)) {
+        str++;
+    }
+    return str;
+}
+
+static bool is_at_end_after_space(const char* str) {
+    str = skip_space(str);
+    return *str == '\0';
+}
+
+static bool equals_trimmed_nocase(const char* str, const char* word) {
+    if (str == NULL || word == NULL) {
+        return false;
+    }
+
+    str = skip_space(str);
+
+    while (*str != '\0' && *word != '\0') {
+        if (tolower((unsigned char)*str) != tolower((unsigned char)*word)) {
+            return false;
+        }
+        str++;
+        word++;
+    }
+
+    return *word == '\0' && is_at_end_after_space(str);
+}
 
 /* =============================================================================
  - String View Implementation
@@ -171,22 +203,19 @@ bool mud_str_to_int(const char* str, int* out) {
         return false;
     }
 
-    while (isspace((unsigned char)*str)) {
-        str++;
-    }
-
+    str = skip_space(str);
     if (*str == '\0') {
         return false;
     }
 
-    char* end;
+    char* end = NULL;
     errno = 0;
     long val = strtol(str, &end, 10);
     if (errno == ERANGE || val < INT_MIN || val > INT_MAX) {
         return false;  // Overflow
     }
 
-    if (end == str || *end != '\0') {
+    if (end == str || !is_at_end_after_space(end)) {
         return false;  // No conversion or trailing garbage
     }
 
@@ -199,19 +228,16 @@ bool mud_str_to_long(const char* str, long* out) {
         return false;
     }
 
-    while (isspace((unsigned char)*str)) {
-        str++;
-    }
-
+    str = skip_space(str);
     if (*str == '\0') {
         return false;
     }
 
-    char* end;
+    char* end = NULL;
     errno = 0;
     long val = strtol(str, &end, 10);
 
-    if (errno == ERANGE) {
+    if (errno == ERANGE || end == str || !is_at_end_after_space(end)) {
         return false;
     }
 
@@ -220,12 +246,17 @@ bool mud_str_to_long(const char* str, long* out) {
 }
 
 bool mud_str_to_double(const char* str, double* out) {
-    while (isspace((unsigned char)*str)) str++;
+    if (str == NULL || out == NULL) return false;
+    str = skip_space(str);
+    if (*str == '\0') return false;
+
+    char* end = NULL;
     errno = 0;
     double val = strtod(str, &end);
     if (end == str || errno == ERANGE) return false;
-    while (isspace((unsigned char)*end)) end++;
-    if (*end != '\0') return false;
+
+    if (!is_at_end_after_space(end)) return false;
+
     *out = val;
     return true;
 }
@@ -235,22 +266,18 @@ bool mud_str_to_bool(const char* str, bool* out) {
         return false;
     }
 
-    while (isspace((unsigned char)*str)) {
-        str++;
-    }
-
-    if (mud_str_compare_nocase(str, "true") == 0 ||
-        mud_str_compare_nocase(str, "yes") == 0 ||
-        mud_str_compare_nocase(str, "on") == 0 ||
-        mud_str_compare_nocase(str, "1") == 0) {
+    if (equals_trimmed_nocase(str, "true") ||
+        equals_trimmed_nocase(str, "yes") ||
+        equals_trimmed_nocase(str, "on") ||
+        equals_trimmed_nocase(str, "1")) {
         *out = true;
         return true;
     }
 
-    if (mud_str_compare_nocase(str, "false") == 0 ||
-        mud_str_compare_nocase(str, "no") == 0 ||
-        mud_str_compare_nocase(str, "off") == 0 ||
-        mud_str_compare_nocase(str, "0") == 0) {
+    if (equals_trimmed_nocase(str, "false") ||
+        equals_trimmed_nocase(str, "no") ||
+        equals_trimmed_nocase(str, "off") ||
+        equals_trimmed_nocase(str, "0")) {
         *out = false;
         return true;
     }

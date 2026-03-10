@@ -25,6 +25,36 @@
 },
 {
   "directory": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug",
+  "command": "/usr/bin/cc -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2 -o src/CMakeFiles/mud_core.dir/mud_utils.c.o -c /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_utils.c",
+  "file": "/home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_utils.c",
+  "output": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/src/CMakeFiles/mud_core.dir/mud_utils.c.o"
+},
+{
+  "directory": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug",
+  "command": "/usr/bin/cc -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2 -o src/CMakeFiles/mud_core.dir/mud_arena.c.o -c /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_arena.c",
+  "file": "/home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_arena.c",
+  "output": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/src/CMakeFiles/mud_core.dir/mud_arena.c.o"
+},
+{
+  "directory": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug",
+  "command": "/usr/bin/cc -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2 -o src/CMakeFiles/mud_core.dir/mud_arena_temp.c.o -c /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_arena_temp.c",
+  "file": "/home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_arena_temp.c",
+  "output": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/src/CMakeFiles/mud_core.dir/mud_arena_temp.c.o"
+},
+{
+  "directory": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug",
+  "command": "/usr/bin/cc -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2 -o src/CMakeFiles/mud_core.dir/mud_arena_string.c.o -c /home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_arena_string.c",
+  "file": "/home/yosh/gitrepos/personalProjectRepositories/MUD/src/mud_arena_string.c",
+  "output": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/src/CMakeFiles/mud_core.dir/mud_arena_string.c.o"
+},
+{
+  "directory": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug",
+  "command": "/usr/bin/cc -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -o tests/CMakeFiles/mud_test_support.dir/test_registry.c.o -c /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/test_registry.c",
+  "file": "/home/yosh/gitrepos/personalProjectRepositories/MUD/tests/test_registry.c",
+  "output": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests/CMakeFiles/mud_test_support.dir/test_registry.c.o"
+},
+{
+  "directory": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug",
   "command": "/usr/bin/cc -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -o tests/CMakeFiles/run_all_tests.dir/run_all_tests.c.o -c /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_all_tests.c",
   "file": "/home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_all_tests.c",
   "output": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests/CMakeFiles/run_all_tests.dir/run_all_tests.c.o"
@@ -52,6 +82,18 @@
   "command": "/usr/bin/cc -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -o tests/CMakeFiles/run_all_tests.dir/modules/test_hashmap.c.o -c /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_hashmap.c",
   "file": "/home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_hashmap.c",
   "output": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests/CMakeFiles/run_all_tests.dir/modules/test_hashmap.c.o"
+},
+{
+  "directory": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug",
+  "command": "/usr/bin/cc -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -o tests/CMakeFiles/run_all_tests.dir/modules/test_utils.c.o -c /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_utils.c",
+  "file": "/home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_utils.c",
+  "output": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests/CMakeFiles/run_all_tests.dir/modules/test_utils.c.o"
+},
+{
+  "directory": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug",
+  "command": "/usr/bin/cc -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -o tests/CMakeFiles/run_all_tests.dir/modules/test_arena.c.o -c /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_arena.c",
+  "file": "/home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_arena.c",
+  "output": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests/CMakeFiles/run_all_tests.dir/modules/test_arena.c.o"
 },
 {
   "directory": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug",
@@ -100,5 +142,29 @@
   "command": "/usr/bin/cc -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -o tests/CMakeFiles/test_hashmap.dir/modules/test_hashmap.c.o -c /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_hashmap.c",
   "file": "/home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_hashmap.c",
   "output": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests/CMakeFiles/test_hashmap.dir/modules/test_hashmap.c.o"
+},
+{
+  "directory": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug",
+  "command": "/usr/bin/cc -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -o tests/CMakeFiles/test_utils.dir/run_single_module.c.o -c /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_single_module.c",
+  "file": "/home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_single_module.c",
+  "output": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests/CMakeFiles/test_utils.dir/run_single_module.c.o"
+},
+{
+  "directory": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug",
+  "command": "/usr/bin/cc -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -o tests/CMakeFiles/test_utils.dir/modules/test_utils.c.o -c /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_utils.c",
+  "file": "/home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_utils.c",
+  "output": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests/CMakeFiles/test_utils.dir/modules/test_utils.c.o"
+},
+{
+  "directory": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug",
+  "command": "/usr/bin/cc -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -o tests/CMakeFiles/test_arena.dir/run_single_module.c.o -c /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_single_module.c",
+  "file": "/home/yosh/gitrepos/personalProjectRepositories/MUD/tests/run_single_module.c",
+  "output": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests/CMakeFiles/test_arena.dir/run_single_module.c.o"
+},
+{
+  "directory": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug",
+  "command": "/usr/bin/cc -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include -I/home/yosh/gitrepos/personalProjectRepositories/MUD/include/test -g -std=c2x -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Werror -o tests/CMakeFiles/test_arena.dir/modules/test_arena.c.o -c /home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_arena.c",
+  "file": "/home/yosh/gitrepos/personalProjectRepositories/MUD/tests/modules/test_arena.c",
+  "output": "/home/yosh/gitrepos/personalProjectRepositories/MUD/build/debug/tests/CMakeFiles/test_arena.dir/modules/test_arena.c.o"
 }
 ]

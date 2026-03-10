@@ -9,6 +9,10 @@ set(MUD_CORE_SOURCES
     mud_buffer.c
     mud_str.c
     mud_hashmap.c
+    mud_utils.c
+    mud_arena.c
+    mud_arena_temp.c
+    mud_arena_string.c
 )
 
 # ------------------------------------------------------------------------------

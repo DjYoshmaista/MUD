@@ -134,7 +134,7 @@
 				"verbosity": "verbose"
 			},
 			"environment": {
-				"ASAN_OPTIONS": "detect_leaks=1:abort_on_error=0:halt_on_error=0",
+				"ASAN_OPTIONS": "detect_leaks=0:abort_on_error=0:halt_on_error=0",
 				"UBSAN_OPTIONS": "print_stacktrace=1:halt_on_error=0"
 			}
 		},

@@ -32,9 +32,8 @@ endif()
 # ------------------------------------------------------------------------------
 set(SANITIZER_FLAGS "")
 foreach(san IN LISTS SANITIZER_LIST)
-    string(APPEND SANITIZER_FLAGS "-fsanitize=${san} ")
+    list(APPEND SANITIZER_FLAGS "-fsanitize=${san}")
 endforeach()
-string(STRIP "${SANITIZER_FLAGS}" SANITIZER_FLAGS)
 
 # ------------------------------------------------------------------------------
 # Adds the sanitizer flags to all subsequent compilation and linking commands
@@ -54,8 +53,9 @@ endif()
 # Define CMake cache variables that can be passed to test via environment
 # ------------------------------------------------------------------------------
 
-# detect_leaks=1 Enables leak detection at runtime; abort_on_error=0 don't abort immediatel, continue & find more errors; halt_on_error=0 Same as abort_on_error=0 [UBSan]
-set(ASAN_OPTIONS "detect_leaks=1:abort_on_error=0:halt_on_error=0" CACHE STRING "ASan runtime options")
+# LeakSanitizer is disabled by default because this environment runs tests under
+# supervision that conflicts with LSan's ptrace requirements.
+set(ASAN_OPTIONS "detect_leaks=0:abort_on_error=0:halt_on_error=0" CACHE STRING "ASan runtime options")
 # print_stacktrace=1 Show call stack on UBSan errors
 set(UBSAN_OPTIONS "print_stacktrace=1:halt_on_error=0" CACHE STRING "UBSan runtime options")
 

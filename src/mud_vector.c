@@ -19,7 +19,7 @@ static inline void* vector_element_ptr(const MudVector* vec, size_t index) {
     return (char*)vec->data + (index * vec->element_size);
 }
 
-/* =============================================================================
+/* ============================================================================
  * Creation->Process
  * - Validate element_size (must be > 0)
  * - Allocate the struct itself

@@ -1,4 +1,5 @@
 #include "mud_buffer.h"
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -45,9 +46,13 @@ MudBuffer* mud_buffer_create_with_capacity(size_t capacity) {
 }
 
 MudBuffer* mud_buffer_create_from(const char* fromStr) {
-    MudBuffer* buf = mud_buffer_create_with_capacity(str ? strlen(str) : 0);
-    if (!buf) return NULL;
-    if (fromStr) mud_buffer_append_str(buf, str);
+    size_t initial = fromStr ? strlen(fromStr) : 0;
+    MudBuffer* buf = mud_buffer_create_with_capacity(initial);
+    if (buf == NULL) return NULL;
+    if (fromStr != NULL && !mud_buffer_append_str(buf, fromStr)) {
+        mud_buffer_destroy(buf);
+        return NULL;
+    }
     return buf;
 }
 
@@ -102,6 +107,9 @@ static bool buffer_ensure_capacity(MudBuffer* buf, size_t needed) {
 
     size_t new_capacity = buf->capacity;
     while (new_capacity < needed) {
+        if (new_capacity > (SIZE_MAX / 2U)) {
+            return false;
+        }
         new_capacity *= 2;
     }
 
