@@ -10,14 +10,22 @@
 extern "C" {
 #endif
 
+#ifdef NDEBUG
+#define MUD_NULL_STR_FALLBACK ""
+#else
+#define MUD_NULL_STR_FALLBACK "(null)"
+#endif
+
 #ifndef EFPINVAL
 #define EFPINVAL 1000
+#endif
+
 #ifndef EFINVAL
 #define EFINVAL 1001
+#endif
+
 #ifndef EFHINVAL
 #define EFHINVAL 1002
-#endif
-#endif
 #endif
 
 /*  strdup replacement for C source, header and other files
@@ -57,6 +65,16 @@ char* mud_strdup(const char* str);
         - errno is set to provide additional error information
 */
 int mud_fileno(FILE* file);
+
+/*  @brief Format current local time into a buffer
+    @param buf  Output buffer (must not be NULL)
+    @param size Size of output buffer in bytes
+    @return     Number of characters written (excluding null terminator), or 0 on failure.  Buffer will contain a fallback string on failure
+
+    Format: "YYYY-MM-DD HH:MM:SS" (19 chars + null = 20 bytes min)
+    Thread-safe: uses localtime_r (POSIX)
+*/
+size_t mud_format_timestamp(char* buf, size_t size);
 
 /*  Check if a stream is a TTY (terminal)
     mud_stream_is_tty

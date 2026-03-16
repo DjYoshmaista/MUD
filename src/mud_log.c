@@ -1,5 +1,7 @@
 #include "mud_log.h"
 #include "mud_log_sink.h"       // Full sink definitions needed here
+#include "mud_log_thread.h"
+#include "mud_log_internal.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,18 +16,16 @@
     Default values: Designated initializers set sensible defaults
     `pthread_mutex_t` protects sink list and state from concurrent access
 */
-static struct {
+
+
+// Named private type for LogState
+typedef struct MudLogState {
     MudLogSink* sinks[MUD_LOG_MAX_SINKS];
     size_t sink_count;
     MudLogLevel min_level;
     pthread_mutex_t mutex;
     bool initialized;
-} g_log = {
-    .sinks = {NULL},
-    .sink_count = 0,
-    .min_level = MUD_LOG_INFO,
-    .initialized = false
-};
+} MudLogState;
 
 // Level Names
 static const char* level_names[] = {
@@ -35,6 +35,14 @@ static const char* level_names[] = {
     "WARN",
     "ERROR",
     "FATAL"
+};
+
+// Declaration of MudLogState g_log
+static MudLogState g_log = {
+    .sinks = {NULL},
+    .sink_count = 0,
+    .min_level = MUD_LOG_INFO,
+    .initialized = false
 };
 
 // Array indexing: Level enum values are array indices
@@ -95,7 +103,6 @@ void mud_log_writev(MudLogLevel level, const char* file, int line, const char* f
 
     // Acquire the mutex
     if (!g_log.initialized) {
-        MUD_LOG_ERROR("Logging not initialized");
         return;     // Logging not initialized
     }
 
@@ -120,24 +127,30 @@ void mud_log_writev(MudLogLevel level, const char* file, int line, const char* f
         filename = slash + 1;
     }
 
-    // Build the log record
-    MudLogRecord record = {
-        .level = level,
-        .timestamp = timestamp,
-        .file = filename,
-        .line = line,
-        .message = message
-    };
+    if (mud_log_thread_is_running()) {
+        mud_log_thread_enqueue(level, filename, line, timestamp, message);
+    } else {
+        // Fallback -- Direct dispatch (before thread starts or after shutdown)
+        MudLogRecord record = {
+            .level = level,
+            .timestamp = timestamp,
+            .file = filename,
+            .line = line,
+            .message = message
+        };
 
-    // Send to all sinks
-    for (size_t i = 0; i < g_log.sink_count; i++) {
-        MudLogSink* sink = g_log.sinks[i];
-        if (sink != NULL && sink->write != NULL) {
-            if (level >= sink->min_level) {
-                sink->write(sink, &record);
+        // Iterate sinks, check levels, call write
+        for (size_t i = 0; i < g_log.sink_count; i++) {
+            MudLogSink* sink = g_log.sinks[i];
+            if (sink != NULL && sink->write != NULL) {
+                if (level >= sink->min_level) {
+                    sink->write(sink, &record);
+                }
             }
         }
     }
+
+    // Unlock mutex
     pthread_mutex_unlock(&g_log.mutex);
 }
 
@@ -237,4 +250,35 @@ void mud_log_flush(void) {
     }
 
     pthread_mutex_unlock(&g_log.mutex);
+}
+
+void mud_log_dispatch_record(const MudLogRecord* record) {
+    // Lock g_log.mutex
+    pthread_mutex_lock(&g_log.mutex);
+
+    // Iterate sinks, check levels, call write
+    for (size_t i = 0; i < g_log.sink_count; i++) {
+        MudLogSink* sink = g_log.sinks[i];
+        if (sink != NULL && sink->write != NULL) {
+            if (level >= sink->min_level) {
+                sink->write(sink, &record);
+            }
+        }
+    }
+
+    // Unlock
+    pthread_mutex_unlock(&g_log.mutex);
+
+
+    if (g_log.sinks[sink_count] != NULL) {
+        if (record->level >= g_log.sinks[sink_count]->min_level) {
+            g_log.sinks[sink_count]->write(g_log.sinks[sink_count], record);
+        }
+        if (record->flush_mutex != NULL) {
+            g_log.sinks[sink_count]->flush(g_log.sinks[sink_count]);
+        }
+        if (record->flush_cond != NULL) {
+            g_log.sinks[sink_count]->flush(g_log.sinks[sink_count]);
+        }
+    }
 }

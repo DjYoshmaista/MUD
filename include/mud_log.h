@@ -24,6 +24,7 @@
 #ifndef MUD_LOG_H
 #define MUD_LOG_H
 
+#include "mud_log_types.h"
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdarg.h>
@@ -32,7 +33,6 @@
 extern "C" {
 #endif
 
-// Log severity levels, from least to most severe
 typedef enum MudLogLevel {
     MUD_LOG_TRACE = 0,
     MUD_LOG_DEBUG = 1,
@@ -42,7 +42,7 @@ typedef enum MudLogLevel {
     MUD_LOG_FATAL = 5,
 
     MUD_LOG_LEVEL_COUNT
-} MudLogLevel;
+}
 
 // Level Name Conversion
 /*  @brief Get the name of a log level
@@ -180,6 +180,7 @@ void mud_log_flush(void);
     @return true on success, false on failure
 */
 void mud_log_write_to_sink(MudLogSink* sink, MudLogLevel level, const char* file, int line, const char* fmt, ...);
+
 
 #ifdef __cplusplus
 }

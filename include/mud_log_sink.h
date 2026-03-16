@@ -2,6 +2,7 @@
 #define MUD_LOG_SINK_H
 
 #include "mud_log.h"
+#include "mud_log_types.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -9,16 +10,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-// Log Record Structure
-/*  @brief A single log record passed to sinks */
-typedef struct MudLogRecord {
-    MudLogLevel level;          // Severity
-    const char* timestamp;      // Fomratted time string
-    const char* file;           // Source filename
-    int line;                   // Source line number
-    const char* message;        // Formatted message text
-} MudLogRecord;
 
 // Sink interface
 /*  @brief Function pointer type for writing a log record */
