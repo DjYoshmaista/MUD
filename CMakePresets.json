@@ -1,0 +1,188 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 23,
+    "patch": 0
+  },
+
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "installDir": "${sourceDir}/build/${presetNmae}/install",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "BUILD_SHARED_LIBS": "OFF",
+        "BUILD_TESTING": "ON",
+        "MUD_ENABLE_TESTS": "ON",
+        "MUD_ENABLE_TOOLS": "ON",
+        "MUD_ENABLE_SAMPLES": "OFF"
+      }
+    },
+
+    {
+      "name": "debug",
+      "displayName": "Debug (Ninja)",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+      }
+    },
+
+    {
+      "name": "release",
+      "displayName": "Relase (Ninja)",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+      }
+    },
+
+    {
+      "name": "relwithdebinfo",
+      "displayName": "RelWithDebInfo (Ninja)",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+      }
+    },
+
+    {
+      "name": "asan",
+      "displayName": "Address Sanitizer (Ninja)",
+      "inherits": "debug",
+      "cacheVariables": {
+        "MUD_ENABLE_SANITIZERS": "ON",
+        "MUD_SANITIZERS": "address,undefined"
+      }
+    },
+
+    {
+      "name": "coverage",
+      "displayName": "Debug + Coverage (Ninja)",
+      "inherits": "debug",
+      "cacheVariables": {
+        "MUD_ENABLE_COVERAGE": "ON"
+      }
+    }
+  ],
+
+  "buildPresets": [
+    {
+      "name": "build-debug",
+      "displayName": "Build Debug",
+      "configurePreset": "debug",
+      "jobs": 16
+    },
+    {
+      "name": "build-release",
+      "displayName": "Build Release",
+      "configurePreset": "release",
+      "jobs": 16
+    },
+    {
+      "name": "build-asan",
+      "displayName": "Build Address Sanitizer/UBSan",
+      "configurePreset": "asan",
+      "jobs": 16
+    },
+    {
+      "name": "build-coverage",
+      "displayName": "Build Coverage",
+      "configurePreset": "coverage",
+      "jobs": 16
+    },
+    {
+      "name": "build-debug-tests",
+      "displayName": "Build Debug [Tests Target]",
+      "configurePreset": "debug",
+      "targets": [ "tests" ],
+      "jobs": 16
+    }
+  ],
+
+  "testPresets": [
+    {
+      "name": "test-debug",
+      "displayName": "CTest (Debug) - all tests",
+      "configurePreset": "debug",
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      },
+      "output": {
+        "outputOnFailure": true,
+        "verbosity": "verbose"
+      }
+    },
+    {
+      "name": "test-asan",
+      "displayName": "CTest (ASan/UBSan) - all tests",
+      "configurePreset": "asan",
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      },
+      "output": {
+        "outputOnFailure": true,
+        "verbosity": "verbose"
+      },
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=-0:abort_on_error=0:halt_on_error=0",
+        "UBSAN_OPTIONS": "print_stacktrace=1:halt_on_error=0"
+      }
+    },
+    {
+      "name": "test-unit-debug",
+      "displayName": "CTest (Debug) - unit only",
+      "configurePreset": "debug",
+      "filter": {
+        "excludeLabel": [ "integration", "performance", "regression" ],
+        "includeLabel": "unit"
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      },
+      "output": {
+        "outputOnFailure": true,
+        "verbosity": "verbose"
+      }
+    },
+    {
+      "name": "test-integration-debug",
+      "displayName": "CTest (Debug) - integration only",
+      "configurePreset": "debug",
+      "filter": {
+        "includeLabel": "integration"
+      },
+      "exection": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      },
+      "output": {
+        "outputOnFailure": true,
+        "verbosity": "verbose"
+      }
+    },
+    {
+      "name": "test-fast-debug",
+      "displayName": "CTest (Debug) - exclude slow",
+      "configurePreset": "debug",
+      "filter": {
+        "excludeLabel": [ "slow" ]
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      },
+      "output": {
+        "outputOnFailure": true,
+        "verbosity": "verbose"
+      }
+    }
+  ]
+}

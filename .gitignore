@@ -1,0 +1,10 @@
+**.swp
+build/**
+**.pyc
+**.*~
+**.bak
+**.gch
+build/
+**/__pycache__
+**/.*/
+**.log
