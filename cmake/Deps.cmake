@@ -7,28 +7,22 @@
 find_package(PkgConfig REQUIRED)
 
 # -- zlog: structured logging with categories, multiple sinks, config-file rules
-pkg_check_modules(ZLOG REQUIRED zlog)
+find_path(ZLOG_INCLUDE_DIR zlog.h)
+find_library(ZLOG_LIBRARY zlog)
 
-if(ZLOG_FOUND)
-    message(STATUS "zlog found: ${ZLOG_VERSION}")
-    message(STATUS "  includes: ${ZLOG_INCLUDE_DIRS}")
-    message(STATUS "  libs:     ${ZLOG_LIBRARIES}")
-else()
-    message(FATAL_ERROR "zlog not found.  Install w/ 'yay -S zlog-git'")
+if(NOT ZLOG_INCLUDE_DIR OR NOT ZLOG_LIBRARY)
+    message(FATAL_ERROR "zlog not found. Install the zlog headers and library")
 endif()
 
-# Create an imported interface target so consumers just write:
-#   target_link_libraries(my_target PRIVATE deps::zlog)
 add_library(deps::zlog INTERFACE IMPORTED)
-target_include_directories(deps::zlog INTERFACE ${ZLOG_INCLUDE_DIRS})
-target_link_libraries(deps::zlog INTERFACE ${ZLOG_LIBRARIES})
-target_compile_options(deps::zlog INTERFACE ${ZLOG_CFLAGS_OTHER})
+target_include_directories(deps::zlog INTERFACE ${ZLOG_INCLUDE_DIR})
+target_link_libraries(deps::zlog INTERFACE ${ZLOG_LIBRARY})
 
 # -- libsodium - cryptography: Argon2id password hashing, secure random, etcc
 pkg_check_modules(LIBSODIUM REQUIRED libsodium)
 
 if(LIBSODIUM_FOUND)
-    message(STATUS "libsodium found: $[LIBSODIUM_VERSION}")
+    message(STATUS "libsodium found: ${LIBSODIUM_VERSION}")
 else()
     message(FATAL_ERROR "libsodium NOT found.  Install w/ pacman -S libsodium")
 endif()
@@ -37,6 +31,31 @@ add_library(deps::sodium INTERFACE IMPORTED)
 target_include_directories(deps::sodium INTERFACE ${LIBSODIUM_INCLUDE_DIRS})
 target_link_libraries(deps::sodium INTERFACE ${LIBSODIUM_LIBRARIES})
 target_compile_options(deps::sodium INTERFACE ${LIBSODIUM_CFLAGS_OTHER})
+
+# -- libtelnet - telnet protocol implementation
+pkg_check_modules(LIBTELNET REQUIRED libtelnet)
+
+if(LIBTELNET_FOUND)
+    message(STATUS "libtelnet found: ${LIBTELNET_VERSION}")
+else()
+    message(FATAL_ERROR "libtelnet not found.  Install w/ pacman -S libtelnet")
+endif()
+
+add_library(deps::ltelnet INTERFACE IMPORTED)
+target_include_directories(deps::ltelnet INTERFACE ${LIBTELNET_INCLUDE_DIRS})
+target_link_libraries(deps::ltelnet INTERFACE ${LIBTELNET_LIBRARIES})
+target_compile_options(deps::ltelnet INTERFACE ${LIBTELNET_CFLAGS_OTHER})
+
+# -- libuv - networking: async I/O, event loop, etc
+# -- LibUV integration for networking layer and async I/O
+pkg_check_modules(LIBUV QUIET libuv)
+
+if(LIBUV_FOUND)
+    add_library(deps::luv INTERFACE IMPORTED)
+    target_include_directories(deps::luv INTERFACE ${LIBUV_INCLUDE_DIRS})
+    target_link_libraries(deps::luv INTERFACE ${LIBUV_LIBRARIES})
+    target_compile_options(deps::luv INTERFACE ${LIBUV_CFLAGS_OTHER})
+endif()
 
 # -- SQLite3 - embedded relational database.  No pkg-config needed
 find_package(SQLite3 REQUIRED)
@@ -59,10 +78,10 @@ else()
     message(FATAL_ERROR "cJSON not found.  Install w/ pacman -S cjson")
 endif()
 
-add_library(deps::cjson INTERFACE IMPORTED)
-target_include_directories(deps::cjson INTERFACE ${CJSON_INCLUDE_DIRS})
-target_link_libraries(deps::cjson INTERFACE ${CJSON_LIBRARIES})
-target_compile_options(deps::cjson INTERFACE ${CJSON_CFLAGS_OTHER})
+add_library(deps::lcjson INTERFACE IMPORTED)
+target_include_directories(deps::lcjson INTERFACE ${CJSON_INCLUDE_DIRS})
+target_link_libraries(deps::lcjson INTERFACE ${CJSON_LIBRARIES})
+target_compile_options(deps::lcjson INTERFACE ${CJSON_CFLAGS_OTHER})
 
 # -- libconfig - structured configuration file parsing
 pkg_check_modules(LIBCONFIG REQUIRED libconfig)
@@ -73,10 +92,10 @@ else()
     message(FATAL_ERROR "libconfig not found.  Install w/ pacman -S libconfig")
 endif()
 
-add_library(deps::config INTERFACE IMPORTED)
-target_include_directories(deps::config INTERFACE ${LIBCONFIG_INCLUDE_DIRS})
-target_link_libraries(deps::config INTERFACE ${LIBCONFIG_LIBRARIES})
-target_compile_options(deps::config INTERFACE ${LIBCONFIG_CFLAGS_OTHER})
+add_library(deps::lconfig INTERFACE IMPORTED)
+target_include_directories(deps::lconfig INTERFACE ${LIBCONFIG_INCLUDE_DIRS})
+target_link_libraries(deps::lconfig INTERFACE ${LIBCONFIG_LIBRARIES})
+target_compile_options(deps::lconfig INTERFACE ${LIBCONFIG_CFLAGS_OTHER})
 
 # -- Threads (POSIX pthreads explicit)
 find_package(Threads REQUIRED)      # Exposes Threads::Threads imported target

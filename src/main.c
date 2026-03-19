@@ -1,87 +1,61 @@
-#include "mud_log.h"
-#include "mud_utils.h"
-#include "mud_network.h"
+#include "mud_config.h"
 #include "mud_crypto.h"
+#include "mud_db.h"
+#include "mud_log.h"
 
-#include <zlog.h>
-#include <sodium.h>
+#include <stdbool.h>
 #include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
 
-// Global variables
-unsigned char SERVER_KEY[crypto_box_PUBLICKEYBYTES];
-unsigned char recipient_public_key[crypto_box_PUBLICKEYBYTES];
-unsigned char recipient_secret_key[crypto_box_SECRETKEYBYTES];
-unsigned char sender_public_key[crypto_box_PUBLICKEYBYTES];
-unsigned char sender_secret_key[crypto_box_SECRETKEYBYTES];
-
-// Must be the first libsodium call in the entire process.  Inits CPU feature detection (AVX2, etc) for fast paths.
-// Thread-safe and idempotent, calling it multiple times is fine.
-// Returns 0 on success or -1 on failure (hardware too old, or PRNG unavailable)
-static bool sodium_init() {
-    SODIUM_FLAG = sodium_init();
-    if (sodium_init() < 0) {
-        return false;
-    } else {
-        return true;
+static void shutdown_subsystems(bool config_loaded, bool db_open) {
+    if (db_open) {
+        mud_db_close();
     }
-    return false;
+    if (config_loaded) {
+        mud_config_shutdown();
+    }
+    mud_log_shutdown();
 }
 
-static int keygen() {
-    // Initialize the PRNG
-    randombytes_stir();
+int main(void) {
+    bool config_loaded = false;
+    bool db_open = false;
+    const char* log_config_path = "config/zlog.conf";
+    const char* db_path = NULL;
 
-    // Generates a random 32-byte nonce
-    unsigned char nonce[crypto_box_NONCEBYTES];
-    randombytes_buf(nonce, crypto_box_NONCEBYTES);
-
-    // Generate a random 32-byte key
-    unsigned char key[crypto_box_PUBLICKEYBYTES];
-    randombytes_buf(key, crypto_box_PUBLICKEYBYTES);
-
-    // Encrypts key for the recipient using nonce
-    unsigned char ciphertext[crypto_box_PUBLICKEYBYTES + crypto_box_MACBYTES];
-    crypto_box_easy(ciphertext, key, crypto_box_PUBLICKEYBYTES, nonce, recipient_public_key, recipient_secret_key);
-
-    // Decrypts key using nonce
-    unsigned char plaintext[crypto_box_PUBLICKEYBYTES];
-    crypto_box_open_easy(plaintext, ciphertext, crypto_box_PUBLICKEYBYTES + crypto_box_MACBYTES, nonce, sender_public_key, sender_secret_key);
-
-    // Compares the decrypted key with the original key
-    if (memcmp(key, plaintext, crypto_box_PUBLICKEYBYTES) == 0) {
-        // Key was successfully generated
-        // Return the key
-        return key;
-    } else if (memcmp(key, plaintext, crypto_box_PUBLICKEYBYTES) != 0) {
-        // Key was not successfully generated
-        // Return -1
-        return 0;
+    if (!mud_log_init(log_config_path)) {
+        fprintf(stderr, "Failed to initialize logging using '%s'\n", log_config_path);
+        return EXIT_FAILURE;
     }
-    return 0;
-}
 
-void mud_log_reload(const char* config_path) {
-    // Reloads the logging configuration
-    if (zlog_reload(config_path) != 0) {
-        LOG_ADMIN_ERROR("Failed to reload zlog config from '%s'", config_path);
-    } else {
-        LOG_ADMIN_INFO("Successfully reloaded config from '%s'", config_path);
+    if (!mud_config_load(NULL)) {
+        LOG_CORE_FATAL("Failed to load configuration");
+        shutdown_subsystems(false, false);
+        return EXIT_FAILURE;
     }
+    config_loaded = true;
+
+    if (!mud_crypto_init()) {
+        LOG_CORE_FATAL("Failed to initialize crypto");
+        shutdown_subsystems(config_loaded, false);
+        return EXIT_FAILURE;
+    }
+
+    db_path = mud_config_get_string("database.path", "data/mud.db");
+    if (!mud_db_open(db_path)) {
+        LOG_CORE_FATAL("Failed to open database '%s'", db_path);
+        shutdown_subsystems(config_loaded, false);
+        return EXIT_FAILURE;
+    }
+    db_open = true;
+
+    if (!mud_db_migrate()) {
+        LOG_CORE_FATAL("Failed to migrate database schema");
+        shutdown_subsystems(config_loaded, db_open);
+        return EXIT_FAILURE;
+    }
+
+    LOG_CORE_INFO("Startup checks completed successfully");
+    shutdown_subsystems(config_loaded, db_open);
+    return EXIT_SUCCESS;
 }
-
-void main() {
-    // Inits sodium and sets the flag
-    sodium_init();
-
-    // Generates a key and stores it in a global variable
-    SERVER_KEY = keygen();
-
-    // Saves the key to a file in /tmp/key
-    LOG_CORE_INFO(g_log_core, file_fmt, "Saving key to /tmp/key");
-    FILE *key_file = fopen("/tmp/key", "w");
-    fwrite(SERVER_KEY, sizeof(SERVER_KEY), 1, key_file);
-    fclose(key_file);
-
-    return 0;
-}    

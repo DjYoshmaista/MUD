@@ -12,7 +12,7 @@
       "hidden": true,
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/${presetName}",
-      "installDir": "${sourceDir}/build/${presetNmae}/install",
+      "installDir": "${sourceDir}/build/${presetName}/install",
       "cacheVariables": {
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
         "BUILD_SHARED_LIBS": "OFF",
@@ -28,7 +28,7 @@
       "displayName": "Debug (Ninja)",
       "inherits": "base",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_BUILD_TYPE": "Debug"
       }
     },
 
@@ -37,7 +37,7 @@
       "displayName": "Relase (Ninja)",
       "inherits": "base",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_BUILD_TYPE": "Release"
       }
     },
 
@@ -46,7 +46,7 @@
       "displayName": "RelWithDebInfo (Ninja)",
       "inherits": "base",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo"
       }
     },
 
@@ -75,32 +75,32 @@
       "name": "build-debug",
       "displayName": "Build Debug",
       "configurePreset": "debug",
-      "jobs": 16
+      "jobs": 0
     },
     {
       "name": "build-release",
       "displayName": "Build Release",
       "configurePreset": "release",
-      "jobs": 16
+      "jobs": 0
     },
     {
       "name": "build-asan",
       "displayName": "Build Address Sanitizer/UBSan",
       "configurePreset": "asan",
-      "jobs": 16
+      "jobs": 0
     },
     {
       "name": "build-coverage",
       "displayName": "Build Coverage",
       "configurePreset": "coverage",
-      "jobs": 16
+      "jobs": 0
     },
     {
       "name": "build-debug-tests",
       "displayName": "Build Debug [Tests Target]",
       "configurePreset": "debug",
       "targets": [ "tests" ],
-      "jobs": 16
+      "jobs": 0
     }
   ],
 
@@ -159,7 +159,7 @@
       "filter": {
         "includeLabel": "integration"
       },
-      "exection": {
+      "execution": {
         "noTestsAction": "error",
         "stopOnFailure": false
       },

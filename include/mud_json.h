@@ -23,13 +23,14 @@ char* mud_json_print(const cJSON* root);
     Caller must cJSON_free() the result */
 char* mud_json_print_compact(const cJSON* root);
 
+
 /*  Safe field extraction helpers
     These return the value or a default - they never crash on NULL or wrong types
 */
 const char* mud_json_get_string(const cJSON* obj, const char* key, const char* default_val);
-int         mud_juson_get_int(const cJSON* obj, const char* key, int default_val);
-double      mud_json_get_double(const cJSON* obj, const char* key, double default_val);
-bool        mud_json_get_bool(const cJSON* obj, const char* key, bool default_val);
+int mud_json_get_int(const cJSON* obj, const char* key, int default_val);
+double mud_json_get_double(const cJSON* obj, const char* key, double default_val);
+bool mud_json_get_bool(const cJSON* obj, const char* key, bool default_val);
 
 #ifdef __cplusplus
 }

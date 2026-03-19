@@ -6,6 +6,12 @@ project(MUDv2
 	LANGUAGES C
 )
 
+include(CTest)
+
+option(MUD_ENABLE_TESTS "Build the project test suite" ${BUILD_TESTING})
+option(MUD_ENABLE_TOOLS "Build developer tools" OFF)
+option(MUD_ENABLE_SAMPLES "Build sample programs" OFF)
+
 # -- CMake Compile Definitions --
 if(UNIX OR APPLE)
 	# Enabel POSIX-1-2008 for fileno, isatty and getcwd
@@ -44,15 +50,11 @@ include(cmake/Sanitizers.cmake)
 include(cmake/Coverage.cmake)
 include(cmake/Deps.cmake)
 
-# -- Public Header Search Path --
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
-
 # -- Subsystem --
 # Core Library - Always Built
-add_subdirectory(src/core)
+add_subdirectory(src)
 
-if(MUD_ENABLE_TESTS)
-	include(CTest)
+if(BUILD_TESTING AND MUD_ENABLE_TESTS)
 	add_subdirectory(test)
 endif()
 

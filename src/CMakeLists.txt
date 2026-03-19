@@ -8,7 +8,6 @@ set(MUD_CORE_SOURCES
     utils/mud_db.c
     utils/mud_json.c
     config/mud_config.c
-    log/mud_log_sink.c
     utils/mud_vector.c
     utils/mud_buffer.c
     utils/mud_str.c
@@ -25,7 +24,7 @@ set(MUD_CORE_SOURCES
 add_library(mud_core STATIC ${MUD_CORE_SOURCES})
 
 # -- Include directories: Includes the directory containing the source files
-target_include_directories(mud_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(mud_core PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
 # -- Compiler features: Modern CMake way to specify language requirements (per targt)
 target_compile_features(mud_core PUBLIC c_std_23)
@@ -43,12 +42,16 @@ target_link_libraries(mud_core PUBLIC
     deps::zlog
     deps::sodium
     SQLite::SQLite3
-    deps::cjson
-    deps::config
+    deps::lcjson
+    deps::lconfig
     Threads::Threads
-
+)
 # -- Library Alias: Creates a namespaced alias for the library
 add_library(MUD::core ALIAS mud_core)
+
+add_executable(mudv2 main.c)
+target_link_libraries(mudv2 PRIVATE mud_core)
+target_compile_features(mudv2 PRIVATE c_std_23)
 
 # -- Status Message: Confirms which files are included during configuration
 message(STATUS "Core library sources: ${MUD_CORE_SOURCES}")

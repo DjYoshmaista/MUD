@@ -1,4 +1,7 @@
 **.swp
+docs/todo/
+data/
+logs/
 build/**
 **.pyc
 **.*~

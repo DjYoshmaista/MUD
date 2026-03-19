@@ -9,14 +9,14 @@ extern "C" {
 
 /*  Load the server configuration from a file.
     Must bec alled before any mud_config_get_* functions
-    @param path Path to mud.conf.  If NULL, defaults to "src/config/mud.conf"
+    @param path Path to mud.conf.  If NULL, defaults to "config/mud.conf"
     @return true on success, false if file is missing or has syntax errors
         On failure a human-readable error is printed to stderr
 */
 bool mud_config_load(const char* path);
 
 // Release all config memory
-void_mud_config_shutdown(void);
+void mud_config_shutdown(void);
 
 /*  Scalar accessors
     The 'path' arg uses libconfig's dot-notation for nested lookup:

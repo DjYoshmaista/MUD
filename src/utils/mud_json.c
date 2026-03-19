@@ -1,4 +1,6 @@
 #include "mud_json.h"
+#include <limits.h>
+#include <math.h>
 
 cJSON* mud_json_parse (const char* s) {
     return s ? cJSON_Parse(s) : NULL;
@@ -22,7 +24,13 @@ const char* mud_json_get_string(const cJSON* obj, const char* key, const char* d
 int mud_json_get_int(const cJSON* obj, const char* key, int def) {
     if (!obj || !key) return def;
     const cJSON* item = cJSON_GetObjectItemCaseSensitive(obj, key);
-    return cJSON_IsNumber(item) ? (int)item->valuedouble : def;
+    if (!cJSON_IsNumber(item)) return def;
+
+    double value = item->valuedouble;
+    if (value < (double)INT_MIN || value > (double)INT_MAX) return def;
+    if (trunc(value) != value) return def;
+
+    return (int)value;
 }
 
 double mud_json_get_double(const cJSON* obj, const char* key, double def) {
