@@ -12,10 +12,12 @@ bool mud_config_load(const char* path) {
     const char* p = path ? path : "config/mud.conf";
 
     if (g_loaded) {
+        LOG_SESSION_DEBUG("Config already loaded");
         config_destroy(&g_config);
         g_loaded = false;
     }
 
+    LOG_SESSION_DEBUG("Loading config from '%s'", p);
     config_init(&g_config);
 
     if (config_read_file(&g_config, p) != CONFIG_TRUE) {
@@ -38,6 +40,10 @@ void mud_config_shutdown(void) {
 
 const char* mud_config_get_string(const char* path, const char* def) {
     if (!g_loaded || !path) {
+        if (!g_loaded) {
+            LOG_SESSION_DEBUG("Config not loaded");
+        } else if (!path) LOG_SESSION_DEBUG("Path is NULL");
+        fprintf(stderr, "[mud_config_get_string]::Config error: path is null or config not loaded\n");
         return def;
     }
     const char* val;
@@ -46,6 +52,10 @@ const char* mud_config_get_string(const char* path, const char* def) {
 
 int mud_config_get_int(const char* path, int def) {
     if (!g_loaded || !path) {
+        if (!g_loaded) {
+            LOG_SESSION_DEBUG("Config not loaded");
+        } else if (!path) LOG_SESSION_DEBUG("Path is NULL");
+        fprintf(stderr, "[mud_config_get_int]::Config error: path is null or config not loaded\n");
         return def;
     }
     int val;
@@ -54,6 +64,10 @@ int mud_config_get_int(const char* path, int def) {
 
 bool mud_config_get_bool(const char* path, bool def) {
     if (!g_loaded || !path) {
+        if (!g_loaded) {
+            LOG_SESSION_DEBUG("Config not loaded");
+        } else if (!path) LOG_SESSION_DEBUG("Path is NULL");
+        fprintf(stderr, "[mud_config_get_bool]::Config error: path is null or config not loaded\n");
         return def;
     }
     int val;
@@ -62,6 +76,10 @@ bool mud_config_get_bool(const char* path, bool def) {
 
 double mud_config_get_double(const char* path, double def) {
     if (!g_loaded || !path) {
+        if (!g_loaded) {
+            LOG_SESSION_DEBUG("Config not loaded");
+        } else if (!path) LOG_SESSION_DEBUG("Path is NULL");
+        fprintf(stderr, "[mud_config_get_double]::Config error: path is null or config not loaded\n");
         return def;
     }
     double val;

@@ -1,6 +1,13 @@
 **.swp
+**.bak
+**/.DS_Store
 docs/todo/
 data/
+!data/
+data/*
+!data/db_dest/
+data/db_dest/*
+!data/db_dest/test_fixture.sql
 logs/
 build/**
 **.pyc

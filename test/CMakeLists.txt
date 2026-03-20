@@ -22,11 +22,20 @@ add_library(mud_test_support STATIC
 )
 target_link_libraries(mud_test_support PUBLIC mud_test_lib)
 
+add_executable(generate_test_db
+    generate_test_db.c
+)
+target_link_libraries(generate_test_db PRIVATE SQLite::SQLite3)
+
 # ------------------------------------------------------------------------------
 # List All Test Module Soruces - One file per module being tested
 # ------------------------------------------------------------------------------
 set(TEST_MODULE_SOURCES
     modules/test_vector.c
+    modules/test_crypto.c
+    modules/test_json.c
+    modules/test_db.c
+    modules/test_config.c
     modules/test_buffer.c
     modules/test_str.c
     modules/test_hashmap.c
@@ -63,6 +72,18 @@ add_test(
     COMMAND run_all_tests
 )
 
+add_test(
+    NAME setup_test_db_fixture
+    COMMAND generate_test_db
+            ${CMAKE_SOURCE_DIR}/data/db_dest/test_fixture.sql
+            ${CMAKE_SOURCE_DIR}/data/db_dest/test.db
+)
+set_tests_properties(setup_test_db_fixture PROPERTIES
+    FIXTURES_SETUP TestDatabaseFixture
+    LABELS "fixture"
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
+
 # ------------------------------------------------------------------------------
 # Test Properties: Labels
 #   - Attaches metadata labels to the test
@@ -89,8 +110,8 @@ foreach(test_source IN LISTS TEST_MODULE_SOURCES)
 
     # Create executable
     add_executable(${test_name}
-	run_single_module.c
-	${test_source}
+        run_single_module.c
+        ${test_source}
     )
 
     target_link_libraries(${test_name} PRIVATE mud_test_support)
@@ -98,12 +119,20 @@ foreach(test_source IN LISTS TEST_MODULE_SOURCES)
     # Register with CTest
     add_test(NAME ${test_name} COMMAND ${test_name})
     set_tests_properties(${test_name} PROPERTIES
-	LABELS "unit"
-	TIMEOUT 300
+        LABELS "unit"
+        TIMEOUT 300
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         ENVIRONMENT "MUD_TEST_VERBOSE=1;MUD_LOG_LEVEL=debug"
     )
 endforeach()
+
+set_tests_properties(test_db PROPERTIES
+    FIXTURES_REQUIRED TestDatabaseFixture
+)
+
+set_tests_properties(run_all_tests PROPERTIES
+    FIXTURES_REQUIRED TestDatabaseFixture
+)
 
 # -------------------------------------------------------------------------------
 # build_tests target: ninja build_tests compiles everything without executing
@@ -111,6 +140,7 @@ endforeach()
 # Custom target to build all tests w/o running them
 add_custom_target(build_tests)
 add_dependencies(build_tests run_all_tests)
+add_dependencies(build_tests generate_test_db)
 foreach(test_source IN LISTS TEST_MODULE_SOURCES)
     get_filename_component(test_name ${test_source} NAME_WE)
     add_dependencies(build_tests ${test_name})
@@ -130,8 +160,8 @@ if(MUD_ENABLE_SLOW_TESTS)
     target_link_libraries(test_slow_integration PRIVATE mud_test_support)
     add_test(NAME test_slow_integration COMMAND test_slow_integration)
     set_tests_properties(test_slow_integration PROPERTIES
-	LABELS "integration;slow"
-	TIMEOUT 900
+        LABELS "integration;slow"
+        TIMEOUT 900
     )
 endif()
 
@@ -174,6 +204,7 @@ set_tests_properties(run_all_tests PROPERTIES
 # ------------------------------------------------------------------------------
 add_custom_target(tests)
 add_dependencies(tests run_all_tests)
+add_dependencies(tests generate_test_db)
 foreach(test_source IN LISTS TEST_MODULE_SOURCES)
     get_filename_component(test_name ${test_source} NAME_WE)
     add_dependencies(tests ${test_name})

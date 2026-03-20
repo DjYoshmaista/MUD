@@ -23,28 +23,27 @@ pkg_check_modules(LIBSODIUM REQUIRED libsodium)
 
 if(LIBSODIUM_FOUND)
     message(STATUS "libsodium found: ${LIBSODIUM_VERSION}")
+    add_library(deps::sodium INTERFACE IMPORTED)
+    target_include_directories(deps::sodium INTERFACE ${LIBSODIUM_INCLUDE_DIRS})
+    target_link_libraries(deps::sodium INTERFACE ${LIBSODIUM_LIBRARIES})
+    target_compile_options(deps::sodium INTERFACE ${LIBSODIUM_CFLAGS_OTHER})
 else()
     message(FATAL_ERROR "libsodium NOT found.  Install w/ pacman -S libsodium")
 endif()
-
-add_library(deps::sodium INTERFACE IMPORTED)
-target_include_directories(deps::sodium INTERFACE ${LIBSODIUM_INCLUDE_DIRS})
-target_link_libraries(deps::sodium INTERFACE ${LIBSODIUM_LIBRARIES})
-target_compile_options(deps::sodium INTERFACE ${LIBSODIUM_CFLAGS_OTHER})
 
 # -- libtelnet - telnet protocol implementation
 pkg_check_modules(LIBTELNET REQUIRED libtelnet)
 
 if(LIBTELNET_FOUND)
     message(STATUS "libtelnet found: ${LIBTELNET_VERSION}")
+    add_library(deps::ltelnet INTERFACE IMPORTED)
+    target_include_directories(deps::ltelnet INTERFACE ${LIBTELNET_INCLUDE_DIRS})
+    target_link_libraries(deps::ltelnet INTERFACE ${LIBTELNET_LIBRARIES})
+    target_compile_options(deps::ltelnet INTERFACE ${LIBTELNET_CFLAGS_OTHER})
 else()
     message(FATAL_ERROR "libtelnet not found.  Install w/ pacman -S libtelnet")
 endif()
 
-add_library(deps::ltelnet INTERFACE IMPORTED)
-target_include_directories(deps::ltelnet INTERFACE ${LIBTELNET_INCLUDE_DIRS})
-target_link_libraries(deps::ltelnet INTERFACE ${LIBTELNET_LIBRARIES})
-target_compile_options(deps::ltelnet INTERFACE ${LIBTELNET_CFLAGS_OTHER})
 
 # -- libuv - networking: async I/O, event loop, etc
 # -- LibUV integration for networking layer and async I/O
@@ -74,28 +73,26 @@ pkg_check_modules(CJSON REQUIRED libcjson)
 
 if(CJSON_FOUND)
     message(STATUS "cJSON found: ${CJSON_VERSION}")
+    add_library(deps::lcjson INTERFACE IMPORTED)
+    target_include_directories(deps::lcjson INTERFACE ${CJSON_INCLUDE_DIRS})
+    target_link_libraries(deps::lcjson INTERFACE ${CJSON_LIBRARIES})
+    target_compile_options(deps::lcjson INTERFACE ${CJSON_CFLAGS_OTHER})
 else()
     message(FATAL_ERROR "cJSON not found.  Install w/ pacman -S cjson")
 endif()
-
-add_library(deps::lcjson INTERFACE IMPORTED)
-target_include_directories(deps::lcjson INTERFACE ${CJSON_INCLUDE_DIRS})
-target_link_libraries(deps::lcjson INTERFACE ${CJSON_LIBRARIES})
-target_compile_options(deps::lcjson INTERFACE ${CJSON_CFLAGS_OTHER})
 
 # -- libconfig - structured configuration file parsing
 pkg_check_modules(LIBCONFIG REQUIRED libconfig)
 
 if(LIBCONFIG_FOUND)
     message(STATUS "libconfig found: ${LIBCONFIG_VERSION}")
+    add_library(deps::lconfig INTERFACE IMPORTED)
+    target_include_directories(deps::lconfig INTERFACE ${LIBCONFIG_INCLUDE_DIRS})
+    target_link_libraries(deps::lconfig INTERFACE ${LIBCONFIG_LIBRARIES})
+    target_compile_options(deps::lconfig INTERFACE ${LIBCONFIG_CFLAGS_OTHER})
 else()
     message(FATAL_ERROR "libconfig not found.  Install w/ pacman -S libconfig")
 endif()
-
-add_library(deps::lconfig INTERFACE IMPORTED)
-target_include_directories(deps::lconfig INTERFACE ${LIBCONFIG_INCLUDE_DIRS})
-target_link_libraries(deps::lconfig INTERFACE ${LIBCONFIG_LIBRARIES})
-target_compile_options(deps::lconfig INTERFACE ${LIBCONFIG_CFLAGS_OTHER})
 
 # -- Threads (POSIX pthreads explicit)
 find_package(Threads REQUIRED)      # Exposes Threads::Threads imported target

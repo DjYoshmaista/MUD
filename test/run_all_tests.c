@@ -1,5 +1,6 @@
 #include "test/test_autoreg.h"
-#include "mud_log.h"
+#include "mud_testctx.h"
+#include "test/test_log.h"
 
 #include <stdio.h>
 #include <stdlib.h>

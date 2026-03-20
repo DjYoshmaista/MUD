@@ -20,6 +20,26 @@ bool    mud_db_migrate(void);       // Creates/upgrades tables to current schema
 // Raw execution (for DDL and one-off statements that don't return rows)
 bool    mud_db_exec(const char* sql);
 
+typedef struct sqlite3_stmt MudDbStmt;
+
+typedef enum MudDbStepResult {
+    MUD_DB_STEP_ERROR = -1,
+    MUD_DB_STEP_DONE = 0,
+    MUD_DB_STEP_ROW = 1,
+} MudDbStepResult;
+
+bool            mud_db_prepare(const char* sql, MudDbStmt** out_stmt);
+bool            mud_db_bind_text(MudDbStmt* stmt, int index, const char* value);
+bool            mud_db_bind_int64(MudDbStmt* stmt, int index, int64_t value);
+MudDbStepResult mud_db_step(MudDbStmt* stmt);
+const char*     mud_db_column_text(MudDbStmt* stmt, int index);
+int             mud_db_column_int(MudDbStmt* stmt, int index, int default_val);
+int64_t         mud_db_column_int64(MudDbStmt* stmt, int index, int64_t default_val);
+double          mud_db_column_double(MudDbStmt* stmt, int index, double default_val);
+bool            mud_db_column_bool(MudDbStmt* stmt, int index, bool default_val);
+int             mud_db_changes(void);
+void            mud_db_finalize(MudDbStmt* stmt);
+
 // Account operations (examples - more in later phases)
 typedef struct {
     int64_t         id;

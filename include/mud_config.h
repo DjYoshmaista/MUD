@@ -7,6 +7,18 @@
 extern "C" {
 #endif
 
+/*  Initialize the config subsystem.
+    Must be called before any other config functions
+    @return true on success, false on failure
+        On failure a human-readable error is printed to stderr
+*/
+bool mud_config_init(const char* path);
+#define MUD_DB_PATH "data/mud.db"
+#define WORLD_DB_PATH "data/world.db"
+#define MUD_LOG_PATH "config/zlog.conf"
+#define MUD_CONFIG_PATH "config/mud.conf"
+
+
 /*  Load the server configuration from a file.
     Must bec alled before any mud_config_get_* functions
     @param path Path to mud.conf.  If NULL, defaults to "config/mud.conf"

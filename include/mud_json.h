@@ -32,6 +32,25 @@ int mud_json_get_int(const cJSON* obj, const char* key, int default_val);
 double mud_json_get_double(const cJSON* obj, const char* key, double default_val);
 bool mud_json_get_bool(const cJSON* obj, const char* key, bool default_val);
 
+/*  Safe field setting helpers
+    These return void and never crash on NULL or wrong types
+*/
+void mud_json_set_int(cJSON* obj, const char* key, int value);
+void mud_json_set_double(cJSON* obj, const char* key, double value);
+void mud_json_set_bool(cJSON* obj, const char* key, bool value);
+void mud_json_set_string(cJSON* obj, const char* key, const char* value);
+void mud_json_set_object(cJSON* obj, const char* key, cJSON* value);
+
+/*  Safe field deletion helpers
+    These return void and never crash on NULL or wrong types
+*/
+void mud_json_delete_item(cJSON* obj, const char* key);
+
+/*  Safe field destruction helpers
+    These return void and never crash on NULL or wrong types
+*/
+void mud_json_destroy(cJSON* obj);
+
 #ifdef __cplusplus
 }
 #endif

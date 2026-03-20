@@ -67,7 +67,8 @@ extern MudLogCategory* g_log_admin;
 #define LOG_TEST_WARN(fmt, ...)     MUD_ZLOG_CALL(zlog_warn,  g_log_test, fmt, ##__VA_ARGS__)
 #define LOG_TEST_ERROR(fmt, ...)    MUD_ZLOG_CALL(zlog_error, g_log_test, fmt, ##__VA_ARGS__)
 #define LOG_TEST_FATAL(fmt, ...)    MUD_ZLOG_CALL(zlog_fatal, g_log_test, fmt, ##__VA_ARGS__)
-
+#define LOG_TEST_CHECKPOINT(fmt, ...)   MUD_ZLOG_CALL(zlog_warn, g_log_test, fmt, ##__VA_ARGS__)
+#define LOG_TEST_ACTION(fmt, ...)    MUD_ZLOG_CALL(zlog_info,  g_log_test, fmt, ##__VA_ARGS__)
 
 // Arena
 #define LOG_ARENA_DEBUG(fmt, ...)   MUD_ZLOG_CALL(zlog_debug, g_log_arena, fmt, ##__VA_ARGS__)

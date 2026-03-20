@@ -28,11 +28,11 @@
 
 /*  @brief Log an action being performed in a test */
 #define TEST_LOG_ACTION(action)                                   \
-    LOG_TEST_DEBUG("[%s] Action: %s", ctx->current_test_name, action)
+    LOG_TEST_INFO("[%s] Action: %s", ctx->current_test_name, action)
 
 /*  @brief Log a checkpoint in a test */
 #define TEST_LOG_CHECKPOINT(name)                                 \
-    LOG_TEST_TRACE("[%s] Checkpoint: %s", ctx->current_test_name, name)
+    LOG_TEST_INFO("[%s] Checkpoint: %s", ctx->current_test_name, name)
 
 /* Context aware macro layer for tests 
 #define TEST_LOG_TO(sink, level, fmt, ...)                        \
