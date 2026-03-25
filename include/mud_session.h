@@ -9,21 +9,18 @@
 extern "C" {
 #endif
 
-#define MUD_SESSION_MAX_CONNS_PER_USER    10
-#define DEFAULT_USERNAME                  "Pierce"
-#define DEFAULT_PASSWORD                  "lolcat"
-#define charset                           "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+#define MUD_SESSION_MAX_CONNS_PER_USER      10
 
 typedef enum SessionState {
     CONN_NEW = 0,
     CONN_GET_NAME,
     CONN_GET_PASSWORD,
     CONN_NEW_ACCOUNT,
-    CONN_SET_PASS,
+    CONN_SET_PASSWORD,
     CONN_CONFIRM_PASSWORD,
     CONN_LIMBO,
     CONN_PLAYING,
-    CONN_DISC
+    CONN_DISCONNECTING
 } SessionState;
 
 typedef struct MudSession {
@@ -37,12 +34,6 @@ typedef struct MudSession {
     int64_t last_active_at;
     void*   player;
 } MudSession;
-
-// Create a random username
-char* mud_make_dflt_username(char* out, size_t out_len);
-
-// Create a random password
-char* mud_make_dflt_password(char* out, size_t out_len);
 
 /* Session Creation/Management */
 // -- Session Creation --
