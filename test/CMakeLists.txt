@@ -7,6 +7,10 @@ target_include_directories(mud_test_lib INTERFACE
     ${CMAKE_SOURCE_DIR}/include
     ${CMAKE_SOURCE_DIR}/include/test
 )
+set(MUD_TEST_FIXTURE_DB_PATH "${CMAKE_CURRENT_BINARY_DIR}/test_fixture.db")
+target_compile_definitions(mud_test_lib INTERFACE
+    MUD_TEST_FIXTURE_DB_PATH=\"${MUD_TEST_FIXTURE_DB_PATH}\"
+)
 
 # ------------------------------------------------------------------------------
 # Linking Test Library
@@ -41,6 +45,10 @@ set(TEST_MODULE_SOURCES
     modules/test_hashmap.c
     modules/test_utils.c
     modules/test_arena.c
+    modules/test_connection.c
+    modules/test_input.c
+    modules/test_output.c
+    modules/test_net_loop.c
 )
 
 # ------------------------------------------------------------------------------
@@ -76,7 +84,7 @@ add_test(
     NAME setup_test_db_fixture
     COMMAND generate_test_db
             ${CMAKE_SOURCE_DIR}/data/db_dest/test_fixture.sql
-            ${CMAKE_SOURCE_DIR}/data/db_dest/test.db
+            ${MUD_TEST_FIXTURE_DB_PATH}
 )
 set_tests_properties(setup_test_db_fixture PROPERTIES
     FIXTURES_SETUP TestDatabaseFixture
@@ -122,9 +130,58 @@ foreach(test_source IN LISTS TEST_MODULE_SOURCES)
         LABELS "unit"
         TIMEOUT 300
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-        ENVIRONMENT "MUD_TEST_VERBOSE=1;MUD_LOG_LEVEL=debug"
+        ENVIRONMENT "MUD_TEST_VERBOSE=1;MUD_LOG_LEVEL=trace"
     )
 endforeach()
+
+set(MUD_VERIFY_BUILD_MODE_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/cmake/VerifyBuildMode.cmake")
+
+add_test(
+    NAME verify_debug_build_mode
+    COMMAND ${CMAKE_COMMAND}
+        -DSOURCE_DIR=${CMAKE_SOURCE_DIR}
+        -DBUILD_DIR=${CMAKE_BINARY_DIR}/verify/debug
+        -DBUILD_TYPE=Debug
+        -P ${MUD_VERIFY_BUILD_MODE_SCRIPT}
+)
+set_tests_properties(verify_debug_build_mode PROPERTIES
+    LABELS "verification;buildmode;debug"
+    TIMEOUT 1800
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
+
+add_test(
+    NAME verify_asan_ubsan_build_mode
+    COMMAND ${CMAKE_COMMAND}
+        -DSOURCE_DIR=${CMAKE_SOURCE_DIR}
+        -DBUILD_DIR=${CMAKE_BINARY_DIR}/verify/asan
+        -DBUILD_TYPE=Debug
+        -DENABLE_SANITIZERS=ON
+        -DSANITIZERS=address,undefined
+        -P ${MUD_VERIFY_BUILD_MODE_SCRIPT}
+)
+set_tests_properties(verify_asan_ubsan_build_mode PROPERTIES
+    LABELS "verification;buildmode;asan;ubsan"
+    TIMEOUT 1800
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    ENVIRONMENT "ASAN_OPTIONS=detect_leaks=0:abort_on_error=0:halt_on_error=0;UBSAN_OPTIONS=print_stacktrace=1:halt_on_error=0"
+)
+
+add_test(
+    NAME verify_coverage_build_mode
+    COMMAND ${CMAKE_COMMAND}
+        -DSOURCE_DIR=${CMAKE_SOURCE_DIR}
+        -DBUILD_DIR=${CMAKE_BINARY_DIR}/verify/coverage
+        -DBUILD_TYPE=Debug
+        -DENABLE_COVERAGE=ON
+        -DRUN_COVERAGE_TARGET=ON
+        -P ${MUD_VERIFY_BUILD_MODE_SCRIPT}
+)
+set_tests_properties(verify_coverage_build_mode PROPERTIES
+    LABELS "verification;buildmode;coverage"
+    TIMEOUT 2400
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
 
 set_tests_properties(test_db PROPERTIES
     FIXTURES_REQUIRED TestDatabaseFixture
@@ -178,7 +235,7 @@ set_tests_properties(run_all_tests PROPERTIES
 #   - Sets environment variables when the test runs
 # ------------------------------------------------------------------------------
 set_tests_properties(run_all_tests PROPERTIES
-    ENVIRONMENT "MUD_TEST_VERBOSE=1;MUD_LOG_LEVEL=debug"
+    ENVIRONMENT "MUD_TEST_VERBOSE=1;MUD_LOG_LEVEL=trace"
 )
 
 # ------------------------------------------------------------------------------
@@ -209,6 +266,11 @@ foreach(test_source IN LISTS TEST_MODULE_SOURCES)
     get_filename_component(test_name ${test_source} NAME_WE)
     add_dependencies(tests ${test_name})
 endforeach()
+
+add_custom_target(verify_build_modes
+    COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure -L verification
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+)
 
 # ------------------------------------------------------------------------------
 # Status Message

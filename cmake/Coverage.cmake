@@ -173,7 +173,7 @@ if(MUD_COVERAGE_HTML_ENABLED)
     add_custom_target(coverage
 	COMMAND ${CMAKE_COMMAND} --build "${CMAKE_BINARY_DIR}" --target coverage-clean
 	COMMAND ${CMAKE_COMMAND} --build "${CMAKE_BINARY_DIR}" --target coverage-baseline
-	COMMAND ${CMAKE_CTEST_COMMAND} --test-dir "${CMAKE_BINARY_DIR}" --output-on-failure
+	COMMAND ${CMAKE_CTEST_COMMAND} --test-dir "${CMAKE_BINARY_DIR}" --output-on-failure -LE verification
 	COMMAND ${CMAKE_COMMAND} --build "${CMAKE_BINARY_DIR}" --target coverage-capture
 	COMMAND ${CMAKE_COMMAND} --build "${CMAKE_BINARY_DIR}" --target coverage-combine
 	COMMAND ${CMAKE_COMMAND} --build "${CMAKE_BINARY_DIR}" --target coverage-filter
@@ -189,7 +189,7 @@ endif()
 # ------------------------------------------------------------------------------
 if(NOT MUD_COVERAGE_HTML_ENABLED)
     add_custom_target(coverage
-	COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
+	COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure -LE verification
 	COMMAND ${CMAKE_COMMAND} -E echo "Tests complete. Use gcov manually to analyze .gcda files "
 	COMMAND ${CMAKE_COMMAND} -E echo "For HTML reports, install lcov and genhtml."
 	COMMENT "Running tests with coverage (no HTML report)"

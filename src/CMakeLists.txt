@@ -4,14 +4,10 @@
 # -- Creates a variable listing all source files for the core lib
 set(MUD_CORE_SOURCES
     log/mud_log.c
-    utils/mud_crypto.c
-    net/mud_socket.c
-    net/mud_net.c
-    net/mud_connection.cq
+    config/mud_config.c
     utils/mud_crypto.c
     utils/mud_db.c
     utils/mud_json.c
-    config/mud_config.c
     utils/mud_vector.c
     utils/mud_buffer.c
     utils/mud_str.c
@@ -20,6 +16,13 @@ set(MUD_CORE_SOURCES
     arena/mud_arena.c
     arena/mud_arena_temp.c
     arena/mud_arena_str.c
+    net/mud_net_loop.c
+    net/mud_listener.c
+    net/mud_connection.c
+    net/mud_session.c
+    net/mud_output.c
+    net/mud_input.c
+    net/mud_telnet.c
 )
 
 # -- Library definition
@@ -45,6 +48,8 @@ target_compile_options(mud_core PRIVATE
 target_link_libraries(mud_core PUBLIC
     deps::zlog
     deps::sodium
+    deps::luv
+    deps::ltelnet
     SQLite::SQLite3
     deps::lcjson
     deps::lconfig
@@ -58,13 +63,7 @@ endif()
 add_library(MUD::core ALIAS mud_core)
 
 add_executable(mudv2 main.c)
-target_link_libraries(
-    mudv2 PRIVATE mud_core
-    mud_core PRIVATE deps::zlog
-    mud_core PRIVATE deps::sodium
-    mud_core PRIVATE deps::lcjson
-    mud_core PRIVATE deps::lconfig
-)
+target_link_libraries(mudv2 PRIVATE mud_core)
 target_compile_features(mudv2 PRIVATE c_std_23)
 
 # -- Status Message: Confirms which files are included during configuration

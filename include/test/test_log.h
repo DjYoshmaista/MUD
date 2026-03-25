@@ -8,8 +8,8 @@
     These include the test name in the log message for easier debugging
     The 'ctx' variable must be in scope (which it always is in TEST fn's)
 */
-#define TEST_LOG_TRACE(fmt, ...)                                  \
-    LOG_TEST_TRACE("[%s] " fmt, ctx->current_test_name, ##__VA_ARGS__)
+#define TEST_LOG_DEBUG(fmt, ...)                                  \
+    LOG_TEST_DEBUG("[%s] " fmt, ctx->current_test_name, ##__VA_ARGS__)
 
 #define TEST_LOG_DEBUG(fmt, ...)                                  \
     LOG_TEST_DEBUG("[%s] " fmt, ctx->current_test_name, ##__VA_ARGS__)

@@ -13,7 +13,11 @@
 #include <stdio.h>
 #include <string.h>
 
-static const char* kFixtureDbPath = "data/db_dest/test.db";
+#ifndef MUD_TEST_FIXTURE_DB_PATH
+#define MUD_TEST_FIXTURE_DB_PATH "data/db_dest/test.db"
+#endif
+
+static const char* kFixtureDbPath = MUD_TEST_FIXTURE_DB_PATH;
 
 static void cleanup_open_db(void) {
     if (mud_db_is_open()) {

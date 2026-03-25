@@ -11,6 +11,8 @@ include(CTest)
 option(MUD_ENABLE_TESTS "Build the project test suite" ${BUILD_TESTING})
 option(MUD_ENABLE_TOOLS "Build developer tools" OFF)
 option(MUD_ENABLE_SAMPLES "Build sample programs" OFF)
+option(MUD_ENABLE_SANITIZERS "Build with compiler sanitizers enabled" OFF)
+option(MUD_ENABLE_COVERAGE "Build with coverage instrumentation enabled" OFF)
 
 # -- CMake Compile Definitions --
 if(UNIX OR APPLE)

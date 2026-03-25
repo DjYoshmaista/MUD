@@ -15,7 +15,17 @@ extern "C" {
 bool mud_config_init(const char* path);
 #define MUD_DB_PATH "data/mud.db"
 #define WORLD_DB_PATH "data/world.db"
-#define MUD_LOG_PATH "config/zlog.conf"
+#define MUD_ZLOG_PATH "config/zlog.conf"
+#define MUD_LOG_PATH "logs/mud.log"
+#define MUD_NET_LOG_PATH "logs/net.log"
+#define MUD_CORE_LOG_PATH "logs/mud_core.log"
+#define MUD_ADMIN_LOG_PATH "logs/mud_admin.log"
+#define MUD_ARENA_LOG_PATH "logs/mud_arena.log"
+#define MUD_AUTH_LOG_PATH "logs/mud_auth.log"
+#define MUD_DB_LOG_PATH "logs/mud_db.log"
+#define MUD_SCRIPT_LOG_PATH "logs/mud_script.log"
+#define MUD_SESSION_LOG_PATH "logs/mud_session.log"
+#define MUD_WORLD_LOG_PATH "logs/mud_world.log"
 #define MUD_CONFIG_PATH "config/mud.conf"
 
 

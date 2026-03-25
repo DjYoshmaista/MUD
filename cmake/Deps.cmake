@@ -46,14 +46,16 @@ endif()
 
 
 # -- libuv - networking: async I/O, event loop, etc
-# -- LibUV integration for networking layer and async I/O
-pkg_check_modules(LIBUV QUIET libuv)
+pkg_check_modules(LIBUV REQUIRED libuv)
 
 if(LIBUV_FOUND)
+    message(STATUS "libuv found: ${LIBUV_VERSION}")
     add_library(deps::luv INTERFACE IMPORTED)
     target_include_directories(deps::luv INTERFACE ${LIBUV_INCLUDE_DIRS})
     target_link_libraries(deps::luv INTERFACE ${LIBUV_LIBRARIES})
     target_compile_options(deps::luv INTERFACE ${LIBUV_CFLAGS_OTHER})
+else()
+    message(FATAL_ERROR "libuv not found. Install with: pacman -S libuv")
 endif()
 
 # -- SQLite3 - embedded relational database.  No pkg-config needed

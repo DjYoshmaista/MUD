@@ -14,7 +14,7 @@ TEST(vector_create_destroy) {
     CHECK_NOT_NULL(ctx, vec);
     if (ctx->abort_current_test) return;
 
-    TEST_LOG_TRACE("Verifying initial state");
+    TEST_LOG_DEBUG("Verifying initial state");
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 0);
     CHECK_INT_EQ(ctx, mud_vector_capacity(vec), 8);
     CHECK(mud_vector_is_empty(vec));
@@ -28,14 +28,14 @@ TEST(vector_null_safety) {
 
     int dummy = 42;
 
-    TEST_LOG_TRACE("Testing read operations with NULL");
+    TEST_LOG_DEBUG("Testing read operations with NULL");
     CHECK_INT_EQ(ctx, mud_vector_size(NULL), 0);
     CHECK_INT_EQ(ctx, mud_vector_capacity(NULL), 0);
     CHECK(mud_vector_is_empty(NULL));
     CHECK_NULL(ctx, mud_vector_get(NULL, 0));
     CHECK_NULL(ctx, mud_vector_data(NULL));
 
-    TEST_LOG_TRACE("Testing write operations with NULL");
+    TEST_LOG_DEBUG("Testing write operations with NULL");
     CHECK(!mud_vector_push(NULL, &dummy));
     CHECK(!mud_vector_set(NULL, 0, &dummy));
     CHECK(!mud_vector_pop(NULL, NULL));
@@ -43,7 +43,7 @@ TEST(vector_null_safety) {
     CHECK(!mud_vector_reserve(NULL, 10));
     CHECK(!mud_vector_shrink_to_fit(NULL));
 
-    TEST_LOG_TRACE("Testing destroy with NULL");
+    TEST_LOG_DEBUG("Testing destroy with NULL");
     mud_vector_destroy(NULL);
 
     TEST_LOG_DEBUG("All NULL safety checks passed");
@@ -61,7 +61,7 @@ TEST(vector_push_get_set) {
 
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 10);
     CHECK(mud_vector_capacity(vec) >= 10);
-    TEST_LOG_TRACE("Size: %zu, Capacity: %zu", mud_vector_size(vec), mud_vector_capacity(vec)); 
+    TEST_LOG_DEBUG("Size: %zu, Capacity: %zu", mud_vector_size(vec), mud_vector_capacity(vec)); 
 
     for (int i = 0; i < 10; i++) {
         int* val = mud_vector_get(vec, (size_t)i);
@@ -75,7 +75,7 @@ TEST(vector_push_get_set) {
     CHECK(mud_vector_set(vec, 5, &updated));
     CHECK_INT_EQ(ctx, *(int*)mud_vector_get(vec, 5), 99);
 
-    TEST_LOG_TRACE("Testing out-of-bounds set (should fail)");
+    TEST_LOG_DEBUG("Testing out-of-bounds set (should fail)");
     CHECK(!mud_vector_set(vec, 100, &updated));
 
     mud_vector_destroy(vec);
@@ -98,7 +98,7 @@ TEST(vector_insert_pop_remove) {
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 4);
     CHECK_INT_EQ(ctx, *(int*)mud_vector_get(vec, 1), 20);
     for (size_t i = 0; i <= 3; i++) {
-        TEST_LOG_TRACE("Vector[%zu]: %d", i, *(int*)mud_vector_get(vec, i));
+        TEST_LOG_DEBUG("Vector[%zu]: %d", i, *(int*)mud_vector_get(vec, i));
     }
 
     TEST_LOG_DEBUG("Removing element at index 2");
@@ -106,7 +106,7 @@ TEST(vector_insert_pop_remove) {
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 3);
     CHECK_INT_EQ(ctx, *(int*)mud_vector_get(vec, 2), 40);
     for (size_t i = 0; i <= 2; i++) {
-        TEST_LOG_TRACE("Vector[%zu]: %d", i, *(int*)mud_vector_get(vec, i));
+        TEST_LOG_DEBUG("Vector[%zu]: %d", i, *(int*)mud_vector_get(vec, i));
     }
 
     TEST_LOG_DEBUG("Popping last element");
@@ -114,12 +114,12 @@ TEST(vector_insert_pop_remove) {
     CHECK(mud_vector_pop(vec, &popped));
     CHECK_INT_EQ(ctx, popped, 40);
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 2);
-    TEST_LOG_TRACE("Popped value: %d", popped);
+    TEST_LOG_DEBUG("Popped value: %d", popped);
     for (size_t i = 0; i <= 1; i++) {
-        TEST_LOG_TRACE("Vector[%zu]: %d", i, *(int*)mud_vector_get(vec, i));
+        TEST_LOG_DEBUG("Vector[%zu]: %d", i, *(int*)mud_vector_get(vec, i));
     }
 
-    TEST_LOG_TRACE("Testing invalid remove (should fail)");
+    TEST_LOG_DEBUG("Testing invalid remove (should fail)");
     CHECK(!mud_vector_remove(vec, 10));
 
     mud_vector_destroy(vec);
@@ -136,7 +136,7 @@ TEST(vector_clear_reserve_shrink) {
     TEST_LOG_DEBUG("Reserving capacity for 100 elements");
     CHECK(mud_vector_reserve(vec, 100));
     CHECK(mud_vector_capacity(vec) >= 100);
-    TEST_LOG_TRACE("Capacity after reserve: %zu", mud_vector_capacity(vec));
+    TEST_LOG_DEBUG("Capacity after reserve: %zu", mud_vector_capacity(vec));
 
     TEST_LOG_DEBUG("Pushing 12 elements");
     for (int i = 0; i < 12; i++) {
@@ -146,13 +146,13 @@ TEST(vector_clear_reserve_shrink) {
     TEST_LOG_DEBUG("Shrinking to fit");
     CHECK(mud_vector_shrink_to_fit(vec));
     CHECK_INT_EQ(ctx, mud_vector_capacity(vec), mud_vector_size(vec));
-    TEST_LOG_TRACE("Capacity after shrink: %zu", mud_vector_capacity(vec));
+    TEST_LOG_DEBUG("Capacity after shrink: %zu", mud_vector_capacity(vec));
 
     TEST_LOG_DEBUG("Clearing vector");
     mud_vector_clear(vec);
     CHECK(mud_vector_is_empty(vec));
     CHECK_INT_EQ(ctx, mud_vector_capacity(vec), 12);
-    TEST_LOG_TRACE("Capacity preserved after clear: %zu", mud_vector_capacity(vec));
+    TEST_LOG_DEBUG("Capacity preserved after clear: %zu", mud_vector_capacity(vec));
 
     TEST_LOG_DEBUG("Shrinking empty vector");
     CHECK(mud_vector_shrink_to_fit(vec));
@@ -169,7 +169,7 @@ TEST(vector_data_access) {
     TEST_LOG_DEBUG("Pushing 5 elements...");
     for (size_t i = 0; i < 5; i++) {
         CHECK(mud_vector_push(vec, &i));
-        TEST_LOG_TRACE("Vector[%zu] checked: %d", i + 1, *(int*)mud_vector_get(vec, i));
+        TEST_LOG_DEBUG("Vector[%zu] checked: %d", i + 1, *(int*)mud_vector_get(vec, i));
     }
 
     TEST_LOG_DEBUG("Getting raw data pointer");
@@ -181,7 +181,7 @@ TEST(vector_data_access) {
     data[2] = 77;
     CHECK_INT_EQ(ctx, *(int*)mud_vector_get(vec, 2), 77);
 
-    TEST_LOG_TRACE("Verifying const accessor returns same address");
+    TEST_LOG_DEBUG("Verifying const accessor returns same address");
     CHECK_PTR_EQ(ctx, data, mud_vector_data_const(vec));
 
     mud_vector_destroy(vec);
@@ -236,23 +236,23 @@ TEST(vector_type_safe_macros) {
     MUD_VECTOR_PUSH(vec, double, 1.41421);
 
     CHECK_INT_EQ(ctx, mud_vector_size(vec), 3);
-    TEST_LOG_TRACE("Pushed 3 doubles: p1, e, sqrt(2)");
+    TEST_LOG_DEBUG("Pushed 3 doubles: p1, e, sqrt(2)");
 
     TEST_LOG_DEBUG("Using MUD_VECTOR_GET macro");
     double val = MUD_VECTOR_GET(vec, double, 0);
     CHECK(val > 3.14 && val < 3.15);
-    TEST_LOG_TRACE("Index 0: %f (expected ~3.14159)", val);
+    TEST_LOG_DEBUG("Index 0: %f (expected ~3.14159)", val);
 
     val = MUD_VECTOR_GET(vec, double, 1);
     CHECK(val > 2.71 && val < 2.72);
-    TEST_LOG_TRACE("Index 1: %f (expected ~2.71828)", val);
+    TEST_LOG_DEBUG("Index 1: %f (expected ~2.71828)", val);
 
     TEST_LOG_DEBUG("Using MUD_VECTOR_GET_PTR macro");
     double* dbl_ptr = MUD_VECTOR_GET_PTR(vec, double, 2);
     CHECK_NOT_NULL(ctx, dbl_ptr);
     if (ctx->abort_current_test) { mud_vector_destroy(vec); return; }
     CHECK(*dbl_ptr > 1.41 && *dbl_ptr < 1.42);
-    TEST_LOG_TRACE("Index 2 (via ptr): %f (expected ~1.41421)", *dbl_ptr);
+    TEST_LOG_DEBUG("Index 2 (via ptr): %f (expected ~1.41421)", *dbl_ptr);
 
     mud_vector_destroy(vec);
 }

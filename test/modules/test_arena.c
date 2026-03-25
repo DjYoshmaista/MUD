@@ -114,9 +114,9 @@ TEST(arena_alloc_zero) {
 
     // Verify all bytes are ezero
     for (int i = 0; i < 64; i++) {
-        if (i % 8 == 0) TEST_LOG_TRACE("Checking byte %d of data", i);
+        if (i % 8 == 0) TEST_LOG_DEBUG("Checking byte %d of data", i);
         CHECK_INT_EQ(ctx, data[i], 0);
-        if (i % 8 == 0) TEST_LOG_TRACE("Byte %d of data successfully checked", i);
+        if (i % 8 == 0) TEST_LOG_DEBUG("Byte %d of data successfully checked", i);
     }
 
     mud_arena_destroy(arena);
@@ -135,19 +135,19 @@ TEST(arena_alignment_default) {
     TEST_LOG_INFO("Arena Created And Tested Successfully\nBeginning Arena Default Alignment Test...");
     // Make several allocations of different sizes
     for (int i = 0; i < 10; i++) {
-        if (i % 10 == 0) TEST_LOG_TRACE("Checking alignment of allocation of size %d", i);
+        if (i % 10 == 0) TEST_LOG_DEBUG("Checking alignment of allocation of size %d", i);
         size_t size = (size_t)(i * 7 + 1); // Varying sizes: 1, 8, 15, 22, ...
-        if (i % 10 == 0) TEST_LOG_TRACE("Allocating %zu bytes of memory to ptr", size);
+        if (i % 10 == 0) TEST_LOG_DEBUG("Allocating %zu bytes of memory to ptr", size);
         void* ptr = mud_arena_alloc(arena, size);
 
         REQUIRE_NOT_NULL(ctx, ptr);
         if (ctx->abort_current_test) { mud_arena_destroy(arena); return; }
 
-        if (i % 10 == 0) TEST_LOG_TRACE("ptr successfully tested not NULL\nChecking alignment of ptr...");
+        if (i % 10 == 0) TEST_LOG_DEBUG("ptr successfully tested not NULL\nChecking alignment of ptr...");
         // Check alignment
         uintptr_t addr = (uintptr_t)ptr;
         CHECK_INT_EQ(ctx, addr % MUD_ARENA_DEFAULT_ALIGN, 0);
-        if (i % 10 == 0) TEST_LOG_TRACE("ptr successfully checked alignment");
+        if (i % 10 == 0) TEST_LOG_DEBUG("ptr successfully checked alignment");
     }
 
     mud_arena_destroy(arena);
@@ -170,11 +170,11 @@ TEST(arena_alignment_custom) {
     for (size_t i = 0; i < num_alignments; i++) {
         size_t align = alignments[i];
 
-        if (i % 3 == 0) TEST_LOG_TRACE("Checking 32-byte allocation with alignment %zu: ", align);
+        if (i % 3 == 0) TEST_LOG_DEBUG("Checking 32-byte allocation with alignment %zu: ", align);
 
         void* ptr = mud_arena_alloc_aligned((MudArena*)arena, 32, align);
 
-        if (i % 3 == 0) TEST_LOG_TRACE("Allocation attempted");
+        if (i % 3 == 0) TEST_LOG_DEBUG("Allocation attempted");
 
         REQUIRE_NOT_NULL(ctx, ptr);
         if (ctx->abort_current_test) { mud_arena_destroy(arena); return; }
@@ -185,7 +185,7 @@ TEST(arena_alignment_custom) {
         CHECK_INT_EQ(ctx, (int)(addr % align), 0);
         if (ctx->abort_current_test) { mud_arena_destroy(arena); return; }
 
-        if (i % 3 == 0) TEST_LOG_TRACE("ptr successfully passed alignment check for alignment %zu", align);
+        if (i % 3 == 0) TEST_LOG_DEBUG("ptr successfully passed alignment check for alignment %zu", align);
     }
     TEST_LOG_INFO("Arena Custom Alignment Test Successfully Completed!");
     mud_arena_destroy(arena);
@@ -380,7 +380,7 @@ TEST(arena_temp_nested) {
 
         mud_arena_temp_end(inner);
     }
-    TEST_LOG_TRACE("Inner Temporary Scope Ended");
+    TEST_LOG_DEBUG("Inner Temporary Scope Ended");
 
     CHECK_INT_EQ(ctx, mud_arena_used(arena), level1);
 

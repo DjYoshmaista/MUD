@@ -53,7 +53,6 @@ extern MudLogCategory* g_log_admin;
         }                                                                           \
     } while (0)
 
-#define LOG_CORE_TRACE(fmt, ...)    MUD_ZLOG_CALL(zlog_debug, g_log_core, fmt, ##__VA_ARGS__)
 #define LOG_CORE_DEBUG(fmt, ...)    MUD_ZLOG_CALL(zlog_debug, g_log_core, fmt, ##__VA_ARGS__)
 #define LOG_CORE_INFO(fmt, ...)     MUD_ZLOG_CALL(zlog_info,  g_log_core, fmt, ##__VA_ARGS__)
 #define LOG_CORE_WARN(fmt, ...)     MUD_ZLOG_CALL(zlog_warn,  g_log_core, fmt, ##__VA_ARGS__)
@@ -61,7 +60,6 @@ extern MudLogCategory* g_log_admin;
 #define LOG_CORE_FATAL(fmt, ...)    MUD_ZLOG_CALL(zlog_fatal, g_log_core, fmt, ##__VA_ARGS__)
 
 // Test / general
-#define LOG_TEST_TRACE(fmt, ...)    MUD_ZLOG_CALL(zlog_debug, g_log_test, fmt, ##__VA_ARGS__)
 #define LOG_TEST_DEBUG(fmt, ...)    MUD_ZLOG_CALL(zlog_debug, g_log_test, fmt, ##__VA_ARGS__)
 #define LOG_TEST_INFO(fmt, ...)     MUD_ZLOG_CALL(zlog_info,  g_log_test, fmt, ##__VA_ARGS__)
 #define LOG_TEST_WARN(fmt, ...)     MUD_ZLOG_CALL(zlog_warn,  g_log_test, fmt, ##__VA_ARGS__)
@@ -78,7 +76,7 @@ extern MudLogCategory* g_log_admin;
 #define LOG_ARENA_FATAL(fmt, ...)   MUD_ZLOG_CALL(zlog_fatal, g_log_arena, fmt, ##__VA_ARGS__)
 
 // Networking
-#define LOG_NET_TRACE(fmt, ...)     MUD_ZLOG_CALL(zlog_debug, g_log_net, fmt, ##__VA_ARGS__)
+#define LOG_NET_AUTH(fmt, ...)     MUD_ZLOG_CALL(zlog_info, g_log_net, fmt, ##__VA_ARGS__)
 #define LOG_NET_DEBUG(fmt, ...)     MUD_ZLOG_CALL(zlog_debug, g_log_net, fmt, ##__VA_ARGS__)
 #define LOG_NET_INFO(fmt, ...)      MUD_ZLOG_CALL(zlog_info,  g_log_net, fmt, ##__VA_ARGS__)
 #define LOG_NET_WARN(fmt, ...)      MUD_ZLOG_CALL(zlog_warn,  g_log_net, fmt, ##__VA_ARGS__)
@@ -92,7 +90,6 @@ extern MudLogCategory* g_log_admin;
 #define LOG_SESSION_ERROR(fmt, ...) MUD_ZLOG_CALL(zlog_error, g_log_session, fmt, ##__VA_ARGS__)
 
 // World Simulation
-#define LOG_WORLD_TRACE(fmt, ...)   MUD_ZLOG_CALL(zlog_debug, g_log_world, fmt, ##__VA_ARGS__)
 #define LOG_WORLD_DEBUG(fmt, ...)   MUD_ZLOG_CALL(zlog_debug, g_log_world, fmt, ##__VA_ARGS__)
 #define LOG_WORLD_INFO(fmt, ...)    MUD_ZLOG_CALL(zlog_info,  g_log_world, fmt, ##__VA_ARGS__)
 #define LOG_WORLD_WARN(fmt, ...)    MUD_ZLOG_CALL(zlog_warn,  g_log_world, fmt, ##__VA_ARGS__)
@@ -111,10 +108,11 @@ extern MudLogCategory* g_log_admin;
 #define LOG_SCRIPT_ERROR(fmt, ...)  MUD_ZLOG_CALL(zlog_error, g_log_script, fmt, ##__VA_ARGS__)
 
 // Authentication
-#define LOG_AUTH_DEBUG(fmt, ...)    MUD_ZLOG_CALL(zlog_debug, g_log_auth, fmt, ##__VA_ARGS__)
+#define LOG_AUTH_SUCCESS(fmt, ...)    MUD_ZLOG_CALL(zlog_debug, g_log_auth, fmt, ##__VA_ARGS__)
 #define LOG_AUTH_INFO(fmt, ...)     MUD_ZLOG_CALL(zlog_info,  g_log_auth, fmt, ##__VA_ARGS__)
 #define LOG_AUTH_WARN(fmt, ...)     MUD_ZLOG_CALL(zlog_warn,  g_log_auth, fmt, ##__VA_ARGS__)
 #define LOG_AUTH_ERROR(fmt, ...)    MUD_ZLOG_CALL(zlog_error, g_log_auth, fmt, ##__VA_ARGS__)
+#define LOG_AUTH_FAIL(fmt, ...)     MUD_ZLOG_CALL(zlog_fatal, g_log_auth, fmt, ##__VA_ARGS__)
 
 // Administration
 #define LOG_ADMIN_INFO(fmt, ...)    MUD_ZLOG_CALL(zlog_info,  g_log_admin, fmt, ##__VA_ARGS__)
