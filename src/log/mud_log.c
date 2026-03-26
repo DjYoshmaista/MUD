@@ -13,7 +13,7 @@ MudLogCategory* g_log_script        = NULL;
 MudLogCategory* g_log_auth          = NULL;
 MudLogCategory* g_log_admin         = NULL;
 
-static bool g_log_initialized = false;
+bool g_log_initialized = false;
 
 static void mud_log_clear_categories(void) {
     g_log_core = NULL;
@@ -62,7 +62,13 @@ bool mud_log_init(const char* config_path) {
     // zlog_init returns 0 on success, -1 on failure
     if (zlog_init(path) != 0) {
         fprintf(stderr, "[mud_log] zlog_init failed: could not load '%s'\n", path);
-        return false;
+        static const char fallback_path[] = "mud.log";
+        if (zlog_init(fallback_path) == 0) {
+            fprintf(stdout, "[mud_log] zlog_init succeeded, using '%s' as a fallback\n", fallback_path);
+        } else {
+            fprintf(stderr, "[mud_log] zlog_init failed: could not load '%s'\n", fallback_path);
+            return false;
+        }
     }
 
     if (!mud_log_bind_categories()) {
@@ -71,7 +77,6 @@ bool mud_log_init(const char* config_path) {
         mud_log_clear_categories();
         return false;
     }
-
     g_log_initialized = true;
     return true;
 }

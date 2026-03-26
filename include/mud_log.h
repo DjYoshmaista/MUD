@@ -8,6 +8,9 @@
 extern "C" {
 #endif
 
+//  Boolean value to keep track of whether mud_log_init() has been called
+extern bool g_log_initialized;
+
 /*  Initialize the logging system.  Must be called before any MUD_LOG_* macros are used.
     @param config_path  Path to zlog.conf.  If NULLL uses config/zlog.conf
     @return true on success, false if config file is missing or malformed

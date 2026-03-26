@@ -26,64 +26,134 @@ static void shutdown_subsystems(bool db_loaded, bool config_loaded, bool log_loa
 }
 
 int main(void) {
-    bool log_loaded = false;
-    bool config_loaded = false;
-    bool db_loaded = false;
-    int port = 4000;
-    int max_connections = 256;
+    bool log_loaded = false, config_loaded = false, db_loaded = false, crypto_init = false, db_migrated = false, net_loop_init = false, listener_started = false;
 
-    if (!mud_log_init(MUD_ZLOG_PATH)) {
-        return EXIT_FAILURE;
-    }
-    log_loaded = true;
-
-    if (!mud_config_load(MUD_CONFIG_PATH)) {
-        LOG_CORE_FATAL("Failed to load config from '%s'", MUD_CONFIG_PATH);
-        shutdown_subsystems(db_loaded, config_loaded, log_loaded);
-        return EXIT_FAILURE;
-    }
-    config_loaded = true;
-
-    if (!mud_crypto_init()) {
-        LOG_CORE_FATAL("Failed to initialize crypto subsystem");
-        shutdown_subsystems(db_loaded, config_loaded, log_loaded);
-        return EXIT_FAILURE;
+    if (!config_loaded) {
+        for (int i = 0; i < 5; i++) {
+            if (!config_loaded) {
+                config_loaded = mud_config_load("config/mud.conf");
+                if (config_loaded) {
+                    LOG_CORE_INFO("Config loaded successfully");
+                    break;
+                } else {
+                    LOG_CORE_ERROR("Failed to load config from '%s'", MUD_CONFIG_PATH);
+                    if (i == 4) {
+                        LOG_CORE_FATAL("Failed to load config from '%s'", MUD_CONFIG_PATH);
+                        shutdown_subsystems(db_loaded, config_loaded, log_loaded);
+                        return EXIT_FAILURE;
+                    }
+                }
+            }
+        }
     }
 
-    if (!mud_db_open(MUD_DB_PATH)) {
-        LOG_CORE_FATAL("Failed to open database at '%s'", MUD_DB_PATH);
-        shutdown_subsystems(db_loaded, config_loaded, log_loaded);
-        return EXIT_FAILURE;
-    }
-    db_loaded = true;
+    int port = mud_config_get_int("network.telnet.port", 4000);
+    int max_connections = mud_config_get_int("network.max_connections", 256);
 
-    if (!mud_db_migrate()) {
-        LOG_CORE_FATAL("Failed to migrate database schema");
-        shutdown_subsystems(db_loaded, config_loaded, log_loaded);
-        return EXIT_FAILURE;
+    if (!log_loaded) {
+        for (int i = 0; i < 5; i++) {
+            if (!log_loaded) {
+                log_loaded = mud_log_init("config/zlog.conf");
+                if (log_loaded) {
+                    LOG_CORE_INFO("Logging initialized successfully");
+                    break;
+                } else {
+                    LOG_CORE_ERROR("Failed to initialize logging");
+                    if (i == 4) {
+                        LOG_CORE_FATAL("Failed to initialize logging");
+                        shutdown_subsystems(db_loaded, config_loaded, log_loaded);
+                        return EXIT_FAILURE;
+                    }
+                }
+            }
+        }
     }
 
-    port = mud_config_get_int("network.telnet.port", 4000);
-    max_connections = mud_config_get_int("network.max_connections", 256);
+    if (!crypto_init) {
+        for (int i = 0; i < 5; i++) {
+            crypto_init = mud_crypto_init();
+            if (crypto_init) {
+                LOG_CORE_INFO("Crypto initialized successfully");
+                break;
+            } else {
+                LOG_CORE_ERROR("Failed to initialize crypto");
+                if (i == 4) {
+                    LOG_CORE_FATAL("Failed to initialize crypto");
+                    shutdown_subsystems(db_loaded, config_loaded, log_loaded);
+                    return EXIT_FAILURE;
+                }
+            }
+        }
+    }
+
+    if (!db_loaded) {
+        for (int i = 0; i < 5; i++) {
+            if (!db_loaded) {
+                db_loaded = mud_db_open(MUD_DB_PATH);
+                if (db_loaded) {
+                    LOG_CORE_INFO("Database initialized successfully");
+                    break;
+                } else {
+                    LOG_CORE_ERROR("Failed to initialize database");
+                    if (i == 4) {
+                        LOG_CORE_FATAL("Failed to initialize database");
+                        shutdown_subsystems(db_loaded, config_loaded, log_loaded);
+                        return EXIT_FAILURE;
+                    }
+                }
+            }
+        }
+    }
+
+    if (!db_migrated) {
+        db_migrated = mud_db_migrate(); 
+        if (!db_migrated) {
+            LOG_CORE_ERROR("Failed to migrate database");
+            shutdown_subsystems(db_loaded, config_loaded, log_loaded);
+            return EXIT_FAILURE;
+        } else {
+            LOG_CORE_INFO("Database migrated successfully");
+        }
+    }
 
     mud_connection_table_init();
 
-    if (!mud_net_loop_init()) {
-        LOG_CORE_FATAL("Failed to initialize network subsystem");
-        shutdown_subsystems(db_loaded, config_loaded, log_loaded);
-        return EXIT_FAILURE;
+    if (net_loop_init) {
+        LOG_CORE_INFO("Net loop already initialized!");
+    } else {
+        LOG_CORE_INFO("Net loop wasn't initialized.  Initializing...");
+        net_loop_init = mud_net_loop_init();
+        if (!net_loop_init) {
+            LOG_CORE_ERROR("Failed to initialize net loop");
+            shutdown_subsystems(db_loaded, config_loaded, log_loaded);
+            return EXIT_FAILURE;
+        } else {
+            LOG_CORE_INFO("Mud Net Loop initialized successfully");
+        }
     }
 
-    if (!mud_listener_start(port, max_connections)) {
-        LOG_CORE_FATAL("Failed to start listener");
-        shutdown_subsystems(db_loaded, config_loaded, log_loaded);
-        return EXIT_FAILURE;
+    if (listener_started) {
+        LOG_CORE_INFO("Listenera already started");
+    } else {
+        LOG_CORE_INFO("Listener wasn't started.  Starting...");
+        listener_started = mud_listener_start(port, max_connections);
+        if (!listener_started) {
+            LOG_CORE_ERROR("Failed to start listener");
+            shutdown_subsystems(db_loaded, config_loaded, log_loaded);
+            return EXIT_FAILURE;
+        } else {
+            LOG_CORE_INFO("Mud Listener started successfully");
+        }
     }
 
     LOG_CORE_INFO("MUD server starting on port %d", port);
-    mud_net_loop_run();
-    LOG_CORE_INFO("MUD server shutting down");
-
+    if (mud_net_loop_run()) {
+        LOG_CORE_INFO("MUD Server Net Loop Started Successfully on port %d", port);
+    } else {
+        LOG_CORE_ERROR("Failed to start MUD server Net Loop");
+        shutdown_subsystems(db_loaded, config_loaded, log_loaded);
+        return EXIT_FAILURE;
+    }
     LOG_CORE_INFO("Startup checks completed successfully");
 
     // Cleanup
