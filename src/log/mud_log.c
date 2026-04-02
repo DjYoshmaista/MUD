@@ -1,19 +1,19 @@
 #include "mud_log.h"
+
 #include <stdio.h>
 
-// Catgeory handle definitions -declared extern in mud_log.h, defined once here
-MudLogCategory* g_log_core          = NULL;
-MudLogCategory* g_log_net           = NULL;
-MudLogCategory* g_log_session       = NULL;
-MudLogCategory* g_log_arena         = NULL;
-MudLogCategory* g_log_test          = NULL;
-MudLogCategory* g_log_world         = NULL;
-MudLogCategory* g_log_db            = NULL;
-MudLogCategory* g_log_script        = NULL;
-MudLogCategory* g_log_auth          = NULL;
-MudLogCategory* g_log_admin         = NULL;
+MudLogCategory* g_log_core = NULL;
+MudLogCategory* g_log_net = NULL;
+MudLogCategory* g_log_session = NULL;
+MudLogCategory* g_log_arena = NULL;
+MudLogCategory* g_log_test = NULL;
+MudLogCategory* g_log_world = NULL;
+MudLogCategory* g_log_db = NULL;
+MudLogCategory* g_log_script = NULL;
+MudLogCategory* g_log_auth = NULL;
+MudLogCategory* g_log_admin = NULL;
 
-bool g_log_initialized = false;
+static LogState g_log_state = G_LOG_STATE_UNINITIALIZED;
 
 static void mud_log_clear_categories(void) {
     g_log_core = NULL;
@@ -53,40 +53,36 @@ static bool mud_log_bind_categories(void) {
 }
 
 bool mud_log_init(const char* config_path) {
-    const char* path = config_path ? config_path : "config/zlog.conf";
+    const char* path = config_path != NULL ? config_path : "config/zlog.conf";
 
-    if (g_log_initialized) {
+    if (g_log_state == G_LOG_STATE_INITIALIZED) {
         return true;
     }
 
-    // zlog_init returns 0 on success, -1 on failure
     if (zlog_init(path) != 0) {
         fprintf(stderr, "[mud_log] zlog_init failed: could not load '%s'\n", path);
-        static const char fallback_path[] = "mud.log";
-        if (zlog_init(fallback_path) == 0) {
-            fprintf(stdout, "[mud_log] zlog_init succeeded, using '%s' as a fallback\n", fallback_path);
-        } else {
-            fprintf(stderr, "[mud_log] zlog_init failed: could not load '%s'\n", fallback_path);
-            return false;
-        }
+        return false;
     }
 
     if (!mud_log_bind_categories()) {
-        fprintf(stderr, "[mud_log] failed to bind one or more log categories from '%s'\n", path);
+        fprintf(stderr, "[mud_log] failed to bind one or more log categories\n");
         zlog_fini();
         mud_log_clear_categories();
         return false;
     }
-    g_log_initialized = true;
+
+    g_log_state = G_LOG_STATE_INITIALIZED;
     return true;
 }
 
 bool mud_log_reload(const char* config_path) {
-    if (!g_log_initialized) {
+    const char* path = config_path != NULL ? config_path : "config/zlog.conf";
+
+    if (g_log_state != G_LOG_STATE_INITIALIZED) {
         return false;
     }
 
-    if (zlog_reload(config_path) != 0) {
+    if (zlog_reload(path) != 0) {
         return false;
     }
 
@@ -94,11 +90,11 @@ bool mud_log_reload(const char* config_path) {
 }
 
 void mud_log_shutdown(void) {
-    if (!g_log_initialized) {
+    if (g_log_state != G_LOG_STATE_INITIALIZED) {
         return;
     }
 
     zlog_fini();
     mud_log_clear_categories();
-    g_log_initialized = false;
+    g_log_state = G_LOG_STATE_SHUTDOWN;
 }

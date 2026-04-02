@@ -147,7 +147,8 @@ int main(void) {
     }
 
     LOG_CORE_INFO("MUD server starting on port %d", port);
-    if (mud_net_loop_run()) {
+    if (net_loop_init && listener_started) {
+        mud_net_loop_run();
         LOG_CORE_INFO("MUD Server Net Loop Started Successfully on port %d", port);
     } else {
         LOG_CORE_ERROR("Failed to start MUD server Net Loop");

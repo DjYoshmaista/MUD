@@ -1,4 +1,5 @@
 #include "mud_listener.h"
+#include "mud_session.h"
 #include "mud_connection.h"
 #include "mud_net_loop.h"
 #include "mud_output.h"
@@ -7,10 +8,10 @@
 
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include <stdio.h>
 #include <uv.h>
 
 static uv_tcp_t g_server;
@@ -82,6 +83,7 @@ static void read_cb(uv_stream_t* stream, ssize_t nread, const uv_buf_t* buf) {
 static void on_new_connection(uv_stream_t* server, int status) {
     uv_tcp_t* client = NULL;
     MudConnection* conn = NULL;
+    MudSession* session = NULL;
     char addr[46];
     int port = 0;
     int rc = 0;
@@ -135,14 +137,20 @@ static void on_new_connection(uv_stream_t* server, int status) {
         return;
     }
 
-    rc = uv_read_start((uv_stream_t*)client, alloc_cb, read_cb);
-    if (rc != 0) {
-        LOG_NET_ERROR("uv_read_start failed for conn=%llu: %s", (unsigned long long)mud_connection_get_id(conn), uv_strerror(rc));
+    session = mud_session_create(conn);
+    if (session == NULL) {
         mud_connection_close(conn);
         return;
     }
 
-    mud_output_send_line(conn, "Connected to My MUD.");
+    rc = uv_read_start((uv_stream_t*)client, alloc_cb, read_cb);
+    if (rc != 0) {
+        LOG_NET_ERROR("uv_read_start failed for conn=%llu: %s",
+                      (unsigned long long)mud_connection_get_id(conn),
+                      uv_strerror(rc));
+        mud_connection_close(conn);
+        return;
+    }
 }
 
 bool mud_listener_start(int port, int max_connections) {

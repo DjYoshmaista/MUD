@@ -1,5 +1,6 @@
 #include "mud_connection.h"
 #include "mud_log.h"
+#include "mud_session.h"
 
 #include <limits.h>
 #include <stdio.h>
@@ -242,6 +243,10 @@ void mud_connection_destroy(MudConnection* conn) {
     }
 
     mud_connection_table_remove(conn);
+
+    if (conn->session != NULL) {
+        mud_session_destroy(conn->session);
+    }
 
     if (conn->telnet != NULL) {
         telnet_free(conn->telnet);

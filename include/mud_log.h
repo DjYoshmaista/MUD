@@ -8,8 +8,14 @@
 extern "C" {
 #endif
 
-//  Boolean value to keep track of whether mud_log_init() has been called
-extern bool g_log_initialized;
+// Log lifecycle state
+typedef enum g_log_state {
+    G_LOG_STATE_UNINITIALIZED,
+    G_LOG_STATE_INITIALIZED,
+    G_LOG_STATE_SHUTDOWN
+} g_log_state_t;
+
+typedef g_log_state_t LogState;
 
 /*  Initialize the logging system.  Must be called before any MUD_LOG_* macros are used.
     @param config_path  Path to zlog.conf.  If NULLL uses config/zlog.conf

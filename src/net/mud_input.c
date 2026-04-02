@@ -3,6 +3,7 @@
 #include "mud_connection.h"
 #include "mud_buffer.h"
 #include "mud_output.h"
+#include "mud_session.h"
 
 #include <ctype.h>
 #include <string.h>
@@ -160,6 +161,11 @@ void mud_input_on_line(MudConnection* conn, const char* line) {
                   (unsigned long long)mud_connection_get_id(conn),
                   line != NULL ? line : "");
     if (conn == NULL || line == NULL) {
+        return;
+    }
+
+    if (conn->session != NULL) {
+        mud_session_on_line(conn->session, line);
         return;
     }
 

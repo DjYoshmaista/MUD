@@ -1,0 +1,509 @@
+#include "mud_db.h"
+#include "mud_session.h"
+#include "mud_connection.h"
+#include "mud_log.h"
+#include "mud_output.h"
+#include "mud_telnet.h"
+#include "mud_crypto.h"
+
+#include <sqlite3.h>
+#include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <stdio.h>
+#include <stdbool.h>
+#include <time.h>
+#include <stdio.h>
+#include <stdarg.h>
+#include <assert.h>
+#include <unistd.h>
+#include <inttypes.h>
+
+static SessionLookupResult session_lookup_account(MudSession* session, const char* input_username, MudDbAccount* out_account) {
+    size_t src_len = 0, start = 0, end = 0, i = 0, out_len = 0;
+    char normalized[sizeof(session->username)];
+
+    if (session == NULL || session->conn == NULL || session->conn->session != session || input_username == NULL || out_account == NULL) {
+        return SESSION_LOOKUP_INVALID_INPUT;
+    }
+
+    if (!mud_db_is_open()) {
+        return SESSION_LOOKUP_DB_ERROR;
+    }
+
+    src_len = strlen(input_username);
+    while (start < src_len && (input_username[start] == ' ' || input_username[start] == '\t')) {
+        start++;
+    }
+    end = src_len;
+    while (end > start && (input_username[end - 1] == ' ' || input_username[end - 1] == '\t')) {
+        end--;
+    }
+
+    out_len = end - start;
+    if (out_len == 0 || out_len >= sizeof(normalized)) {
+        return SESSION_LOOKUP_INVALID_INPUT;
+    }
+
+    for (i = 0; i < out_len; i++) {
+        char c = input_username[start + i];
+        if (!((c >= 'a' && c <= 'z') || (c>= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_' || c == '-')) {
+            return SESSION_LOOKUP_INVALID_INPUT;
+        }
+        normalized[i] = c;
+    }
+    normalized[out_len] = '\0';
+
+    memset(out_account, 0, sizeof(*out_account));
+    if (!mud_db_account_get_by_name(normalized, out_account)) {
+        return SESSION_LOOKUP_NOT_FOUND; // DB wrapper currently doesn't distinguis not found vs query err
+    }
+
+    snprintf(session->username, sizeof(session->username), "%s", out_account->username);
+    session->account_id = out_account->id;
+    session->failed_logins = out_account->failed_logins;
+
+    return SESSION_LOOKUP_FOUND;
+}
+
+static bool session_authenticate_password(MudSession* session, const char* input_password) {
+    MudDbAccount account = {0};
+    int64_t now = 0;
+
+    if (session == NULL || session->conn == NULL || input_password == NULL) {
+        return false;
+    }
+    if (session->conn->session != session) {
+        return false;
+    }
+    if (session->username[0] == '\0') {
+        LOG_AUTH_WARN("Cannot authenticate: username is empty");
+        return false;
+    }
+
+    if (!mud_db_is_open()) {
+        LOG_AUTH_ERROR("Cannot authenticate: Database not open");
+        return false;
+    }
+
+    // Retrieve account row for username chosen in CONN_GET_NAME
+    if (!mud_db_account_get_by_name(session->username, &account)) {
+        LOG_AUTH_ERROR("Account lookup failed for username '%s'", session->username);
+        return false;
+    }
+
+    if (account.is_banned) {
+        LOG_AUTH_WARN("Login denied: account '%s' is banned", session->username);
+        return false;
+    }
+
+    // Constant-time password verification (libsodium)
+    if (!mud_crypto_verify_password(input_password, account_password_hash)) {
+        session->failed_logins++;
+        (void)mud_db_account_increment_failed_logins(account.id);
+        LOG_AUTH_WARN("Invalid password for username '%s' (attempt %d)", session->username, session->failed_logins);
+        return false;
+    }
+
+    // Success path
+    now = (int64_t)time(NULL);
+    session->account_id = account.id;
+    session->failed_logins = 0;
+    session->last_active_at = now;
+
+    (void)mud_db_account_update_login(account.id, now);
+    (void)mud-db-account_reset_failed_logins(account.id);
+
+    // Wipe any temporary password buffer which may be used elsewhere
+    mud_crypto_memzero(session->pw_buf, sizeof(session->pw_buf));
+
+    LOG_AUTH_INFO("Authenticated username '%s' (account_id=%lld)", session->username, (long long)session->account_id);
+    return true;
+}
+
+MudSession* mud_session_create(MudConnection* conn) {
+    if (conn == NULL) {
+        LOG_NET_ERROR("Connection is NULL");
+        return NULL;
+    }
+    if (conn->session != NULL || conn->id == 0 || conn->closing) {
+        const char* conn_closing = conn->closing ? "true" : "false";
+        LOG_NET_ERROR("Connection with ID '''%llu''' has '0' MudConnection ID '''%llu''', or conn->closing is set to '''%s'''",
+                (unsigned long long)conn->id, (unsigned long long)conn->id, conn_closing);
+        return NULL;
+    }
+
+    MudSession* new_sess = (MudSession*)malloc(sizeof(MudSession));
+    if (new_sess == NULL) {
+        LOG_NET_ERROR("Failed to allocate memory for new session");
+        return NULL;
+    }
+    memset(new_sess, 0, sizeof(MudSession));
+
+    new_sess->conn = (MudConnection*)conn;
+    new_sess->state = CONN_NEW; 
+    conn->session = new_sess;
+    mud_session_transition(new_sess, CONN_NEW);
+
+    LOG_SESSION_INFO("***NEW SESSION***:\nSession->Connection ID: '%llu'::Session->Username '%s'::Sess->Account_ID `%llu'", (unsigned long long)conn->id, new_sess->username, (unsigned long long)new_sess->account_id);
+    LOG_SESSION_INFO("***STATS***\nFailed Logins: '%d'::Connected At: '%" PRId64 "'::Last Active At: '%" PRId64 "'", new_sess->failed_logins, new_sess->connected_at, new_sess->last_active_at);
+    return new_sess;
+}
+
+void mud_session_destroy(MudSession* session) {
+    if (session == NULL) {
+        LOG_SESSION_WARN("Session is NULL");
+        return;
+    }
+    if (session->conn == NULL) {
+        LOG_SESSION_WARN("Session->Connection is NULL");
+        return;
+    }
+    if (session->conn->session != session) {
+        LOG_SESSION_WARN("Session->Connection->Session is not the same as the session");
+        return;
+    }
+    session->conn->session = NULL;
+    free(session);
+}
+
+void mud_session_on_line(MudSession* session, const char* line) {
+    static const int kMaxFailedAttempts = 5;
+    static const size_t kMinPasswordLen = 8;
+
+    MudDbAccount acct = {0};
+    char input[1025];
+    char hash[CRYPTO_HASH_STR_BYTES] = {0};
+    char* p = NULL;
+    char* e = NULL;
+    size_t i = 0;
+    int64_t now = 0;
+
+    if (session == NULL || session->conn == NULL || line == NULL) {
+        return;
+    }
+    if (session->conn->session != session) {
+        return;
+    }
+
+    now = (int64_t)time(NULL);
+    session->last_active_at = now;
+    mud_connection_touch(session->conn);
+
+    snprintf(input, sizeof(input), "%s", line);
+
+    // Trim leading/trailing spaces and tabs
+    p = input;
+    while (*p == ' ' || *p == '\t') {
+        p++;
+    }
+    e = p + strlen(p);
+    while(e > p && (e[-1] == ' ' || e[-1] == '\t')) {
+        e--;
+    }
+    *e = '\0';
+
+    (void)mud_db_account_get_by_name(session->username, &account);
+
+    switch(session->state) {
+        case CONN_NEW:
+            mud_session_transition(session, CONN_GET_NAME);
+            return;
+
+        case CONN_GET_NAME:
+            if (p[0] == '\0') {
+                mud_output_send(session->conn, "Name cannot be empty.\r\nName: ");
+                return;
+            }
+            if (strlen(p) >= sizeof(session->username)) {
+                mud_output_send(session->conn, "Name too long.\r\nName: ");
+                return;
+            }
+            for (i = 0; p[i] != '\0'; i++) {
+                unsigned char ch = (unsigned char)p[i];
+                if (!(isalnum(ch) || ch == '_' || ch == '-')) {
+                    mud_output_send(session->conn, "Use letters, numbers, '_' or '-'.\r\nName: ");
+                    return;
+                }
+            }
+
+            snprintf(session->username, sizeof(session->username), "%s", p);
+
+            if (mud_db_account_get-By_name(session->username, &acct)) {
+                session->account_id = acct.id;
+                session->failed-logins = acct.failed_logins;
+                mud_session_transition(session, CONN_GET_PASSWORD);
+            } else {
+                mud_session_transition(session, CONN_NEW_ACCOUNT);
+            }
+            return;
+
+        case CONN_GET_PASSWORD:
+            if (p[0] == '\0') {
+                mud_output_send(session->conn, "Password: ");
+                return;
+            }
+
+            if (!mud_db_account_get-by_name(session->username, &acct)) {
+                mud_output_send_line(session->conn, "Account lookup failed.");
+                mud_session_transition(session, CONN_GET_NAME);
+                return;
+            }
+
+            if (acct.is_banned) {
+                mud_output_send_line(session->conn,, "This account is banned.");
+                mud_session_transition(session, CONN_DISCONNECTING);
+                return;
+            }
+
+            if (session_authenticate_password(session, p)) {
+                session->account_id = acct.id;
+                session->failed_logins = 0;
+                (void)mud_db_account_update_login(acc.id, now);
+                mud_crypto_memzero(session->pw_buf, sizeof(session->pw_buf));
+                mud_session_transition(session, CONN_LIMBO);
+            } else {
+                session->failed_logins++;
+                (void)mud_db_account_increment_failed_logins(acct.id);
+
+                if (session->failed_logins >= kMaxFailedAttempts) {
+                    mud_output_send_line(session->conn, "Too many failed attempts.");
+                    mud_session_transition(session, CONN_DISCONNECTING);
+                } else {
+                    mud_output_send_line(session->conn, "Invalid password.");
+                    mud_telnet_echo_off(session->conn);
+                    mud_output_send(session->conn, "Password: ");
+                }
+            }
+            return;
+
+        case CONN_NEW_ACCOUNT:
+            if ((p[0] == 'y' || p[0] == 'Y') && p[1] == '\0') {
+                mud_session_transition(session, CONN_SET_PASSWORD);
+                return;
+            }
+       
+            if ((p[0] == 'n' || p[0] == 'N') && p[1] == '\0') {
+                mud_session_transition(session, CONN_DISCONNECTING);
+                return;
+            }
+            mud_output_send(session->conn, Please answer [y]es or [n]o: ");
+            return;
+
+        case CONN_SET_PASSWORD:
+            if (strlen(p) < kMinPasswordLen) {
+                mud_output_sendf(session->conn, "Password must be at least %u chars.\r\nNew password: ", kMinPasswordLen);
+                return;
+            }
+            if (strlen(p) >= sizeof(session->pw_buf)) {
+                mud_output_send(session->conn, "Password too long.\r\nNew password: ");
+                return;
+            }
+
+            snprintf(session->pw_buf, sizeof(session->pw_buf), "%s", p);
+            mud_session_transition(session, CONN_CONFIRM_PASSWORD);
+            return;
+
+        case CONN_CONFIRM_PASSWORD:
+            if (strcmp(p, session->pw_buf) != 0) {
+                mud_crypto_memzero(session->pw_buf, sizeof(session->pw_buf));
+                mud_output_send_line(session->conn, "Passwords do not match.");
+                mud_session_transition(session, CONN_SET_PASSWORD);
+                return;
+            }
+
+            if (!mud_crypto_hash_password(session->pw_buf, hash, sizeof(hash))) {
+                mud_crypto_memzero(session->pw_buf, sizeof(session->pw_buf));
+                mud_output_send_line(session->>conn, "Could not hash password.");
+                mud_session_transition(session, CONN_DISCONNECTING);
+                return;
+            }
+
+            if (!mud_db_account_insert(session->username, hash)) {
+                mud_crypto_memzero(session->pw_buf, sizeof(session->pw_buf));
+                mud_crypto_memzero(hash, sizeof(hash));
+                mud_output_send_line(session->conn, "Could not create account.");
+                mud_session_transition(session, CONN_GET_NAME);
+                return;
+            }
+
+            if (!mud_db_account_get_by_name(session->username, &acct)) {
+                mud_crypto_memzero(session->pw_buf, sizeof(session->pw_buf));
+                mud_crypto_memzero(hash, sizeof(hash));
+                mud_output_send_line(session->conn, "Account created, but lookup failed.");
+                mud_session_transition(session, CONN_DISCONNECTING);
+                return;
+            }
+
+            session->account_id = acct.id;
+            session->failed_logins = 0;
+            (void)mud_db_account_update_login(acct.id, now);
+
+            mud_crypto_memzero(session->pw_buf, sizeof(session->pw_buf));
+            mud_crypto_memzero(hash, sizeof(hash));
+
+            mud_session_transition(session, CONN_LIMBO);
+            return;
+
+        case CONN_LIMBO:
+            if (strcmp(p, "enter") == 0) {
+                mud_session_transition(session, CONN_PLAYING);
+                return;
+            }
+            if (strcmp(p, "quit") == 0) {
+                mud_session_transition(session, CONN_DISCONNECTING);
+                return;
+            }
+            mud_output_send(session->conn, "Type 'enter' or 'quit'..\r\n> ");
+            return;
+
+        case CONN_PLAYING:
+            if (strcmp(p, "quit") == 0) {
+                mud_session_transition(session, CONN_DISCONNECTING);
+                return;
+            }
+            mud_output_sendf(session->conn, You said: %s\r\n> ", p);
+            return;
+
+        case CONN_DISCONNECTING:
+            return;
+
+        default:
+            mud_session_transition(session, CONN_DISCONNECTING);
+            return;
+    }
+}
+
+void mud_session_transition(MudSession* session, SessionState new_state) {
+    SessionState old_state = CONN_DISCONNECTING;
+    input64_t now = 0;
+
+    if (session == NULL || session->conn == NULL || session->conn->session != session) {
+        return;
+    }
+
+    old_state = session->state;
+    now = (int64_t)time(NULL);
+    session->last_active_at = now;
+    session->state = new_state;
+
+    LOG_SESSION_INFO("Session conn=%llu state %d -> %d", (unsigned long long)session->conn->id, (int)old_state, (int)new_state);
+
+    switch (new_state) {
+        case CONN_NEW:
+            session->connected_at = now;
+            session->failed_logins = 0;
+            session->account_id = 0;
+            session->username[0] = '\0';
+            memset(session->pw_buf, 0, sizeof(session->pw_buf));
+            session->player = NULL;
+            mud_session_transition(session, CONN_GET_NAME);
+            return;
+
+        case CONN_GET_NAME:
+            mud_telnet_echo_on(session->conn);
+            mud_output_send(session->conn, "Username: ");
+            return;
+
+        case CONN_GET_PASSWORD:
+            mud_telnet_echo_off(session->conn);
+            mud_output_send(session->conn, "Password: ");
+            return;
+
+        case CONN_NEW_ACCOUNT:
+            mud_telnet_echo_on(session->conn);
+            mud_output_send(session->conn, "No account found.  Create one? (y/n): ");
+            return;
+
+        case CONN_SET_PASSWORD:
+            mud_telnet_echo_off(session->conn);
+            mud_output_send(session->conn, "Choose new password: ");
+            return;
+
+        case CONN_CONFIRM_PASSWORD:
+            mud_telnet_echo_off(session->conn);
+            mud_output_send(session->conn, "Confirm password: ");
+            return;
+
+        case CONN_LIMBO:
+            mud_telnet_echo_on(session->conn);
+            mud_output_sendf(session->conn, "\r\nWelcome, %s.\r\nType 'enter' or 'quit'.\r\n> ", session->username);
+            return;
+
+        case CONN_PLAYING:
+            mud_telnet_echo_on(session->conn);
+            mud_output_send(session->conn, "\r\n> ");
+            return;
+
+        case CONN_DISCONNECTING:
+            mud_telnet_echo_on(session->conn);
+            mud_output_send_line(session->conn, "Connection closing.  Goodbye...");
+            mud_connection_close(session->conn);
+            return;
+
+        default:
+            LOG_SESSION_WARN("Invalid state of %d: Closing connection...", (int)new_state);
+            mud_connection_close(session->conn);
+            return;
+    }
+}
+
+void mud_session_send(MudSession* session, const char* text) {
+    if (session == NULL) {
+        LOG_SESSION_WARN("Session is NULL");
+        return;   
+    }
+    if (session->conn == NULL) {
+        LOG_SESSION_WARN("Session->Connection is NULL");
+        return;
+    }
+    if (session->conn->session != session) {
+        LOG_SESSION_WARN("Session->Connection->Session is not the same as the session");
+        return;
+    }
+    if (session->state != CONN_PLAYING) {
+        LOG_SESSION_WARN("Session->State is not CONN_PLAYING");
+        return;
+    }
+}
+
+void mud_session_sendf(MudSession* session, const char* fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    if (session == NULL) {
+        LOG_SESSION_WARN("Session is NULL");
+        return;   
+    }
+    if (session->conn == NULL) {
+        LOG_SESSION_WARN("Session->Connection is NULL");
+        return;
+    }
+    if (session->conn->session != session) {
+        LOG_SESSION_WARN("Session->Connection->Session is not the same as the session");
+        return;
+    }
+    if (session->state != CONN_PLAYING) {
+        LOG_SESSION_WARN("Session->State is not CONN_PLAYING");
+        return;
+    }
+}
+
+void mud_session_kick(MudSession* session, const char* reason) {
+    if (session == NULL) {
+        LOG_SESSION_WARN("Session is NULL");
+        return;   
+    }
+    if (session->conn == NULL) {
+        LOG_SESSION_WARN("Session->Connection is NULL");
+        return;
+    }
+    if (session->conn->session != session) {
+        LOG_SESSION_WARN("Session->Connection->Session is not the same as the session");
+        return;
+    }
+    if (session->state != CONN_PLAYING) {
+        LOG_SESSION_WARN("Session->State is not CONN_PLAYING");
+        return;
+    }
+    LOG_ADMIN_INFO("Kicking player '%s' from session '%llu'.  Reason: '%s'", session->player->username, (unsigned long long)session->id, reason);
+}
